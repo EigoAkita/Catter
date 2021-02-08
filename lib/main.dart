@@ -1,66 +1,45 @@
+import 'package:catter_app/app.dart';
+import 'package:catter_app/presentation/base/base_model.dart';
+import 'package:catter_app/presentation/email_login/email_login_model.dart';
+import 'package:catter_app/presentation/new_member_registration/new_member_registration_model.dart';
+import 'package:catter_app/presentation/nickname_registration/nickname_registration_model.dart';
+import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_mode.dart';
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-void main() {
-  runApp(MyApp());
-}
+Future<void> main() async {
+  // need to run async method in main function
+  WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
 
-class MyApp extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-      ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
-    );
-  }
-}
+  final originalCheck = Provider.debugCheckInvalidValueType;
+  Provider.debugCheckInvalidValueType = <T>(T value) {
+    // ignore: unnecessary_type_check
+    if (value is Object) return;
+    originalCheck<T>(value);
+  };
 
-class MyHomePage extends StatefulWidget {
-  MyHomePage({Key key, this.title}) : super(key: key);
-
-  final String title;
-
-  @override
-  _MyHomePageState createState() => _MyHomePageState();
-}
-
-class _MyHomePageState extends State<MyHomePage> {
-  int _counter = 0;
-
-  void _incrementCounter() {
-    setState(() {
-      _counter++;
-    });
-  }
-
-  @override
-  Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(widget.title),
-      ),
-      body: Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Text(
-              'You have pushed the button this many times:',
-            ),
-            Text(
-              '$_counter',
-              style: Theme.of(context).textTheme.headline4,
-            ),
-          ],
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider<EmailLoginModel>(
+          create: (_) => EmailLoginModel(),
         ),
-      ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: _incrementCounter,
-        tooltip: 'Increment',
-        child: Icon(Icons.add),
-      ),
-    );
-  }
+        ChangeNotifierProvider<NewMemberRegistrationModel>(
+          create: (_) => NewMemberRegistrationModel(),
+        ),
+        ChangeNotifierProvider<NicknameRegistrationModel>(
+          create: (_) => NicknameRegistrationModel(),
+        ),
+        ChangeNotifierProvider<ProfilePhotoRegistrationModel>(
+          create: (_) => ProfilePhotoRegistrationModel(),
+        ),
+        ChangeNotifierProvider<BaseModel>(
+          create: (_) => BaseModel(),
+        ),
+      ],
+      child: App(),
+    ),
+  );
 }
