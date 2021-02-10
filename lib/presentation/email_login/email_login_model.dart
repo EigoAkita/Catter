@@ -22,6 +22,7 @@ class EmailLoginModel extends ChangeNotifier {
 
   Future login({@required BuildContext context}) async {
     try {
+      startLoading();
       await _auth.signInWithEmailAndPassword(
         email: this.mail,
         password: this.password,
@@ -31,6 +32,7 @@ class EmailLoginModel extends ChangeNotifier {
         loginErrorText: '${convertErrorMessage(e.code)}',
         context: context,
       );
+      endLoading();
       print('エラーコード：${e.code}\nエラー：$e');
       throw (convertErrorMessage(e.code));
     }

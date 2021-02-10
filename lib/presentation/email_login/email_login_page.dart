@@ -199,10 +199,8 @@ class EmailLoginPage extends StatelessWidget {
                                         ),
                                         onPressed: model.isCheckTeamsOfUse
                                             ? () async {
-                                                model.startLoading();
                                                 await model.login(
                                                     context: context);
-                                                model.endLoading();
                                                 await Navigator.pushReplacement(
                                                   context,
                                                   MaterialPageRoute(

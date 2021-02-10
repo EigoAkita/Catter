@@ -40,7 +40,7 @@ class NewMemberRegistrationModel extends ChangeNotifier {
         mail: this.mail,
         password: this.password,
       );
-      await UsersApi().setFirebaseUid(
+      await UsersApi().setFirebaseUidAndCount(
         uid: this.userCredential.user.uid,
       );
       await UsersApi().setFirebaseEmail(

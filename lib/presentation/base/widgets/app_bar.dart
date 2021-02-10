@@ -6,6 +6,7 @@ import '../base_model.dart';
 // ignore: missing_return
 AppBar changeAppBar({
   @required BaseModel model,
+  @required String appBarText,
 }) {
   switch (model.currentIndex) {
     case 0:
@@ -40,16 +41,8 @@ AppBar changeAppBar({
       break;
     case 2:
       return AppBar(
-        title: Text(
-          'マイプロフィール',
-          style: TextStyle(
-            color: CustomColors.whiteMain,
-            fontWeight: FontWeight.bold,
-          ),
-        ),
-        elevation: 3,
+        elevation: 0,
         backgroundColor: CustomColors.brownSub,
-        brightness: Brightness.dark,
         automaticallyImplyLeading: false,
       );
       break;

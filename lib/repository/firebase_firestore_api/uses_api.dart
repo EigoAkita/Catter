@@ -5,14 +5,16 @@ class UsersApi {
   final CollectionReference _usersCollection =
       FirebaseFirestore.instance.collection('users');
 
-  ///users collectionに、uidを追加する
-  Future setFirebaseUid({
+  ///users collectionに、uidとカウントを追加する
+  Future setFirebaseUidAndCount({
     @required String uid,
   }) async {
     await _usersCollection.doc(uid).set(
       <String, dynamic>{
         'createdAt': DateTime.now(),
         'isFirstLogin': true,
+        'likedCount': 0,
+        'postedCount': 0,
       },
     );
   }
@@ -23,13 +25,11 @@ class UsersApi {
     @required dynamic email,
   }) async {
     await _usersCollection.doc(uid).collection('user_info').doc('email').set(
-      <String, dynamic>{
-        'email':email
-      },
+      <String, dynamic>{'email': email},
     );
   }
 
-   ///users collectionに、ニックネームを登録する
+  ///users collectionに、ニックネームを登録する
   Future registerNickname({
     @required String uid,
     @required String nickname,
@@ -53,5 +53,14 @@ class UsersApi {
         'updatedAt': DateTime.now(),
       },
     );
+  }
+
+  ///users collectionの、uidを取得する
+  Future getUid({
+    @required String uid,
+  }) async {
+    final result = await _usersCollection.doc(uid).get();
+
+    return result;
   }
 }

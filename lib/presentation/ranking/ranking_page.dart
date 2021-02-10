@@ -11,53 +11,7 @@ class RankingPage extends StatelessWidget {
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Row(
-              children: <Widget>[
-                Expanded(
-                  flex: 1,
-                  child: SizedBox(),
-                ),
-                Expanded(
-                  flex: 2,
-                  child: NeumorphicButton(
-                    child: Center(
-                      child: const Text(
-                        '戻る',
-                        style: TextStyle(
-                          color: CustomColors.whiteMain,
-                          fontWeight: FontWeight.bold,
-                          fontSize: 20,
-                        ),
-                      ),
-                    ),
-                    style: NeumorphicStyle(
-                      boxShape: NeumorphicBoxShape.roundRect(
-                        BorderRadius.circular(15),
-                      ),
-                      color: CustomColors.brownSub,
-                      border: NeumorphicBorder(
-                        color: CustomColors.whiteMain,
-                        width: 3,
-                      ),
-                    ),
-                    onPressed: () async {
-                      await Navigator.pushReplacement(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => EmailLoginPage(),
-                        ),
-                      );
-                    },
-                  ),
-                ),
-                Expanded(
-                  flex: 1,
-                  child: SizedBox(),
-                ),
-              ],
-            ),
-          ],
+          children: <Widget>[],
         ),
       ),
     );

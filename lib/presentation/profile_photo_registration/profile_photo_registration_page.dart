@@ -63,49 +63,72 @@ class ProfilePhotoRegistrationPage extends StatelessWidget {
                             await model.showImagePicker();
                           },
                           child: model.imageFile != null
-                              ? Container(
-                                  width: radius,
-                                  height: radius,
-                                  decoration: BoxDecoration(
-                                    boxShadow: [
-                                      BoxShadow(
-                                        color: CustomColors.blackMain,
-                                        spreadRadius: 1,
-                                        blurRadius: 10,
-                                        offset: Offset(5, 5),
-                                      ),
-                                    ],
-                                    shape: BoxShape.circle,
-                                    border: Border.all(
-                                        color: CustomColors.brownSub, width: 5),
-                                    image: DecorationImage(
-                                      fit: BoxFit.cover,
-                                      image: FileImage(
-                                        model.imageFile,
-                                      ),
-                                    ),
-                                  ),
-                                )
-                              : Stack(
+                              ? Stack(
                                   children: <Widget>[
                                     Center(
                                       child: Container(
                                         width: radius,
                                         height: radius,
+                                        child: Neumorphic(
+                                          style: NeumorphicStyle(
+                                            boxShape:
+                                                NeumorphicBoxShape.roundRect(
+                                              BorderRadius.circular(170),
+                                            ),
+                                            depth: 1,
+                                            color: CustomColors.brownSub,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Center(
+                                      child: Container(
+                                        width: radius,
+                                        height: radius,
                                         decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          border: Border.all(
+                                            color: CustomColors.brownSub,
+                                            width: 5,
+                                          ),
+                                        ),
+                                        child: CircleAvatar(
+                                          backgroundImage: FileImage(
+                                            model.imageFile,
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                )
+                              : Stack(
+                                  children: <Widget>[
+                                    Center(
+                                      child: Neumorphic(
+                                        style: NeumorphicStyle(
+                                          boxShape:
+                                              NeumorphicBoxShape.roundRect(
+                                            BorderRadius.circular(170),
+                                          ),
+                                          depth: 1,
+                                          color: CustomColors.brownSub,
+                                        ),
+                                        child: Container(
+                                          width: radius,
+                                          height: radius,
+                                          decoration: BoxDecoration(
                                             shape: BoxShape.circle,
-                                            boxShadow: [
-                                              BoxShadow(
-                                                color: CustomColors.blackMain,
-                                                spreadRadius: 1,
-                                                blurRadius: 10,
-                                                offset: Offset(5, 5),
-                                              ),
-                                            ],
                                             border: Border.all(
-                                                color: CustomColors.brownSub,
-                                                width: 5),
-                                            color: CustomColors.whiteMain),
+                                              color: CustomColors.brownSub,
+                                              width: 5,
+                                            ),
+                                            color: CustomColors.whiteMain,
+                                          ),
+                                          child: Container(
+                                            width: radius,
+                                            height: radius,
+                                          ),
+                                        ),
                                       ),
                                     ),
                                     Column(
@@ -163,17 +186,17 @@ class ProfilePhotoRegistrationPage extends StatelessWidget {
                                   ),
                                   onPressed: model.imageFile != null
                                       ? () async {
-                                    model.startLoading();
-                                    await model.addProfilePhotoToFirebase();
-                                    model.endLoading();
-                                    await Navigator.pushReplacement(
-                                      context,
-                                      MaterialPageRoute(
-                                        builder: (context) =>
-                                            BasePage(),
-                                      ),
-                                    );
-                                  }
+                                          model.startLoading();
+                                          await model
+                                              .addProfilePhotoToFirebase();
+                                          model.endLoading();
+                                          await Navigator.pushReplacement(
+                                            context,
+                                            MaterialPageRoute(
+                                              builder: (context) => BasePage(),
+                                            ),
+                                          );
+                                        }
                                       : null,
                                 ),
                               ),
