@@ -8,6 +8,8 @@ class MyProfile {
   final Timestamp createdAt;
   final Timestamp updatedAt;
   String profilePhotoURL;
+  final int likedCount;
+  final int postedCount;
 
   MyProfile._(
     this.id,
@@ -17,6 +19,8 @@ class MyProfile {
     this.createdAt,
     this.updatedAt,
     this.profilePhotoURL,
+    this.likedCount,
+    this.postedCount,
   );
 
   factory MyProfile.doc(DocumentSnapshot doc) {
@@ -29,6 +33,8 @@ class MyProfile {
       data['createdAt'] as Timestamp,
       data['updateAt'] as Timestamp,
       data['profilePhotoURL'] as String,
+      data['likedCount'] as int,
+      data['postedCount'] as int,
     );
   }
 }
