@@ -1,5 +1,4 @@
 import 'dart:io';
-import 'package:catter_app/domain/my_profile.dart';
 import 'package:catter_app/repository/firebase_firestore_api/uses_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -9,13 +8,12 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class ProfilePhotoRegistrationModel extends ChangeNotifier {
-  MyProfile myProfile;
   File imageFile;
   bool isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> addProfilePhotoToFirebase() async {
-    final String profilePhotoURL = await _uploadImageFile();
+    final String profilePhotoURL =await _uploadImageFile();
 
     await UsersApi().registerProfilePhoto(
       uid: _auth.currentUser.uid,
@@ -65,15 +63,20 @@ class ProfilePhotoRegistrationModel extends ChangeNotifier {
     if (imageFile == null) {
       return '';
     }
-    final storage = FirebaseStorage.instance;
-    final ref = storage.ref().child(_auth.currentUser.uid);
-    final snapshot = await ref
-        .putFile(
-          imageFile,
-        )
+
+    String newProfilePhotoName = "profilePhoto_" +
+        DateTime.now().toString() +
+        "_" +
+        this._auth.currentUser.uid +
+        '.jpg';
+    FirebaseStorage storage = FirebaseStorage.instance;
+    StorageTaskSnapshot snapshot = await storage
+        .ref()
+        .child('users/${this._auth.currentUser.uid}/profilePhotos/' + newProfilePhotoName)
+        .putFile(this.imageFile)
         .onComplete;
-    final downloadURL = await snapshot.ref.getDownloadURL();
-    return downloadURL;
+    final String newProfilePhotoURL = await snapshot.ref.getDownloadURL();
+    return newProfilePhotoURL;
   }
 
   void startLoading() {

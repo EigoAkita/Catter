@@ -6,7 +6,6 @@ import '../base_model.dart';
 // ignore: missing_return
 AppBar changeAppBar({
   @required BaseModel model,
-  @required String appBarText,
 }) {
   switch (model.currentIndex) {
     case 0:

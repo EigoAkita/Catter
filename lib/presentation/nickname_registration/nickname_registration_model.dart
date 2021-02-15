@@ -7,8 +7,8 @@ import 'package:flutter/material.dart';
 class NicknameRegistrationModel extends ChangeNotifier {
   bool isLoading = false;
   String nickname = '';
-  bool isPasswordValid = false;
-  String errorPassword = '';
+  bool isNicknameValid = false;
+  String errorNickname = '';
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future registrationNickName({
@@ -33,14 +33,14 @@ class NicknameRegistrationModel extends ChangeNotifier {
   void changeNickName(text) {
     this.nickname = text;
     if (text.length == 0) {
-      isPasswordValid = false;
-      this.errorPassword = 'ニックネームを入力して下さい。';
+      isNicknameValid = false;
+      this.errorNickname = 'ニックネームを入力して下さい。';
     } else if (text.length > 6) {
-      isPasswordValid = false;
-      this.errorPassword = 'ニックネームは6文字以内です。';
+      isNicknameValid = false;
+      this.errorNickname = 'ニックネームは6文字以内です。';
     } else {
-      isPasswordValid = true;
-      this.errorPassword = '';
+      isNicknameValid = true;
+      this.errorNickname = '';
     }
     notifyListeners();
   }

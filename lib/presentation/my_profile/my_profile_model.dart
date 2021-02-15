@@ -10,25 +10,6 @@ class MyProfileModel extends ChangeNotifier {
   bool isLoading = false;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Future registrationNickName({
-  //   @required BuildContext context,
-  //   @required String nickname,
-  // }) async {
-  //   try {
-  //     final uid = _auth.currentUser.uid;
-  //     await UsersApi().registerNickname(
-  //       uid: uid,
-  //       nickname: nickname,
-  //     );
-  //   } catch (e) {
-  //     print('エラーコード：${e.code}\nエラー：$e');
-  //     throw (errorShowDialog(
-  //       loginErrorText: convertErrorMessage(e.code),
-  //       context: context,
-  //     ));
-  //   }
-  // }
-
   Future<void> init() async {
     startLoading();
     DocumentSnapshot _userDoc = await FirebaseFirestore.instance

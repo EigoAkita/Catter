@@ -54,7 +54,7 @@ class NicknameRegistrationPage extends StatelessWidget {
                         ),
                         nickNameRegistrationTextFormWidget(
                           nicknameModel: model,
-                          errorTextModel: model.errorPassword,
+                          errorTextModel: model.errorNickname,
                           isController: nicknameController,
                           inputFormTemplateInRegistrationVariables: variables[3]
                               ['value'],
@@ -88,7 +88,7 @@ class NicknameRegistrationPage extends StatelessWidget {
                                     boxShape: NeumorphicBoxShape.roundRect(
                                       BorderRadius.circular(15),
                                     ),
-                                    color: model.isPasswordValid
+                                    color: model.isNicknameValid
                                         ? CustomColors.brownMain
                                         : CustomColors.grayMain,
                                     border: NeumorphicBorder(
@@ -96,7 +96,7 @@ class NicknameRegistrationPage extends StatelessWidget {
                                       width: 3,
                                     ),
                                   ),
-                                  onPressed: model.isPasswordValid
+                                  onPressed: model.isNicknameValid
                                       ? () async {
                                           model.startLoading();
                                           await model.registrationNickName(
