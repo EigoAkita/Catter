@@ -21,168 +21,171 @@ class NewMemberRegistrationPage extends StatelessWidget {
     final data = MediaQuery.of(context);
 
     return ChangeNotifierProvider<NewMemberRegistrationModel>(
-      create: (_) =>
-      NewMemberRegistrationModel(),
+      create: (_) => NewMemberRegistrationModel(),
       child: Consumer<NewMemberRegistrationModel>(
           builder: (context, model, child) {
-            return Stack(
-              children: <Widget>[
-                SizedBox(
-                  height: data.size.height,
-                  width: data.size.width,
-                  child: Scaffold(
-                    appBar: AppBar(
-                      title: Text(
-                        '新規登録',
-                        style: TextStyle(
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
-                      backgroundColor: CustomColors.brownMain,
+        return Stack(
+          children: <Widget>[
+            SizedBox(
+              height: data.size.height,
+              width: data.size.width,
+              child: Scaffold(
+                appBar: AppBar(
+                  title: Text(
+                    '新規登録',
+                    style: TextStyle(
+                      fontWeight: FontWeight.bold,
                     ),
-                    body: Center(
-                      child: SingleChildScrollView(
-                        child: Column(
+                  ),
+                  backgroundColor: CustomColors.brownMain,
+                ),
+                body: Center(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: <Widget>[
+                        inputFormTemplate(
+                          model: model,
+                          context: context,
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: <Widget>[
-                            inputFormTemplate(
-                              model: model,
+                            SizedBox(
+                              width: 18,
+                              height: 18,
+                              child: Checkbox(
+                                activeColor: CustomColors.brownMain,
+                                value: model.isCheckTeamsOfUse,
+                                onChanged: (bool) {
+                                  model.checkTeamsOfUse(bool);
+                                },
+                              ),
+                            ),
+                            SizedBox(
+                              width: 5,
+                            ),
+                            loginTextButtonWidget(
+                              emailLoginModel: model,
+                              loginButtonVariables: _loginButtonVariables[2]
+                                  ['value'],
+                              loginText: '利用規約',
+                              loginTextColor: model.isCheckTeamsOfUse
+                                  ? CustomColors.whiteMain
+                                  : CustomColors.blueMain,
+                              isLoginTextFontSize: true,
+                              isLoginTextWeight: false,
                               context: context,
                             ),
-                            SizedBox(
-                              height: 30,
+                            Text(
+                              'に同意する',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: model.isCheckTeamsOfUse
+                                    ? CustomColors.whiteMain
+                                    : CustomColors.grayMain,
+                              ),
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: 30,
+                        ),
+                        Row(
+                          children: <Widget>[
+                            const Expanded(
+                              flex: 1,
+                              child: SizedBox(),
                             ),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.center,
-                              children: <Widget>[
-                                SizedBox(
-                                  width: 18,
-                                  height: 18,
-                                  child: Checkbox(
-                                    activeColor: CustomColors.brownMain,
-                                    value: model.isCheckTeamsOfUse,
-                                    onChanged: (bool) {
-                                      model.checkTeamsOfUse(bool);
-                                    },
+                            Expanded(
+                              flex: 8,
+                              child: Container(
+                                height: 60,
+                                child: NeumorphicButton(
+                                  child: Center(
+                                    child: const Text(
+                                      '次へ',
+                                      style: TextStyle(
+                                        color: CustomColors.whiteMain,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
                                   ),
-                                ),
-                                SizedBox(
-                                  width: 5,
-                                ),
-                                loginTextButtonWidget(
-                                  emailLoginModel: model,
-                                  loginButtonVariables: _loginButtonVariables[2]
-                                  ['value'],
-                                  loginText: '利用規約',
-                                  loginTextColor: model.isCheckTeamsOfUse
-                                      ? CustomColors.whiteMain
-                                      : CustomColors.blueMain,
-                                  isLoginTextFontSize: true,
-                                  isLoginTextWeight: false,
-                                  context: context,
-                                ),
-                                Text(
-                                  'に同意する',
-                                  style: TextStyle(
-                                    fontSize: 15,
+                                  style: NeumorphicStyle(
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(15),
+                                    ),
                                     color: model.isCheckTeamsOfUse
-                                        ? CustomColors.whiteMain
+                                        ? CustomColors.brownMain
                                         : CustomColors.grayMain,
+                                    border: NeumorphicBorder(
+                                      color: CustomColors.whiteMain,
+                                      width: 3,
+                                    ),
                                   ),
-                                )
-                              ],
-                            ),
-                            SizedBox(
-                              height: 30,
-                            ),
-                            Row(
-                              children: <Widget>[
-                                const Expanded(
-                                  flex: 1,
-                                  child: SizedBox(),
-                                ),
-                                Expanded(
-                                  flex: 8,
-                                  child: Container(
-                                    height: 60,
-                                    child: NeumorphicButton(
-                                      child: Center(
-                                        child: const Text(
-                                          '次へ',
-                                          style: TextStyle(
-                                            color: CustomColors.whiteMain,
-                                            fontWeight: FontWeight.bold,
-                                            fontSize: 20,
-                                          ),
-                                        ),
-                                      ),
-                                      style: NeumorphicStyle(
-                                        boxShape: NeumorphicBoxShape.roundRect(
-                                          BorderRadius.circular(15),
-                                        ),
-                                        color: model.isCheckTeamsOfUse
-                                            ? CustomColors.brownMain
-                                            : CustomColors.grayMain,
-                                        border: NeumorphicBorder(
-                                          color: CustomColors.whiteMain,
-                                          width: 3,
-                                        ),
-                                      ),
-                                      onPressed: model.isCheckTeamsOfUse &&
+                                  onPressed: model.isCheckTeamsOfUse &&
                                           model.isMailValid &&
                                           model.isPasswordValid &&
                                           model.isPasswordConfirmValid
-                                          ? () async {
-                                        model.startLoading();
-                                        try {
-                                          await model.signUp(
-                                              context: context);
-                                          model.endLoading();
-                                          await Navigator.pushReplacement(
-                                            context,
-                                            MaterialPageRoute(
-                                              builder: (context) =>
-                                                  NicknameRegistrationPage(),
-                                            ),
-                                          );
-                                        } catch (e) {
-                                          errorShowDialog(
-                                            loginErrorText:
-                                            convertErrorMessage(
-                                              e.toString(),
-                                            ),
-                                            context: context,
-                                          );
-                                          model.endLoading();
+                                      ? () async {
+                                          model.startLoading();
+                                          try {
+                                            await model.signUp(
+                                                context: context);
+                                            model.endLoading();
+                                            await Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    NicknameRegistrationPage(),
+                                              ),
+                                            );
+                                          } catch (e) {
+                                            errorShowDialog(
+                                              loginErrorText:
+                                                  convertErrorMessage(
+                                                e.toString(),
+                                              ),
+                                              context: context,
+                                            );
+                                            model.endLoading();
+                                          }
                                         }
-                                      }
-                                          : null,
-                                    ),
-                                  ),
+                                      : null,
                                 ),
-                                const Expanded(
-                                  flex: 1,
-                                  child: SizedBox(),
-                                ),
-                              ],
+                              ),
+                            ),
+                            const Expanded(
+                              flex: 1,
+                              child: SizedBox(),
                             ),
                           ],
                         ),
-                      ),
+                      ],
                     ),
                   ),
                 ),
-                model.isLoading
-                    ? Container(
-                  color: Colors.black.withOpacity(0.3),
-                  child: Center(
-                    child: CircularProgressIndicator(),
-                  ),
-                )
-                    : SizedBox(),
-              ],
-            );
-          }),
+              ),
+            ),
+            model.isLoading
+                ? Container(
+                    color: Colors.black.withOpacity(0.3),
+                    child: Center(
+                      child: CircularProgressIndicator(
+                        valueColor: AlwaysStoppedAnimation<Color>(
+                          CustomColors.brownSub,
+                        ),
+                      ),
+                    ),
+                  )
+                : SizedBox(),
+          ],
+        );
+      }),
     );
   }
 }

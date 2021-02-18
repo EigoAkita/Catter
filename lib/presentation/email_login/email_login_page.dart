@@ -243,7 +243,11 @@ class EmailLoginPage extends StatelessWidget {
                           ? Container(
                               color: Colors.black.withOpacity(0.3),
                               child: Center(
-                                child: CircularProgressIndicator(),
+                                child: CircularProgressIndicator(
+                                  valueColor: AlwaysStoppedAnimation<Color>(
+                                    CustomColors.brownSub,
+                                  ),
+                                ),
                               ),
                             )
                           : SizedBox(),
