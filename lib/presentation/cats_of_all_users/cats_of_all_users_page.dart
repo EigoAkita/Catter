@@ -2,6 +2,7 @@ import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
@@ -65,231 +66,221 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   SizedBox(
-                                    height: 20,
+                                    height: 15,
                                   ),
-                                  Container(
-                                    width: MediaQuery.of(context).size.width /
-                                        1.15,
-                                    child: Neumorphic(
-                                      style: NeumorphicStyle(
-                                        boxShape: NeumorphicBoxShape.roundRect(
-                                          BorderRadius.circular(10),
-                                        ),
-                                        depth: 2,
-                                        color: CustomColors.brownSub,
-                                        border: NeumorphicBorder(
-                                          color: CustomColors.brownSub,
-                                          width: 5,
-                                        ),
-                                      ),
-                                      child: Image(
-                                        image:
-                                            NetworkImage(catLists.catPhotoURL),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
+                                  Stack(
                                     children: <Widget>[
-                                      SizedBox(
-                                        width: 25,
-                                      ),
-                                      Text(
-                                        '名前 : ${catLists.catName}',
-                                        style: TextStyle(
-                                          fontSize: 15,
-                                          fontWeight: FontWeight.bold,
-                                          color: CustomColors.whiteMain,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  catLists.catType.length > 14
-                                      ? Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: 25,
-                                            ),
-                                            Text(
-                                              '種類 : ${catLists.catType}',
-                                              style: TextStyle(
-                                                fontSize: 13,
-                                                fontWeight: FontWeight.bold,
-                                                color: CustomColors.whiteMain,
+                                      Center(
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.10,
+                                          child: Neumorphic(
+                                            style: NeumorphicStyle(
+                                              boxShape:
+                                                  NeumorphicBoxShape.roundRect(
+                                                BorderRadius.circular(10),
+                                              ),
+                                              depth: 3,
+                                              color: CustomColors.brownSub,
+                                              border: NeumorphicBorder(
+                                                color: CustomColors.brownSub,
+                                                width: 5,
                                               ),
                                             ),
-                                          ],
-                                        )
-                                      : Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.start,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: 25,
-                                            ),
-                                            Text(
-                                              '種類 : ${catLists.catType}',
-                                              style: TextStyle(
-                                                fontSize: 15,
-                                                fontWeight: FontWeight.bold,
-                                                color: CustomColors.whiteMain,
+                                            child: Image(
+                                              image: NetworkImage(
+                                                catLists.catPhotoURL,
                                               ),
-                                            ),
-                                          ],
-                                        ),
-                                  SizedBox(
-                                    height: 20,
-                                  ),
-                                  Visibility(
-                                    visible:
-                                        catLists.uid == _auth.currentUser.uid,
-                                    child: SizedBox(
-                                      width: 145,
-                                      height: 55,
-                                      child: NeumorphicButton(
-                                        style: NeumorphicStyle(
-                                          depth: 1,
-                                          color: CustomColors.grayMain,
-                                          boxShape:
-                                              NeumorphicBoxShape.roundRect(
-                                            BorderRadius.circular(10),
-                                          ),
-                                        ),
-                                        onPressed: () async {
-                                          model.startLoading();
-                                          await model.deleteMyPost(
-                                            id: catLists.id,
-                                            uid: _auth.currentUser.uid,
-                                          );
-                                          await model.fetchPosts();
-                                          model.endLoading();
-                                        },
-                                        child: Center(
-                                          child: Text(
-                                            '投稿を削除する',
-                                            style: TextStyle(
-                                              color: CustomColors.whiteMain,
-                                              fontWeight: FontWeight.bold,
-                                              fontSize: 15,
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  ),
-                                  Visibility(
-                                    visible:
-                                        catLists.uid != _auth.currentUser.uid,
-                                    child: Row(
-                                      mainAxisAlignment:
-                                          MainAxisAlignment.spaceBetween,
-                                      children: <Widget>[
-                                        Row(
+                                      Visibility(
+                                        visible: catLists.uid ==
+                                            _auth.currentUser.uid,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
                                           children: <Widget>[
-                                            SizedBox(
-                                              width: 20,
-                                            ),
-                                            NeumorphicFloatingActionButton(
-                                              style: NeumorphicStyle(
-                                                depth: 1,
-                                                color: model.isFavoritePhotos
-                                                    ? CustomColors.whiteMain
-                                                    : Colors.amberAccent,
-                                                boxShape: NeumorphicBoxShape
-                                                    .roundRect(
-                                                  BorderRadius.circular(170),
-                                                ),
-                                              ),
-                                              child: Icon(
-                                                FontAwesome5.star,
+                                            IconButton(
+                                              icon: Icon(
+                                                AntDesign.delete,
+                                                color: CustomColors.grayMain,
                                                 size: 25,
-                                                color: model.isFavoritePhotos
-                                                    ? CustomColors.grayMain
-                                                    : CustomColors.whiteMain,
                                               ),
-                                              onPressed: () {
-                                                model.pressedFavoriteButton(
+                                              onPressed: () async {
+                                                await model.deleteMyPost(
                                                   id: catLists.id,
                                                   uid: _auth.currentUser.uid,
                                                 );
+                                                await model.fetchPosts();
                                               },
                                             ),
                                             SizedBox(
                                               width: 15,
                                             ),
-                                            NeumorphicFloatingActionButton(
-                                              style: NeumorphicStyle(
-                                                depth: 1,
-                                                color: model.isLikePhotos
-                                                    ? CustomColors.whiteMain
-                                                    : Colors.pinkAccent,
-                                                boxShape: NeumorphicBoxShape
-                                                    .roundRect(
-                                                  BorderRadius.circular(170),
-                                                ),
-                                              ),
-                                              child: Icon(
-                                                FontAwesome5.heart,
+                                          ],
+                                        ),
+                                      ),
+                                      Visibility(
+                                        visible: catLists.uid !=
+                                            _auth.currentUser.uid,
+                                        child: Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.end,
+                                          children: <Widget>[
+                                            IconButton(
+                                              icon: Icon(
+                                                AntDesign.exclamationcircle,
+                                                color: Colors.red,
                                                 size: 25,
-                                                color: model.isLikePhotos
-                                                    ? CustomColors.grayMain
-                                                    : CustomColors.whiteMain,
                                               ),
-                                              onPressed: () {
-                                                model.pressedLikeButton(
-                                                    id: catLists.id,
-                                                    uid: catLists.uid);
-                                              },
+                                              onPressed: () {},
+                                            ),
+                                            SizedBox(
+                                              width: 15,
                                             ),
                                           ],
                                         ),
-                                        Row(
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: 100,
-                                              height: 55,
-                                              child: NeumorphicButton(
-                                                style: NeumorphicStyle(
-                                                  depth: 1,
-                                                  color: Colors.red,
-                                                  boxShape: NeumorphicBoxShape
-                                                      .roundRect(
-                                                    BorderRadius.circular(10),
+                                      ),
+                                      Column(
+                                        children: <Widget>[
+                                          SizedBox(
+                                            height: MediaQuery.of(context)
+                                                    .size
+                                                    .shortestSide /
+                                                1.26,
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              Row(
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    width: 25,
                                                   ),
-                                                ),
-                                                onPressed: () {},
-                                                child: Center(
-                                                  child: Text(
-                                                    '通報する',
+                                                  Text(
+                                                    '名前 : ${catLists.catName}',
                                                     style: TextStyle(
-                                                      color: CustomColors
-                                                          .whiteMain,
+                                                      fontSize: 12.5,
                                                       fontWeight:
                                                           FontWeight.bold,
-                                                      fontSize: 15,
+                                                      color: CustomColors
+                                                          .whiteMain,
                                                     ),
                                                   ),
-                                                ),
+                                                ],
                                               ),
-                                            ),
-                                            SizedBox(
-                                              width: 20,
+                                              Row(
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    width: 25,
+                                                  ),
+                                                  Text(
+                                                    '種類 : ${catLists.catType}',
+                                                    style: TextStyle(
+                                                      fontSize: 12.5,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: CustomColors
+                                                          .whiteMain,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ],
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                  SizedBox(
+                                    height: 15,
+                                  ),
+                                  Visibility(
+                                    visible:
+                                        catLists.uid != _auth.currentUser.uid,
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: <Widget>[
+                                            Row(
+                                              children: <Widget>[
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                                NeumorphicFloatingActionButton(
+                                                  style: NeumorphicStyle(
+                                                    depth: 1,
+                                                    color: model
+                                                            .isFavoritePhotos
+                                                        ? CustomColors.whiteMain
+                                                        : Colors.amberAccent,
+                                                    boxShape: NeumorphicBoxShape
+                                                        .roundRect(
+                                                      BorderRadius.circular(10),
+                                                    ),
+                                                  ),
+                                                  child: Icon(
+                                                    FontAwesome5.star,
+                                                    size: 25,
+                                                    color: model
+                                                            .isFavoritePhotos
+                                                        ? CustomColors.grayMain
+                                                        : CustomColors
+                                                            .whiteMain,
+                                                  ),
+                                                  onPressed: () {
+                                                    model.pressedFavoriteButton(
+                                                      id: catLists.id,
+                                                      uid:
+                                                          _auth.currentUser.uid,
+                                                    );
+                                                  },
+                                                ),
+                                                SizedBox(
+                                                  width: 30,
+                                                ),
+                                                NeumorphicFloatingActionButton(
+                                                  style: NeumorphicStyle(
+                                                    depth: 1,
+                                                    color: model.isLikePhotos
+                                                        ? CustomColors.whiteMain
+                                                        : Colors.pinkAccent,
+                                                    boxShape: NeumorphicBoxShape
+                                                        .roundRect(
+                                                      BorderRadius.circular(10),
+                                                    ),
+                                                  ),
+                                                  child: Icon(
+                                                    FontAwesome5.heart,
+                                                    size: 25,
+                                                    color: model.isLikePhotos
+                                                        ? CustomColors.grayMain
+                                                        : CustomColors
+                                                            .whiteMain,
+                                                  ),
+                                                  onPressed: () {
+                                                    model.pressedLikeButton(
+                                                        id: catLists.id,
+                                                        uid: catLists.uid);
+                                                  },
+                                                ),
+                                                SizedBox(
+                                                  width: 10,
+                                                ),
+                                              ],
                                             ),
                                           ],
+                                        ),
+                                        SizedBox(
+                                          height: 10,
                                         ),
                                       ],
                                     ),
-                                  ),
-                                  SizedBox(
-                                    height: 20,
                                   ),
                                 ],
                               ),

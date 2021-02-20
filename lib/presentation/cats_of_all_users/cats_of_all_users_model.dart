@@ -16,25 +16,25 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     final docs = snapshot.docs;
     final catsOfAllUsersList = docs.map((doc) => CatsOfAllUsers(doc)).toList();
     this.catsOfAllUsersList = catsOfAllUsersList;
-    isFavoritePhotos = false;
-    isLikePhotos = false;
     endLoading();
     notifyListeners();
   }
 
   Future<void> fetchPostsRealTime() async {
     startLoading();
-    final snapshots = FirebaseFirestore.instance.collection('posts').snapshots();
+    final snapshots =
+        FirebaseFirestore.instance.collection('posts').snapshots();
     snapshots.listen((snapshot) {
       final docs = snapshot.docs;
-      final catsOfAllUsersList = docs.map((doc) => CatsOfAllUsers(doc)).toList();
+      final catsOfAllUsersList =
+          docs.map((doc) => CatsOfAllUsers(doc)).toList();
       catsOfAllUsersList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       this.catsOfAllUsersList = catsOfAllUsersList;
       endLoading();
+      notifyListeners();
     });
-    isFavoritePhotos = false;
-    isLikePhotos = false;
-    notifyListeners();
+    isFavoritePhotos = true;
+    isLikePhotos = true;
   }
 
   // お気に入りボタンを押した時の処理
@@ -135,10 +135,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     FirebaseFirestore _fireStore = FirebaseFirestore.instance;
     WriteBatch _batch = _fireStore.batch();
 
-    await FirebaseFirestore.instance
-        .collection('posts')
-        .doc(id)
-        .delete();
+    await FirebaseFirestore.instance.collection('posts').doc(id).delete();
 
     DocumentReference _myUserDoc = _fireStore.collection('users').doc(uid);
     DocumentSnapshot _snap = await _myUserDoc.get();

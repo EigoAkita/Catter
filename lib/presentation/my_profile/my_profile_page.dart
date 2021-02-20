@@ -9,6 +9,7 @@ import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
+// ignore: must_be_immutable
 class MyProfilePage extends StatelessWidget {
   final nicknameController = TextEditingController();
   final List variables = Variables.inputFormTemplateInRegistrationVariables;
