@@ -27,7 +27,7 @@ Future<void> errorShowDialog({
     btnOkColor: CustomColors.brownMain,
     btnOkText: 'はい',
     buttonsBorderRadius: BorderRadius.all(
-      Radius.circular(10),
+      Radius.circular(5),
     ),
   )..show();
 }

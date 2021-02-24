@@ -6,8 +6,6 @@ import 'package:flutter/material.dart';
 class CatsOfAllUsersModel extends ChangeNotifier {
   String uid = FirebaseAuth.instance.currentUser.uid;
   bool isLoading = false;
-  bool isFavoritePhotos = false;
-  bool isLikePhotos = false;
   List<CatsOfAllUsers> catsOfAllUsersList = [];
 
   Future<void> fetchPosts() async {
@@ -21,6 +19,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
   }
 
   Future<void> fetchPostsRealTime() async {
+
     startLoading();
     final snapshots =
         FirebaseFirestore.instance.collection('posts').snapshots();
@@ -31,22 +30,25 @@ class CatsOfAllUsersModel extends ChangeNotifier {
       catsOfAllUsersList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       this.catsOfAllUsersList = catsOfAllUsersList;
       endLoading();
-      notifyListeners();
     });
-    isFavoritePhotos = true;
-    isLikePhotos = true;
+    notifyListeners();
   }
 
   // お気に入りボタンを押した時の処理
   Future<void> pressedFavoriteButton({
     @required String id,
     @required String uid,
+    @required bool isFavoritePhotos,
   }) async {
+    bool _oldState = isFavoritePhotos;
     // お気に入りの ON/OFF を切り替える
-    switchFavoriteState(this.isFavoritePhotos);
+    switchFavoriteState(
+      input: _oldState,
+      isFavoritePhotos: isFavoritePhotos,
+    );
 
     // 対象をお気に入りから削除する
-    if (this.isFavoritePhotos) {
+    if (isFavoritePhotos) {
       await FirebaseFirestore.instance
           .collection('users/$uid/favorite_posts')
           .doc(id)
@@ -77,19 +79,26 @@ class CatsOfAllUsersModel extends ChangeNotifier {
   Future<void> pressedLikeButton({
     @required String id,
     @required String uid,
+    @required anotherUid,
+    @required bool isLikePhotos,
   }) async {
     FirebaseFirestore _fireStore = FirebaseFirestore.instance;
     WriteBatch _batch = _fireStore.batch();
 
-    DocumentReference _anotherUserDoc = _fireStore.collection('users').doc(uid);
+    DocumentReference _anotherUserDoc =
+        _fireStore.collection('users').doc(anotherUid);
     DocumentSnapshot _snap = await _anotherUserDoc.get();
     int likedCount = _snap.data()['likedCount'];
 
+    bool _oldState = isLikePhotos;
     // いいねの ON/OFF を切り替える
-    switchLikeState(this.isLikePhotos);
+    switchLikeState(
+      input: _oldState,
+      isLikePhotos: isLikePhotos,
+    );
 
     // 対象をいいねから削除する
-    if (this.isLikePhotos) {
+    if (isLikePhotos) {
       await FirebaseFirestore.instance
           .collection('users/$uid/like_posts')
           .doc(id)
@@ -150,13 +159,19 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     await _batch.commit();
   }
 
-  void switchFavoriteState(bool input) {
-    this.isFavoritePhotos = !input;
+  void switchFavoriteState({
+    @required bool input,
+    @required bool isFavoritePhotos,
+  }) {
+    isFavoritePhotos = !input;
     notifyListeners();
   }
 
-  void switchLikeState(bool input) {
-    this.isLikePhotos = !input;
+  void switchLikeState({
+    @required bool input,
+    @required bool isLikePhotos,
+  }) {
+    isLikePhotos = !input;
     notifyListeners();
   }
 

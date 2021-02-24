@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
@@ -7,8 +8,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CatsOfAllUsersPage extends StatelessWidget {
+
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -16,7 +19,8 @@ class CatsOfAllUsersPage extends StatelessWidget {
     final data = MediaQuery.of(context);
 
     return ChangeNotifierProvider<CatsOfAllUsersModel>(
-      create: (_) => CatsOfAllUsersModel()..fetchPostsRealTime(),
+      create: (_) => CatsOfAllUsersModel()
+        ..fetchPostsRealTime(),
       child: Consumer<CatsOfAllUsersModel>(builder: (context, model, child) {
         final catLists = model.catsOfAllUsersList;
         return Stack(
@@ -111,11 +115,38 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 size: 25,
                                               ),
                                               onPressed: () async {
-                                                await model.deleteMyPost(
-                                                  id: catLists.id,
-                                                  uid: _auth.currentUser.uid,
-                                                );
-                                                await model.fetchPosts();
+                                                AwesomeDialog(
+                                                  context: context,
+                                                  animType: AnimType.BOTTOMSLIDE,
+                                                  dialogType: DialogType.QUESTION,
+                                                  body: Center(
+                                                    child: Text(
+                                                      '投稿を削除しますか？',
+                                                      style: TextStyle(
+                                                        color: CustomColors.grayMain,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  btnCancelOnPress: (){
+
+                                                  },
+                                                  btnCancelColor: CustomColors.brownMain,
+                                                  btnCancelText: 'いいえ',
+                                                  btnOkOnPress: ()async{
+                                                    await model.deleteMyPost(
+                                                      id: catLists.id,
+                                                      uid: _auth.currentUser.uid,
+                                                    );
+                                                    await model.fetchPosts();
+                                                  },
+                                                  btnOkColor: CustomColors.brownMain,
+                                                  btnOkText: 'はい',
+                                                  buttonsBorderRadius: BorderRadius.all(
+                                                    Radius.circular(5),
+                                                  ),
+                                                )..show();
                                               },
                                             ),
                                             SizedBox(
@@ -137,7 +168,57 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 color: Colors.red,
                                                 size: 25,
                                               ),
-                                              onPressed: () {},
+                                              onPressed: () {
+                                                AwesomeDialog(
+                                                  context: context,
+                                                  animType: AnimType.BOTTOMSLIDE,
+                                                  dialogType: DialogType.WARNING,
+                                                  body: Center(
+                                                    child: Text(
+                                                      'この投稿を不適切な内容として\n報告（通報）しますか？',
+                                                      style: TextStyle(
+                                                        color: CustomColors.grayMain,
+                                                        fontWeight: FontWeight.bold,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  btnCancelOnPress: (){
+
+                                                  },
+                                                  btnCancelColor: CustomColors.brownMain,
+                                                  btnCancelText: 'いいえ',
+                                                  btnOkOnPress: () {
+                                                    AwesomeDialog(
+                                                      context: context,
+                                                      animType: AnimType.BOTTOMSLIDE,
+                                                      dialogType: DialogType.NO_HEADER,
+                                                      body: Center(
+                                                        child: Text(
+                                                          '報告（通報）が完了しました',
+                                                          style: TextStyle(
+                                                            color: CustomColors.grayMain,
+                                                            fontWeight: FontWeight.bold,
+                                                            fontSize: 15,
+                                                          ),
+                                                        ),
+                                                      ),
+                                                      btnOkOnPress: (){
+                                                      },
+                                                      btnOkColor: CustomColors.brownMain,
+                                                      btnOkText: 'はい',
+                                                      buttonsBorderRadius: BorderRadius.all(
+                                                        Radius.circular(5),
+                                                      ),
+                                                    )..show();
+                                                  },
+                                                  btnOkColor: CustomColors.brownMain,
+                                                  btnOkText: 'はい',
+                                                  buttonsBorderRadius: BorderRadius.all(
+                                                    Radius.circular(5),
+                                                  ),
+                                                )..show();
+                                              },
                                             ),
                                             SizedBox(
                                               width: 15,
@@ -215,8 +296,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 NeumorphicFloatingActionButton(
                                                   style: NeumorphicStyle(
                                                     depth: 1,
-                                                    color: model
-                                                            .isFavoritePhotos
+                                                    color:catLists.isFavoritePhotos
                                                         ? CustomColors.whiteMain
                                                         : Colors.amberAccent,
                                                     boxShape: NeumorphicBoxShape
@@ -227,14 +307,19 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   child: Icon(
                                                     FontAwesome5.star,
                                                     size: 25,
-                                                    color: model
-                                                            .isFavoritePhotos
+                                                    color:catLists.isFavoritePhotos
                                                         ? CustomColors.grayMain
                                                         : CustomColors
                                                             .whiteMain,
                                                   ),
-                                                  onPressed: () {
-                                                    model.pressedFavoriteButton(
+                                                  onPressed: () async {
+                                                    catLists.isFavoritePhotos =
+                                                        !catLists
+                                                            .isFavoritePhotos;
+                                                    await model
+                                                        .pressedFavoriteButton(
+                                                      isFavoritePhotos: catLists
+                                                          .isFavoritePhotos,
                                                       id: catLists.id,
                                                       uid:
                                                           _auth.currentUser.uid,
@@ -242,12 +327,12 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   },
                                                 ),
                                                 SizedBox(
-                                                  width: 30,
+                                                  width: 50,
                                                 ),
                                                 NeumorphicFloatingActionButton(
                                                   style: NeumorphicStyle(
                                                     depth: 1,
-                                                    color: model.isLikePhotos
+                                                    color: catLists.isLikePhotos
                                                         ? CustomColors.whiteMain
                                                         : Colors.pinkAccent,
                                                     boxShape: NeumorphicBoxShape
@@ -258,15 +343,22 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   child: Icon(
                                                     FontAwesome5.heart,
                                                     size: 25,
-                                                    color: model.isLikePhotos
+                                                    color: catLists.isLikePhotos
                                                         ? CustomColors.grayMain
                                                         : CustomColors
                                                             .whiteMain,
                                                   ),
                                                   onPressed: () {
+                                                    catLists.isLikePhotos =
+                                                        !catLists.isLikePhotos;
                                                     model.pressedLikeButton(
-                                                        id: catLists.id,
-                                                        uid: catLists.uid);
+                                                      isLikePhotos:
+                                                          catLists.isLikePhotos,
+                                                      id: catLists.id,
+                                                      uid:
+                                                          _auth.currentUser.uid,
+                                                      anotherUid: catLists.uid,
+                                                    );
                                                   },
                                                 ),
                                                 SizedBox(

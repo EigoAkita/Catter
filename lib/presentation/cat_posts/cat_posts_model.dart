@@ -29,19 +29,15 @@ class CatPostsModel extends ChangeNotifier {
     FirebaseFirestore _fireStore = FirebaseFirestore.instance;
     WriteBatch _batch = _fireStore.batch();
 
-    String _generatedId = _fireStore
-        .collection('posts')
-        .doc()
-        .id;
+    String _generatedId = _fireStore.collection('posts').doc().id;
 
     DocumentReference _myUserDoc =
         _fireStore.collection('users').doc(this._auth.currentUser.uid);
     DocumentSnapshot _snap = await _myUserDoc.get();
     int postedCount = _snap.data()['postedCount'];
 
-    DocumentReference _myPostDoc = _fireStore
-        .collection('posts')
-        .doc(_generatedId);
+    DocumentReference _myPostDoc =
+        _fireStore.collection('posts').doc(_generatedId);
 
     final String postImageURL = await _uploadPostImage();
 
