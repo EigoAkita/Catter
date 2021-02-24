@@ -4,17 +4,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class CatsOfAllUsersModel extends ChangeNotifier {
-  CatsOfAllUsers catsOfAllUsers;
-  String id = '';
   String uid = FirebaseAuth.instance.currentUser.uid;
-  String anotherCatName;
-  String anotherCatType;
-  String anotherCatPhotoURL;
   bool isLoading = false;
-  bool isFavorite = false;
-  bool isLike = false;
-  bool isFavoritePhotos = false;
-  bool isLikePhotos = false;
   List<CatsOfAllUsers> catsOfAllUsersList = [];
 
   Future<void> fetchPosts() async {
@@ -23,45 +14,59 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     final docs = snapshot.docs;
     final catsOfAllUsersList = docs.map((doc) => CatsOfAllUsers(doc)).toList();
     this.catsOfAllUsersList = catsOfAllUsersList;
-    print(catsOfAllUsers.catPhotoURL);
+    endLoading();
+    notifyListeners();
+  }
+
+  Future<void> fetchPostsRealTime() async {
+
+    startLoading();
+    final snapshots =
+        FirebaseFirestore.instance.collection('posts').snapshots();
+    snapshots.listen((snapshot) {
+      final docs = snapshot.docs;
+      final catsOfAllUsersList =
+          docs.map((doc) => CatsOfAllUsers(doc)).toList();
+      catsOfAllUsersList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
+      this.catsOfAllUsersList = catsOfAllUsersList;
+      endLoading();
+    });
     notifyListeners();
   }
 
   // お気に入りボタンを押した時の処理
-  Future<void> pressedFavoriteButton() async {
+  Future<void> pressedFavoriteButton({
+    @required String id,
+    @required String uid,
+    @required bool isFavoritePhotos,
+  }) async {
+    bool _oldState = isFavoritePhotos;
     // お気に入りの ON/OFF を切り替える
-    switchFavoriteState(this.isFavoritePhotos);
+    switchFavoriteState(
+      input: _oldState,
+      isFavoritePhotos: isFavoritePhotos,
+    );
 
     // 対象をお気に入りから削除する
-    if (this.isFavoritePhotos) {
+    if (isFavoritePhotos) {
       await FirebaseFirestore.instance
-          .collection('users/${this.uid}/favorite_posts')
-          .doc(this.catsOfAllUsers.id)
+          .collection('users/$uid/favorite_posts')
+          .doc(id)
           .delete();
     }
     // 対象をお気に入りに追加する
     else {
       DocumentSnapshot _doc;
 
-      if (this.catsOfAllUsers.id.startsWith('posts_')) {
-        _doc = await FirebaseFirestore.instance
-            .collection('posts')
-            .doc(this.catsOfAllUsers.id)
-            .get();
-      } else {
-        _doc = await FirebaseFirestore.instance
-            .collection('users/${this.uid}/posts')
-            .doc(this.catsOfAllUsers.id)
-            .get();
-      }
+      _doc = await FirebaseFirestore.instance.collection('posts').doc(id).get();
 
       Map _fields = _doc.data();
       _fields['favoriteAt'] = FieldValue.serverTimestamp();
 
       try {
         await FirebaseFirestore.instance
-            .collection('users/${this.uid}/favorite_posts')
-            .doc(this.catsOfAllUsers.id)
+            .collection('users/$uid/favorite_posts')
+            .doc(id)
             .set(_fields);
       } catch (e) {
         print('お気に入りの追加時にエラーが発生');
@@ -71,26 +76,39 @@ class CatsOfAllUsersModel extends ChangeNotifier {
   }
 
   // いいねボタンを押した時の処理
-  Future<void> pressedLikeButton() async {
+  Future<void> pressedLikeButton({
+    @required String id,
+    @required String uid,
+    @required anotherUid,
+    @required bool isLikePhotos,
+  }) async {
     FirebaseFirestore _fireStore = FirebaseFirestore.instance;
     WriteBatch _batch = _fireStore.batch();
 
     DocumentReference _anotherUserDoc =
-        _fireStore.collection('users').doc(this.uid);
+        _fireStore.collection('users').doc(anotherUid);
     DocumentSnapshot _snap = await _anotherUserDoc.get();
     int likedCount = _snap.data()['likedCount'];
 
+    bool _oldState = isLikePhotos;
     // いいねの ON/OFF を切り替える
-    switchLikeState(this.isLikePhotos);
+    switchLikeState(
+      input: _oldState,
+      isLikePhotos: isLikePhotos,
+    );
 
     // 対象をいいねから削除する
-    if (this.isLikePhotos) {
+    if (isLikePhotos) {
       await FirebaseFirestore.instance
-          .collection('users/${this.uid}/like_posts')
-          .doc(this.catsOfAllUsers.id)
+          .collection('users/$uid/like_posts')
+          .doc(id)
           .delete();
 
       _batch.update(_anotherUserDoc, {'likedCount': likedCount - 1});
+
+      if (likedCount < 0) {
+        _batch.update(_anotherUserDoc, {'likedCount': 0});
+      }
 
       await _batch.commit();
     }
@@ -98,25 +116,15 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     else {
       DocumentSnapshot _doc;
 
-      if (this.catsOfAllUsers.id.startsWith('posts_')) {
-        _doc = await FirebaseFirestore.instance
-            .collection('posts')
-            .doc(this.catsOfAllUsers.id)
-            .get();
-      } else {
-        _doc = await FirebaseFirestore.instance
-            .collection('users/${this.uid}/posts')
-            .doc(this.catsOfAllUsers.id)
-            .get();
-      }
+      _doc = await FirebaseFirestore.instance.collection('posts').doc(id).get();
 
       Map _fields = _doc.data();
       _fields['likedAt'] = FieldValue.serverTimestamp();
 
       try {
         await FirebaseFirestore.instance
-            .collection('users/${this.uid}/like_posts')
-            .doc(this.catsOfAllUsers.id)
+            .collection('users/$uid/like_posts')
+            .doc(id)
             .set(_fields);
 
         _batch.update(_anotherUserDoc, {'likedCount': likedCount + 1});
@@ -129,13 +137,41 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     }
   }
 
-  void switchFavoriteState(bool input) {
-    this.isFavoritePhotos = !input;
+  Future<void> deleteMyPost({
+    @required String id,
+    @required String uid,
+  }) async {
+    FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+    WriteBatch _batch = _fireStore.batch();
+
+    await FirebaseFirestore.instance.collection('posts').doc(id).delete();
+
+    DocumentReference _myUserDoc = _fireStore.collection('users').doc(uid);
+    DocumentSnapshot _snap = await _myUserDoc.get();
+    int postedCount = _snap.data()['postedCount'];
+
+    _batch.update(_myUserDoc, {'postedCount': postedCount - 1});
+
+    if (postedCount < 0) {
+      _batch.update(_myUserDoc, {'postedCount': 0});
+    }
+
+    await _batch.commit();
+  }
+
+  void switchFavoriteState({
+    @required bool input,
+    @required bool isFavoritePhotos,
+  }) {
+    isFavoritePhotos = !input;
     notifyListeners();
   }
 
-  void switchLikeState(bool input) {
-    this.isLikePhotos = !input;
+  void switchLikeState({
+    @required bool input,
+    @required bool isLikePhotos,
+  }) {
+    isLikePhotos = !input;
     notifyListeners();
   }
 
