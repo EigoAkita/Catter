@@ -11,7 +11,6 @@ import 'package:provider/provider.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class CatsOfAllUsersPage extends StatelessWidget {
-
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   @override
@@ -19,8 +18,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
     final data = MediaQuery.of(context);
 
     return ChangeNotifierProvider<CatsOfAllUsersModel>(
-      create: (_) => CatsOfAllUsersModel()
-        ..fetchPostsRealTime(),
+      create: (_) => CatsOfAllUsersModel()..fetchPostsRealTime(),
       child: Consumer<CatsOfAllUsersModel>(builder: (context, model, child) {
         final catLists = model.catsOfAllUsersList;
         return Stack(
@@ -117,33 +115,39 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                               onPressed: () async {
                                                 AwesomeDialog(
                                                   context: context,
-                                                  animType: AnimType.BOTTOMSLIDE,
-                                                  dialogType: DialogType.QUESTION,
+                                                  animType:
+                                                      AnimType.BOTTOMSLIDE,
+                                                  dialogType:
+                                                      DialogType.QUESTION,
                                                   body: Center(
                                                     child: Text(
                                                       '投稿を削除しますか？',
                                                       style: TextStyle(
-                                                        color: CustomColors.grayMain,
-                                                        fontWeight: FontWeight.bold,
+                                                        color: CustomColors
+                                                            .grayMain,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         fontSize: 15,
                                                       ),
                                                     ),
                                                   ),
-                                                  btnCancelOnPress: (){
-
-                                                  },
-                                                  btnCancelColor: CustomColors.brownMain,
+                                                  btnCancelOnPress: () {},
+                                                  btnCancelColor:
+                                                      CustomColors.brownMain,
                                                   btnCancelText: 'いいえ',
-                                                  btnOkOnPress: ()async{
+                                                  btnOkOnPress: () async {
                                                     await model.deleteMyPost(
                                                       id: catLists.id,
-                                                      uid: _auth.currentUser.uid,
+                                                      uid:
+                                                          _auth.currentUser.uid,
                                                     );
                                                     await model.fetchPosts();
                                                   },
-                                                  btnOkColor: CustomColors.brownMain,
+                                                  btnOkColor:
+                                                      CustomColors.brownMain,
                                                   btnOkText: 'はい',
-                                                  buttonsBorderRadius: BorderRadius.all(
+                                                  buttonsBorderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                 )..show();
@@ -171,50 +175,60 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                               onPressed: () {
                                                 AwesomeDialog(
                                                   context: context,
-                                                  animType: AnimType.BOTTOMSLIDE,
-                                                  dialogType: DialogType.WARNING,
+                                                  animType:
+                                                      AnimType.BOTTOMSLIDE,
+                                                  dialogType:
+                                                      DialogType.WARNING,
                                                   body: Center(
                                                     child: Text(
                                                       'この投稿を不適切な内容として\n報告（通報）しますか？',
                                                       style: TextStyle(
-                                                        color: CustomColors.grayMain,
-                                                        fontWeight: FontWeight.bold,
+                                                        color: CustomColors
+                                                            .grayMain,
+                                                        fontWeight:
+                                                            FontWeight.bold,
                                                         fontSize: 15,
                                                       ),
                                                     ),
                                                   ),
-                                                  btnCancelOnPress: (){
-
-                                                  },
-                                                  btnCancelColor: CustomColors.brownMain,
+                                                  btnCancelOnPress: () {},
+                                                  btnCancelColor:
+                                                      CustomColors.brownMain,
                                                   btnCancelText: 'いいえ',
                                                   btnOkOnPress: () {
                                                     AwesomeDialog(
                                                       context: context,
-                                                      animType: AnimType.BOTTOMSLIDE,
-                                                      dialogType: DialogType.NO_HEADER,
+                                                      animType:
+                                                          AnimType.BOTTOMSLIDE,
+                                                      dialogType:
+                                                          DialogType.NO_HEADER,
                                                       body: Center(
                                                         child: Text(
                                                           '報告（通報）が完了しました',
                                                           style: TextStyle(
-                                                            color: CustomColors.grayMain,
-                                                            fontWeight: FontWeight.bold,
+                                                            color: CustomColors
+                                                                .grayMain,
+                                                            fontWeight:
+                                                                FontWeight.bold,
                                                             fontSize: 15,
                                                           ),
                                                         ),
                                                       ),
-                                                      btnOkOnPress: (){
-                                                      },
-                                                      btnOkColor: CustomColors.brownMain,
+                                                      btnOkOnPress: () {},
+                                                      btnOkColor: CustomColors
+                                                          .brownMain,
                                                       btnOkText: 'はい',
-                                                      buttonsBorderRadius: BorderRadius.all(
+                                                      buttonsBorderRadius:
+                                                          BorderRadius.all(
                                                         Radius.circular(5),
                                                       ),
                                                     )..show();
                                                   },
-                                                  btnOkColor: CustomColors.brownMain,
+                                                  btnOkColor:
+                                                      CustomColors.brownMain,
                                                   btnOkText: 'はい',
-                                                  buttonsBorderRadius: BorderRadius.all(
+                                                  buttonsBorderRadius:
+                                                      BorderRadius.all(
                                                     Radius.circular(5),
                                                   ),
                                                 )..show();
@@ -296,7 +310,8 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 NeumorphicFloatingActionButton(
                                                   style: NeumorphicStyle(
                                                     depth: 1,
-                                                    color:catLists.isFavoritePhotos
+                                                    color: catLists
+                                                            .isFavoritePhotos
                                                         ? CustomColors.whiteMain
                                                         : Colors.amberAccent,
                                                     boxShape: NeumorphicBoxShape
@@ -307,7 +322,8 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   child: Icon(
                                                     FontAwesome5.star,
                                                     size: 25,
-                                                    color:catLists.isFavoritePhotos
+                                                    color: catLists
+                                                            .isFavoritePhotos
                                                         ? CustomColors.grayMain
                                                         : CustomColors
                                                             .whiteMain,
@@ -327,7 +343,23 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   },
                                                 ),
                                                 SizedBox(
-                                                  width: 50,
+                                                  width: 25,
+                                                ),
+                                                NeumorphicText(
+                                                  'or',
+                                                  style: NeumorphicStyle(
+                                                    depth: 1,
+                                                    color:
+                                                        CustomColors.whiteMain,
+                                                  ),
+                                                  textStyle:
+                                                      NeumorphicTextStyle(
+                                                    fontSize: 25,
+                                                    fontWeight: FontWeight.bold,
+                                                  ),
+                                                ),
+                                                SizedBox(
+                                                  width: 25,
                                                 ),
                                                 NeumorphicFloatingActionButton(
                                                   style: NeumorphicStyle(
