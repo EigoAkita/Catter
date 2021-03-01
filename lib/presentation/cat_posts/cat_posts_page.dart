@@ -1,3 +1,4 @@
+import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/cat_type.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
@@ -438,15 +439,42 @@ class CatPostsPage extends StatelessWidget {
                                         catTypes.contains(model.catType) &&
                                         model.imageFile != null
                                     ? () async {
-                                        model.startLoading();
-                                        await model.addPostsToFirebase();
-                                        model.endLoading();
-                                        Navigator.pushReplacement(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => BasePage(),
+                                        AwesomeDialog(
+                                          context: context,
+                                          animType: AnimType.BOTTOMSLIDE,
+                                          dialogType: DialogType.QUESTION,
+                                          body: Center(
+                                            child: Text(
+                                              '猫の写真を投稿しますか？',
+                                              style: TextStyle(
+                                                color: CustomColors.grayMain,
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 15,
+                                              ),
+                                            ),
                                           ),
-                                        );
+                                          btnCancelOnPress: () {},
+                                          btnCancelColor:
+                                              CustomColors.brownMain,
+                                          btnCancelText: 'いいえ',
+                                          btnOkOnPress: () async {
+                                            model.startLoading();
+                                            await model.addPostsToFirebase();
+                                            model.endLoading();
+                                            Navigator.pushReplacement(
+                                              context,
+                                              MaterialPageRoute(
+                                                builder: (context) =>
+                                                    BasePage(),
+                                              ),
+                                            );
+                                          },
+                                          btnOkColor: CustomColors.brownMain,
+                                          btnOkText: 'はい',
+                                          buttonsBorderRadius: BorderRadius.all(
+                                            Radius.circular(5),
+                                          ),
+                                        )..show();
                                       }
                                     : null,
                               ),
