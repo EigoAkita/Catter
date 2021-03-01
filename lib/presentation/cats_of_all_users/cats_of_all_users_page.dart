@@ -8,7 +8,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 
 class CatsOfAllUsersPage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
