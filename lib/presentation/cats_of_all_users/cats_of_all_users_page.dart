@@ -2,6 +2,7 @@ import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
+import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -180,7 +181,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                       DialogType.WARNING,
                                                   body: Center(
                                                     child: Text(
-                                                      'この投稿を不適切な内容として\n報告（通報）しますか？',
+                                                      '不適切な内容や画像として\n報告（通報）しますか？',
                                                       style: TextStyle(
                                                         color: CustomColors
                                                             .grayMain,
@@ -194,38 +195,55 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   btnCancelColor:
                                                       CustomColors.brownMain,
                                                   btnCancelText: 'いいえ',
-                                                  btnOkOnPress: () {
-                                                    AwesomeDialog(
-                                                      context: context,
-                                                      animType:
-                                                          AnimType.BOTTOMSLIDE,
-                                                      dialogType:
-                                                          DialogType.NO_HEADER,
-                                                      body: Center(
-                                                        child: Text(
-                                                          '報告（通報）が完了しました',
-                                                          style: TextStyle(
-                                                            color: CustomColors
-                                                                .grayMain,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            fontSize: 15,
+                                                  btnOkOnPress: () async {
+                                                    model.startLoading();
+                                                    await model.fetchContact();
+                                                    try {
+                                                      await model.submitForm(
+                                                        inappropriatePost: catLists.id,
+                                                        anotherContributor: catLists.uid,
+                                                      );
+                                                      AwesomeDialog(
+                                                        context: context,
+                                                        animType: AnimType
+                                                            .BOTTOMSLIDE,
+                                                        dialogType: DialogType
+                                                            .NO_HEADER,
+                                                        body: Center(
+                                                          child: Text(
+                                                            '報告（通報）が完了しました',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  CustomColors
+                                                                      .grayMain,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 15,
+                                                            ),
                                                           ),
                                                         ),
-                                                      ),
-                                                      btnOkOnPress: () {},
-                                                      btnOkColor: CustomColors
-                                                          .brownMain,
-                                                      btnOkText: 'はい',
-                                                      buttonsBorderRadius:
-                                                          BorderRadius.all(
-                                                        Radius.circular(5),
-                                                      ),
-                                                    )..show();
+                                                        btnOkOnPress: () {},
+                                                        btnOkColor: CustomColors
+                                                            .brownMain,
+                                                        btnOkText: 'はい',
+                                                        buttonsBorderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(5),
+                                                        ),
+                                                      )..show();
+                                                      model.endLoading();
+                                                    } catch (e) {
+                                                      model.endLoading();
+                                                      errorShowDialog(
+                                                          loginErrorText:
+                                                              'エラーが発生しました',
+                                                          context: context);
+                                                    }
                                                   },
                                                   btnOkColor:
                                                       CustomColors.brownMain,
-                                                  btnOkText: 'はい',
+                                                  btnOkText: '報告する',
                                                   buttonsBorderRadius:
                                                       BorderRadius.all(
                                                     Radius.circular(5),

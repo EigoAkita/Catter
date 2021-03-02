@@ -6,7 +6,34 @@ import 'package:flutter/material.dart';
 class CatsOfAllUsersModel extends ChangeNotifier {
   String uid = FirebaseAuth.instance.currentUser.uid;
   bool isLoading = false;
+  String mail = '';
   List<CatsOfAllUsers> catsOfAllUsersList = [];
+
+  Future fetchContact() async {
+    startLoading();
+    final firebaseUser = FirebaseAuth.instance.currentUser;
+    this.mail = firebaseUser.email;
+    endLoading();
+    notifyListeners();
+  }
+
+  Future<void> submitForm({
+    @required String inappropriatePost,
+    @required String anotherContributor,
+  }) async {
+    try {
+      await FirebaseFirestore.instance.collection('contacts').add({
+        'uid': FirebaseAuth.instance.currentUser.uid,
+        'email': this.mail,
+        'createdAt': FieldValue.serverTimestamp(),
+        'inappropriatePost': inappropriatePost,
+        'anotherContributor': anotherContributor,
+      });
+    } catch (e) {
+      print('お問い合わせの送信時にエラー');
+      throw ('エラーが発生しました');
+    }
+  }
 
   Future<void> fetchPosts() async {
     startLoading();
@@ -19,7 +46,6 @@ class CatsOfAllUsersModel extends ChangeNotifier {
   }
 
   Future<void> fetchPostsRealTime() async {
-
     startLoading();
     final snapshots =
         FirebaseFirestore.instance.collection('posts').snapshots();
