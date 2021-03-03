@@ -6,6 +6,7 @@ import 'package:catter_app/presentation/my_favorite_post_screen/my_favorite_post
 import 'package:catter_app/presentation/my_liked_post_screen/my_liked_post_screen_page.dart';
 import 'package:catter_app/presentation/my_post_screen/my_post_screen_page.dart';
 import 'package:catter_app/presentation/my_profile/my_profile_model.dart';
+import 'package:catter_app/presentation/my_profile_change/my_profile_change_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -189,7 +190,15 @@ class MyProfilePage extends StatelessWidget {
                       ),
                       GestureDetector(
                         behavior: HitTestBehavior.opaque,
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushReplacement(
+                            context,
+                            MaterialPageRoute(
+                              builder: (context) =>
+                                  MyProfileChangePage(),
+                            ),
+                          );
+                        },
                         child: ConstrainedBox(
                           constraints: const BoxConstraints.expand(height: 65),
                           child: Neumorphic(

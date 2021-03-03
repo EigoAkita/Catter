@@ -55,6 +55,21 @@ class UsersApi {
     );
   }
 
+  ///users collectionの、自分のプロフィールを変更する
+  Future changeMyProfile({
+    @required String uid,
+    @required String newDisplayName,
+    @required String newProfilePhoto,
+  }) async {
+    await _usersCollection.doc(uid).update(
+      <String, dynamic>{
+        'displayName': newDisplayName,
+        'profilePhotoURL': newProfilePhoto,
+        'updatedAt': DateTime.now(),
+      },
+    );
+  }
+
   ///users collectionの、uidを取得する
   Future getUid({
     @required String uid,
