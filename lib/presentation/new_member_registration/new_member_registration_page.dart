@@ -49,7 +49,7 @@ class NewMemberRegistrationPage extends StatelessWidget {
                           context: context,
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
                         ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
@@ -79,6 +79,7 @@ class NewMemberRegistrationPage extends StatelessWidget {
                               isLoginTextFontSize: true,
                               isLoginTextWeight: false,
                               context: context,
+                              underLine: true,
                             ),
                             Text(
                               'に同意する',
@@ -92,7 +93,33 @@ class NewMemberRegistrationPage extends StatelessWidget {
                           ],
                         ),
                         SizedBox(
-                          height: 30,
+                          height: 20,
+                        ),
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: <Widget>[
+                            loginTextButtonWidget(
+                              emailLoginModel: model,
+                              loginButtonVariables: _loginButtonVariables[3]
+                                  ['value'],
+                              loginText: 'プライバシーポリシー',
+                              loginTextColor: CustomColors.blueMain,
+                              isLoginTextFontSize: true,
+                              isLoginTextWeight: false,
+                              context: context,
+                              underLine: true,
+                            ),
+                            Text(
+                              'を読む',
+                              style: TextStyle(
+                                fontSize: 15,
+                                color: CustomColors.whiteMain,
+                              ),
+                            ),
+                          ],
+                        ),
+                        SizedBox(
+                          height: 20,
                         ),
                         Row(
                           children: <Widget>[

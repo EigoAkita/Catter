@@ -1,6 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/variables.dart';
-import 'package:catter_app/domain/my_favorite_post_screen.dart';
 import 'package:catter_app/presentation/email_login/email_login_page.dart';
 import 'package:catter_app/presentation/my_favorite_post_screen/my_favorite_post_screen_page.dart';
 import 'package:catter_app/presentation/my_liked_post_screen/my_liked_post_screen_page.dart';
@@ -467,42 +466,6 @@ class MyProfilePage extends StatelessWidget {
                               ),
                             ),
                           ),
-                        ),
-                      ),
-                      const SizedBox(
-                        height: 10,
-                      ),
-                      FlatButton(
-                        onPressed: () {
-                          model.startLoading();
-                          Navigator.pushReplacement(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => EmailLoginPage(),
-                            ),
-                          );
-                          model.endLoading();
-                        },
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: <Widget>[
-                            Icon(
-                              Icons.exit_to_app,
-                              color: CustomColors.whiteSub,
-                              size: 20,
-                            ),
-                            const SizedBox(
-                              width: 5,
-                            ),
-                            Text(
-                              'ログアウト',
-                              style: TextStyle(
-                                color: CustomColors.whiteSub,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 15,
-                              ),
-                            ),
-                          ],
                         ),
                       ),
                     ],

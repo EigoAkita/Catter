@@ -25,6 +25,7 @@ class BasePage extends StatelessWidget {
         return Scaffold(
           appBar: changeAppBar(
             model: model,
+            context: context
           ),
           body: changeCurrentBody(model: model),
           bottomNavigationBar: ConvexAppBar(
