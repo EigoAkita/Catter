@@ -1,7 +1,7 @@
 import 'package:catter_app/config/convert_error_message.dart';
 import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
 import 'package:catter_app/repository/firebase_auth.api.dart';
-import 'package:catter_app/repository/firebase_firestore_api/uses_api.dart';
+import 'package:catter_app/repository/firebase_firestore_api/users_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 

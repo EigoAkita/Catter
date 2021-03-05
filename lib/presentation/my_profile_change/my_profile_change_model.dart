@@ -1,5 +1,5 @@
 import 'dart:io';
-import 'package:catter_app/repository/firebase_firestore_api/uses_api.dart';
+import 'package:catter_app/repository/firebase_firestore_api/users_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';

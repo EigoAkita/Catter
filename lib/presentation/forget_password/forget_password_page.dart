@@ -32,114 +32,121 @@ class ForgetPasswordPage extends StatelessWidget {
                     body: Center(
                       child: SingleChildScrollView(
                         child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            ConstrainedBox(
-                              constraints: BoxConstraints(
-                                maxWidth:
-                                    MediaQuery.of(context).size.width / 1.15,
+                          children: <Widget>[
+                            Card(
+                              shadowColor: CustomColors.grayMain,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(15),
                               ),
+                              color: CustomColors.brownSub,
                               child: Column(
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        flex: 1,
-                                        child: SizedBox(),
-                                      ),
-                                      Expanded(
-                                        flex: 9,
-                                        child: RichText(
-                                          text: const TextSpan(
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: CustomColors.whiteMain,
-                                            ),
-                                            children: [
-                                              TextSpan(
-                                                text: 'ご利用中のメールアドレスを\n',
-                                              ),
-                                              TextSpan(
-                                                text: '入力して下さい',
-                                              ),
-                                            ],
-                                          ),
-                                          textAlign: TextAlign.center,
-                                        ),
-                                      ),
-                                      const Expanded(
-                                        flex: 1,
-                                        child: SizedBox(),
-                                      ),
-                                    ],
-                                  ),
+                                children: [
                                   SizedBox(
-                                    height: 100,
+                                    height: 40,
                                   ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Expanded(
-                                        flex: 1,
-                                        child: SizedBox(),
-                                      ),
-                                      Expanded(
-                                        flex: 9,
-                                        child: Neumorphic(
-                                          style: const NeumorphicStyle(
-                                            shape: NeumorphicShape.flat,
-                                            depth: 1,
-                                            color: CustomColors.whiteMain,
-                                            shadowDarkColorEmboss:
-                                                Colors.blueGrey,
-                                          ),
-                                          child: Column(
-                                            children: <Widget>[
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                              TextFormField(
-                                                controller: useMailController,
-                                                onChanged: (text) {
-                                                  model.changeUseMail(text);
-                                                },
-                                                obscureText: false,
-                                                maxLines: 1,
-                                                decoration: InputDecoration(
-                                                  errorText:
-                                                      model.errorUseMail == ''
-                                                          ? null
-                                                          : model.errorUseMail,
-                                                  labelStyle: TextStyle(
-                                                    color:
-                                                        CustomColors.grayMain,
-                                                  ),
-                                                  filled: true,
-                                                  fillColor:
-                                                      CustomColors.whiteMain,
-                                                  border: InputBorder.none,
-                                                  hintText:
-                                                      'catter@example.com',
+                                  ConstrainedBox(
+                                    constraints: BoxConstraints(
+                                      maxWidth:
+                                          MediaQuery.of(context).size.width /
+                                              1.15,
+                                    ),
+                                    child: Column(
+                                      children: <Widget>[
+                                        Row(
+                                          children: <Widget>[
+                                            const Expanded(
+                                              flex: 1,
+                                              child: SizedBox(),
+                                            ),
+                                            Expanded(
+                                              flex: 9,
+                                              child: Text(
+                                                'ご利用中のメールアドレス',
+                                                style: TextStyle(
+                                                  fontSize: 15,
+                                                  fontWeight: FontWeight.bold,
+                                                  color: CustomColors.whiteMain,
                                                 ),
                                               ),
-                                              SizedBox(
-                                                height: 10,
-                                              ),
-                                            ],
-                                          ),
+                                            ),
+                                            const Expanded(
+                                              flex: 1,
+                                              child: SizedBox(),
+                                            ),
+                                          ],
                                         ),
-                                      ),
-                                      const Expanded(
-                                        flex: 1,
-                                        child: SizedBox(),
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: <Widget>[
+                                            const Expanded(
+                                              flex: 1,
+                                              child: SizedBox(),
+                                            ),
+                                            Expanded(
+                                              flex: 9,
+                                              child: Neumorphic(
+                                                style: const NeumorphicStyle(
+                                                  shape: NeumorphicShape.flat,
+                                                  depth: 1,
+                                                  color: CustomColors.whiteMain,
+                                                  shadowDarkColorEmboss:
+                                                      Colors.blueGrey,
+                                                ),
+                                                child: Column(
+                                                  children: <Widget>[
+                                                    TextFormField(
+                                                      controller:
+                                                          useMailController,
+                                                      onChanged: (text) {
+                                                        model.changeUseMail(
+                                                            text);
+                                                      },
+                                                      obscureText: false,
+                                                      maxLines: 1,
+                                                      decoration:
+                                                          InputDecoration(
+                                                        errorText:
+                                                            model.errorUseMail ==
+                                                                    ''
+                                                                ? null
+                                                                : model
+                                                                    .errorUseMail,
+                                                        labelStyle: TextStyle(
+                                                          color: CustomColors
+                                                              .grayMain,
+                                                        ),
+                                                        filled: true,
+                                                        fillColor: CustomColors
+                                                            .whiteMain,
+                                                        border:
+                                                            InputBorder.none,
+                                                        hintText:
+                                                            'catter@example.com',
+                                                      ),
+                                                    ),
+                                                  ],
+                                                ),
+                                              ),
+                                            ),
+                                            const Expanded(
+                                              flex: 1,
+                                              child: SizedBox(),
+                                            ),
+                                          ],
+                                        ),
+                                        SizedBox(
+                                          height: 40,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 ],
                               ),
                             ),
                             SizedBox(
-                              height: 100,
+                              height: 20,
                             ),
                             Row(
                               children: <Widget>[
@@ -148,7 +155,7 @@ class ForgetPasswordPage extends StatelessWidget {
                                   child: SizedBox(),
                                 ),
                                 Expanded(
-                                  flex: 5,
+                                  flex: 8,
                                   child: Container(
                                     height: 60,
                                     child: NeumorphicButton(
@@ -251,13 +258,13 @@ class ForgetPasswordPage extends StatelessWidget {
                               ],
                             ),
                             SizedBox(
-                              height: 10,
+                              height: 15,
                             ),
                             FlatButton(
                               child: Text(
                                 'ログイン画面に戻る',
                                 style: TextStyle(
-                                  color: CustomColors.whiteSub,
+                                  color: CustomColors.whiteMain,
                                   fontWeight: FontWeight.bold,
                                   fontSize: 15,
                                 ),

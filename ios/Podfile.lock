@@ -372,6 +372,8 @@ PODS:
   - SDWebImage/Core (5.10.4)
   - SwiftyGif (5.4.0)
   - TOCropViewController (2.5.5)
+  - url_launcher (0.0.1):
+    - Flutter
 
 DEPENDENCIES:
   - cloud_firestore (from `.symlinks/plugins/cloud_firestore/ios`)
@@ -383,6 +385,7 @@ DEPENDENCIES:
   - flutter_native_image (from `.symlinks/plugins/flutter_native_image/ios`)
   - image_cropper (from `.symlinks/plugins/image_cropper/ios`)
   - image_picker (from `.symlinks/plugins/image_picker/ios`)
+  - url_launcher (from `.symlinks/plugins/url_launcher/ios`)
 
 SPEC REPOS:
   trunk:
@@ -427,6 +430,8 @@ EXTERNAL SOURCES:
     :path: ".symlinks/plugins/image_cropper/ios"
   image_picker:
     :path: ".symlinks/plugins/image_picker/ios"
+  url_launcher:
+    :path: ".symlinks/plugins/url_launcher/ios"
 
 SPEC CHECKSUMS:
   abseil: 6c8eb7892aefa08d929b39f9bb108e5367e3228f
@@ -459,6 +464,7 @@ SPEC CHECKSUMS:
   SDWebImage: c666b97e1fa9c64b4909816a903322018f0a9c84
   SwiftyGif: 5d4af95df24caf1c570dbbcb32a3b8a0763bc6d7
   TOCropViewController: da59f531f8ac8a94ef6d6c0fc34009350f9e8bfe
+  url_launcher: 6fef411d543ceb26efce54b05a0a40bfd74cbbef
 
 PODFILE CHECKSUM: b116d2e8434dbd82fa2b1849612486dc46b5375d
 

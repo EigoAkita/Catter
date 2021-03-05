@@ -128,6 +128,7 @@ class EmailLoginPage extends StatelessWidget {
                                                 isLoginTextFontSize: false,
                                                 isLoginTextWeight: false,
                                                 context: context,
+                                                underLine: true,
                                               ),
                                               Text(
                                                 'に同意する',
@@ -146,10 +147,12 @@ class EmailLoginPage extends StatelessWidget {
                                           loginButtonVariables:
                                               _loginButtonVariables[1]['value'],
                                           loginText: 'パスワードを忘れた方はこちら',
-                                          loginTextColor: CustomColors.grayMain,
+                                          loginTextColor:
+                                              CustomColors.whiteMain,
                                           isLoginTextFontSize: false,
                                           isLoginTextWeight: false,
                                           context: context,
+                                          underLine: false,
                                         ),
                                       ],
                                     ),
@@ -231,6 +234,7 @@ class EmailLoginPage extends StatelessWidget {
                                 isLoginTextFontSize: true,
                                 isLoginTextWeight: true,
                                 context: context,
+                                underLine: false,
                               ),
                               SizedBox(
                                 height: 25,
