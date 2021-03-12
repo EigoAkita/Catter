@@ -1,0 +1,4 @@
+FLUTTER_FLAVOR=Staging
+PRODUCT_BUNDLE_IDENTIFIER=com.eigoakita.catterapp.staging
+DISPLAY_NAME=Stg Catter
+FLUTTER_TARGET=lib/main.dart

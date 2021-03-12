@@ -1,0 +1,4 @@
+FLUTTER_FLAVOR=Production
+PRODUCT_BUNDLE_IDENTIFIER=com.eigoakita.catterapp.release
+DISPLAY_NAME=Catter
+FLUTTER_TARGET=lib/main.dart
