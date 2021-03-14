@@ -113,8 +113,6 @@ class CatsOfAllUsersModel extends ChangeNotifier {
 
     DocumentReference _anotherUserDoc =
         _fireStore.collection('users').doc(anotherUid);
-    DocumentSnapshot _snap = await _anotherUserDoc.get();
-    int likedCount = _snap.data()['likedCount'];
 
     bool _oldState = isLikePhotos;
     // いいねの ON/OFF を切り替える
@@ -130,11 +128,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
           .doc(id)
           .delete();
 
-      _batch.update(_anotherUserDoc, {'likedCount': likedCount - 1});
-
-      if (likedCount < 0) {
-        _batch.update(_anotherUserDoc, {'likedCount': 0});
-      }
+      _batch.update(_anotherUserDoc, {'likedCount': FieldValue.increment(-1)});
 
       await _batch.commit();
     }
@@ -153,7 +147,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
             .doc(id)
             .set(_fields);
 
-        _batch.update(_anotherUserDoc, {'likedCount': likedCount + 1});
+        _batch.update(_anotherUserDoc, {'likedCount': FieldValue.increment(1)});
 
         await _batch.commit();
       } catch (e) {
@@ -173,14 +167,8 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     await FirebaseFirestore.instance.collection('posts').doc(id).delete();
 
     DocumentReference _myUserDoc = _fireStore.collection('users').doc(uid);
-    DocumentSnapshot _snap = await _myUserDoc.get();
-    int postedCount = _snap.data()['postedCount'];
 
-    _batch.update(_myUserDoc, {'postedCount': postedCount - 1});
-
-    if (postedCount < 0) {
-      _batch.update(_myUserDoc, {'postedCount': 0});
-    }
+    _batch.update(_myUserDoc, {'postedCount': FieldValue.increment(-1)});
 
     await _batch.commit();
   }
