@@ -9,7 +9,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CatsOfAllUsersPage extends StatelessWidget {
@@ -38,8 +37,8 @@ class CatsOfAllUsersPage extends StatelessWidget {
                     ),
                   ),
                   child: Icon(
-                    FontAwesome.plus,
-                    size: 30,
+                    MaterialCommunityIcons.plus,
+                    size: 40,
                     color: CustomColors.whiteMain,
                   ),
                   onPressed: () {
