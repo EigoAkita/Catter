@@ -179,7 +179,7 @@ class AnimatedRankingList extends StatelessWidget {
                                             children: <Widget>[
                                               rankingLists.likedCount > 1000
                                                   ? NeumorphicIcon(
-                                                FontAwesome.heart,
+                                                MaterialCommunityIcons.heart,
                                                 size: 15,
                                                 style: NeumorphicStyle(
                                                   depth: 1,
@@ -188,7 +188,7 @@ class AnimatedRankingList extends StatelessWidget {
                                                 ),
                                               )
                                                   : NeumorphicIcon(
-                                                FontAwesome.heart,
+                                                MaterialCommunityIcons.heart,
                                                 size: 20,
                                                 style: NeumorphicStyle(
                                                   depth: 1,

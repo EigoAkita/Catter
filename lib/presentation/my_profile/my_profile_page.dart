@@ -1,6 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/variables.dart';
-import 'package:catter_app/presentation/email_login/email_login_page.dart';
 import 'package:catter_app/presentation/my_favorite_post_screen/my_favorite_post_screen_page.dart';
 import 'package:catter_app/presentation/my_liked_post_screen/my_liked_post_screen_page.dart';
 import 'package:catter_app/presentation/my_post_screen/my_post_screen_page.dart';
@@ -10,7 +9,6 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
@@ -220,8 +218,8 @@ class MyProfilePage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       const Icon(
-                                        FontAwesomeIcons.userAlt,
-                                        size: 25,
+                                        MaterialCommunityIcons.human,
+                                        size: 30,
                                         color: CustomColors.brownMain,
                                       ),
                                       const SizedBox(
@@ -291,8 +289,8 @@ class MyProfilePage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       const Icon(
-                                        FontAwesome5.file,
-                                        size: 25,
+                                        MaterialCommunityIcons.file_document_box,
+                                        size: 30,
                                         color: CustomColors.brownMain,
                                       ),
                                       const SizedBox(
@@ -362,8 +360,8 @@ class MyProfilePage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       const Icon(
-                                        FontAwesome5.heart,
-                                        size: 25,
+                                        MaterialCommunityIcons.heart,
+                                        size: 30,
                                         color: CustomColors.brownMain,
                                       ),
                                       const SizedBox(
@@ -433,8 +431,8 @@ class MyProfilePage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       const Icon(
-                                        FontAwesome5.star,
-                                        size: 25,
+                                        MaterialCommunityIcons.star,
+                                        size: 30,
                                         color: CustomColors.brownMain,
                                       ),
                                       const SizedBox(

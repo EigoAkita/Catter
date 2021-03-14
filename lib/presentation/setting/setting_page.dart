@@ -105,8 +105,8 @@ class SettingPage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       const Icon(
-                                        Icons.sticky_note_2_outlined,
-                                        size: 25,
+                                        MaterialCommunityIcons.book_open,
+                                        size: 30,
                                         color: CustomColors.brownMain,
                                       ),
                                       const SizedBox(
@@ -179,8 +179,8 @@ class SettingPage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       const Icon(
-                                        Icons.privacy_tip,
-                                        size: 25,
+                                        MaterialCommunityIcons.shield_alert,
+                                        size: 30,
                                         color: CustomColors.brownMain,
                                       ),
                                       const SizedBox(
@@ -276,8 +276,8 @@ class SettingPage extends StatelessWidget {
                                         width: 15,
                                       ),
                                       const Icon(
-                                        FlutterIcons.exit_to_app_mco,
-                                        size: 25,
+                                        MaterialCommunityIcons.exit_to_app,
+                                        size: 30,
                                         color: CustomColors.brownMain,
                                       ),
                                       const SizedBox(

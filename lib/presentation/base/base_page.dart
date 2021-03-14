@@ -3,8 +3,8 @@ import 'package:catter_app/presentation/base/widgets/app_bar.dart';
 import 'package:catter_app/presentation/base/widgets/change_current_body.dart';
 import 'package:convex_bottom_bar/convex_bottom_bar.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
-import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 import 'base_model.dart';
@@ -23,10 +23,7 @@ class BasePage extends StatelessWidget {
       builder: (context, model, child) {
         final pageIndex = model.currentIndex;
         return Scaffold(
-          appBar: changeAppBar(
-            model: model,
-            context: context
-          ),
+          appBar: changeAppBar(model: model, context: context),
           body: changeCurrentBody(model: model),
           bottomNavigationBar: ConvexAppBar(
             onTap: model.onTapTapped,
@@ -37,21 +34,21 @@ class BasePage extends StatelessWidget {
             items: [
               TabItem(
                 icon: Icon(
-                  FontAwesomeIcons.cat,
+                  MaterialCommunityIcons.cat,
                   color: CustomColors.whiteMain,
                 ),
                 title: _pageNames[0],
               ),
               TabItem(
                 icon: Icon(
-                  FontAwesomeIcons.crown,
+                  MaterialCommunityIcons.crown,
                   color: CustomColors.whiteMain,
                 ),
-                title:_pageNames[1],
+                title: _pageNames[1],
               ),
               TabItem(
                 icon: Icon(
-                  FontAwesomeIcons.userAlt,
+                  MaterialCommunityIcons.human,
                   color: CustomColors.whiteMain,
                 ),
                 title: _pageNames[2],
