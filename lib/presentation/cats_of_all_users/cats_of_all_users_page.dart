@@ -6,8 +6,10 @@ import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.da
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
 
 class CatsOfAllUsersPage extends StatelessWidget {
@@ -108,9 +110,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                           children: <Widget>[
                                             IconButton(
                                               icon: Icon(
-                                                AntDesign.delete,
+                                                MaterialCommunityIcons.delete,
                                                 color: CustomColors.grayMain,
-                                                size: 25,
+                                                size: 30,
                                               ),
                                               onPressed: () async {
                                                 AwesomeDialog(
@@ -168,9 +170,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                           children: <Widget>[
                                             IconButton(
                                               icon: Icon(
-                                                AntDesign.exclamationcircle,
+                                                MaterialCommunityIcons.alert_circle,
                                                 color: Colors.red,
-                                                size: 25,
+                                                size: 30,
                                               ),
                                               onPressed: () {
                                                 AwesomeDialog(
@@ -316,104 +318,99 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
+                                          mainAxisAlignment: MainAxisAlignment.center,
                                           children: <Widget>[
-                                            Row(
-                                              children: <Widget>[
-                                                SizedBox(
-                                                  width: 10,
+                                            SizedBox(
+                                              width: 10,
+                                            ),
+                                            NeumorphicFloatingActionButton(
+                                              style: NeumorphicStyle(
+                                                depth: 1,
+                                                color: catLists
+                                                        .isFavoritePhotos
+                                                    ? CustomColors.whiteMain
+                                                    : Colors.amberAccent,
+                                                boxShape: NeumorphicBoxShape
+                                                    .roundRect(
+                                                  BorderRadius.circular(10),
                                                 ),
-                                                NeumorphicFloatingActionButton(
-                                                  style: NeumorphicStyle(
-                                                    depth: 1,
-                                                    color: catLists
-                                                            .isFavoritePhotos
-                                                        ? CustomColors.whiteMain
-                                                        : Colors.amberAccent,
-                                                    boxShape: NeumorphicBoxShape
-                                                        .roundRect(
-                                                      BorderRadius.circular(10),
-                                                    ),
-                                                  ),
-                                                  child: Icon(
-                                                    FontAwesome5.star,
-                                                    size: 25,
-                                                    color: catLists
-                                                            .isFavoritePhotos
-                                                        ? CustomColors.grayMain
-                                                        : CustomColors
-                                                            .whiteMain,
-                                                  ),
-                                                  onPressed: () async {
-                                                    catLists.isFavoritePhotos =
-                                                        !catLists
-                                                            .isFavoritePhotos;
-                                                    await model
-                                                        .pressedFavoriteButton(
-                                                      isFavoritePhotos: catLists
-                                                          .isFavoritePhotos,
-                                                      id: catLists.id,
-                                                      uid:
-                                                          _auth.currentUser.uid,
-                                                    );
-                                                  },
+                                              ),
+                                              child: Icon(
+                                              MaterialCommunityIcons.star,
+                                                size: 30,
+                                                color: catLists
+                                                        .isFavoritePhotos
+                                                    ? CustomColors.grayMain
+                                                    : CustomColors
+                                                        .whiteMain,
+                                              ),
+                                              onPressed: () async {
+                                                catLists.isFavoritePhotos =
+                                                    !catLists
+                                                        .isFavoritePhotos;
+                                                await model
+                                                    .pressedFavoriteButton(
+                                                  isFavoritePhotos: catLists
+                                                      .isFavoritePhotos,
+                                                  id: catLists.id,
+                                                  uid:
+                                                      _auth.currentUser.uid,
+                                                );
+                                              },
+                                            ),
+                                            SizedBox(
+                                              width: 25,
+                                            ),
+                                            NeumorphicText(
+                                              'or',
+                                              style: NeumorphicStyle(
+                                                depth: 1,
+                                                color:
+                                                    CustomColors.whiteMain,
+                                              ),
+                                              textStyle:
+                                                  NeumorphicTextStyle(
+                                                fontSize: 25,
+                                                fontWeight: FontWeight.bold,
+                                              ),
+                                            ),
+                                            SizedBox(
+                                              width: 25,
+                                            ),
+                                            NeumorphicFloatingActionButton(
+                                              style: NeumorphicStyle(
+                                                depth: 1,
+                                                color: catLists.isLikePhotos
+                                                    ? CustomColors.whiteMain
+                                                    : Colors.pinkAccent,
+                                                boxShape: NeumorphicBoxShape
+                                                    .roundRect(
+                                                  BorderRadius.circular(10),
                                                 ),
-                                                SizedBox(
-                                                  width: 25,
-                                                ),
-                                                NeumorphicText(
-                                                  'or',
-                                                  style: NeumorphicStyle(
-                                                    depth: 1,
-                                                    color:
-                                                        CustomColors.whiteMain,
-                                                  ),
-                                                  textStyle:
-                                                      NeumorphicTextStyle(
-                                                    fontSize: 25,
-                                                    fontWeight: FontWeight.bold,
-                                                  ),
-                                                ),
-                                                SizedBox(
-                                                  width: 25,
-                                                ),
-                                                NeumorphicFloatingActionButton(
-                                                  style: NeumorphicStyle(
-                                                    depth: 1,
-                                                    color: catLists.isLikePhotos
-                                                        ? CustomColors.whiteMain
-                                                        : Colors.pinkAccent,
-                                                    boxShape: NeumorphicBoxShape
-                                                        .roundRect(
-                                                      BorderRadius.circular(10),
-                                                    ),
-                                                  ),
-                                                  child: Icon(
-                                                    FontAwesome5.heart,
-                                                    size: 25,
-                                                    color: catLists.isLikePhotos
-                                                        ? CustomColors.grayMain
-                                                        : CustomColors
-                                                            .whiteMain,
-                                                  ),
-                                                  onPressed: () {
-                                                    catLists.isLikePhotos =
-                                                        !catLists.isLikePhotos;
-                                                    model.pressedLikeButton(
-                                                      isLikePhotos:
-                                                          catLists.isLikePhotos,
-                                                      id: catLists.id,
-                                                      uid:
-                                                          _auth.currentUser.uid,
-                                                      anotherUid: catLists.uid,
-                                                    );
-                                                  },
-                                                ),
-                                                SizedBox(
-                                                  width: 10,
-                                                ),
-                                              ],
+                                              ),
+                                              child: Icon(
+                                                MaterialCommunityIcons.heart,
+                                                size: 30,
+                                                color: catLists.isLikePhotos
+                                                    ? CustomColors.grayMain
+                                                    : CustomColors
+                                                        .whiteMain,
+                                              ),
+                                              onPressed: () {
+                                                catLists.isLikePhotos =
+                                                    !catLists.isLikePhotos;
+                                                model.pressedLikeButton(
+                                                  isLikePhotos:
+                                                      catLists.isLikePhotos,
+                                                  id: catLists.id,
+                                                  uid:
+                                                      _auth.currentUser.uid,
+                                                  anotherUid: catLists.uid,
+                                                );
+                                              },
+                                            ),
+                                            SizedBox(
+                                              width: 10,
                                             ),
                                           ],
                                         ),

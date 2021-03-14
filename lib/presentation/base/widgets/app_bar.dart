@@ -58,7 +58,7 @@ AppBar changeAppBar({
                   );
                 },
                 child: NeumorphicIcon(
-                  FlutterIcons.setting_ant,
+                  MaterialCommunityIcons.settings,
                   size: 50,
                   style: NeumorphicStyle(
                     depth: 1,
