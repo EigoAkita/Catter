@@ -6,7 +6,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:provider/provider.dart';
-
 import 'base_model.dart';
 
 class BasePage extends StatelessWidget {
