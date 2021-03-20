@@ -485,6 +485,9 @@ class CatPostsPage extends StatelessWidget {
                             ),
                           ],
                         ),
+                        SizedBox(
+                          height: 30,
+                        ),
                       ],
                     ),
                   ),

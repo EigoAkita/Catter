@@ -69,13 +69,4 @@ class UsersApi {
       },
     );
   }
-
-  ///users collectionの、uidを取得する
-  Future getUid({
-    @required String uid,
-  }) async {
-    final result = await _usersCollection.doc(uid).get();
-
-    return result;
-  }
 }

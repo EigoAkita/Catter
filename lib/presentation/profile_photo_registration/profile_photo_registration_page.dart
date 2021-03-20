@@ -1,6 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/variables.dart';
-import 'package:catter_app/domain/my_profile.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_mode.dart';
 import 'package:flutter/cupertino.dart';
@@ -10,9 +9,7 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePhotoRegistrationPage extends StatelessWidget {
-  ProfilePhotoRegistrationPage({this.myProfile});
 
-  final MyProfile myProfile;
   final nicknameController = TextEditingController();
   final List variables = Variables.inputFormTemplateInRegistrationVariables;
   final picker = ImagePicker();
