@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class PostAdd {
   PostAdd(DocumentSnapshot doc) {
     this.id = doc.id;
-    this.uid = doc.data()['uid'];
+    this.userId = doc.data()['userId'];
     this.catName = doc.data()['catName'];
     this.catType = doc.data()['catType'];
     this.createdAt = doc.data()['createdAt'];
@@ -11,7 +11,7 @@ class PostAdd {
     this.catPhotoURL = doc.data()['catPhotoURL'];
   }
   String id;
-  String uid;
+  String userId;
   String catName;
   String catType;
   Timestamp createdAt;
