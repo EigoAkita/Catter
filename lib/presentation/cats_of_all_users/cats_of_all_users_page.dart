@@ -101,7 +101,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                         ),
                                       ),
                                       Visibility(
-                                        visible: catLists.uid ==
+                                        visible: catLists.userId ==
                                             _auth.currentUser.uid,
                                         child: Row(
                                           mainAxisAlignment:
@@ -161,7 +161,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                         ),
                                       ),
                                       Visibility(
-                                        visible: catLists.uid !=
+                                        visible: catLists.userId !=
                                             _auth.currentUser.uid,
                                         child: Row(
                                           mainAxisAlignment:
@@ -202,7 +202,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                     try {
                                                       await model.submitForm(
                                                         inappropriatePost: catLists.id,
-                                                        anotherContributor: catLists.uid,
+                                                        anotherContributor: catLists.userId,
                                                       );
                                                       AwesomeDialog(
                                                         context: context,
@@ -313,7 +313,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                   ),
                                   Visibility(
                                     visible:
-                                        catLists.uid != _auth.currentUser.uid,
+                                        catLists.userId != _auth.currentUser.uid,
                                     child: Column(
                                       children: <Widget>[
                                         Row(
@@ -404,7 +404,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   id: catLists.id,
                                                   uid:
                                                       _auth.currentUser.uid,
-                                                  anotherUid: catLists.uid,
+                                                  anotherUid: catLists.userId,
                                                 );
                                               },
                                             ),

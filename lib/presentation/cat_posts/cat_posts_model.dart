@@ -41,7 +41,7 @@ class CatPostsModel extends ChangeNotifier {
 
     _batch.set(_myPostDoc, {
       'id': _generatedId,
-      'uid': this._auth.currentUser.uid,
+      'userId': this._auth.currentUser.uid,
       'catName': this.catName,
       'catType': this.catType,
       'createdAt': FieldValue.serverTimestamp(),

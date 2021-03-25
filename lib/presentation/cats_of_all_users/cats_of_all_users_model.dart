@@ -23,7 +23,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
   }) async {
     try {
       await FirebaseFirestore.instance.collection('contacts').add({
-        'uid': FirebaseAuth.instance.currentUser.uid,
+        'userId': FirebaseAuth.instance.currentUser.uid,
         'email': this.mail,
         'createdAt': FieldValue.serverTimestamp(),
         'inappropriatePost': inappropriatePost,

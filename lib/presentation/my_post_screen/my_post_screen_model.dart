@@ -26,7 +26,7 @@ class MyPostScreenModel extends ChangeNotifier {
     snapshots.listen((snapshot) {
       final docs = snapshot.docs;
       final myPostScreenList = docs.map((doc) => MyPostScreen(doc)).toList();
-      myPostScreenList.retainWhere((value) => value.uid == uid);
+      myPostScreenList.retainWhere((value) => value.userId == uid);
       myPostScreenList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       this.myPostScreenList = myPostScreenList;
       endLoading();

@@ -16,11 +16,17 @@ import 'package:catter_app/presentation/ranking/ranking_model.dart';
 import 'package:catter_app/presentation/setting/setting_model.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:provider/provider.dart';
 
 Future<void> main() async {
   // need to run async method in main function
   WidgetsFlutterBinding.ensureInitialized();
+
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
+
   await Firebase.initializeApp();
 
   final originalCheck = Provider.debugCheckInvalidValueType;

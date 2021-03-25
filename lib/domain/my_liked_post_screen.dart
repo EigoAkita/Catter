@@ -4,7 +4,7 @@ class MyLikedPostScreen {
   MyLikedPostScreen(DocumentSnapshot doc) {
     this.documentReference = doc.reference;
     this.id = doc.id;
-    this.uid = doc.data()['uid'];
+    this.userId = doc.data()['userId'];
     this.catName = doc.data()['catName'];
     this.catType = doc.data()['catType'];
     this.createdAt = doc.data()['createdAt'];
@@ -14,7 +14,7 @@ class MyLikedPostScreen {
   }
 
   String id;
-  String uid;
+  String userId;
   String catName;
   String catType;
   Timestamp createdAt;

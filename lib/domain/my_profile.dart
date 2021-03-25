@@ -3,7 +3,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 class MyProfile{
   MyProfile(DocumentSnapshot doc){
     this.id =doc.id;
-    this.uid = doc.data()['uid'];
+    this.userId = doc.data()['userId'];
     this.displayName = doc.data()['displayName'];
     this.email = doc.data()['email'];
     this.createdAt = doc.data()['createdAt'];
@@ -14,7 +14,7 @@ class MyProfile{
   }
 
   String id;
-  String uid;
+  String userId;
   String displayName;
   String email;
   Timestamp createdAt;

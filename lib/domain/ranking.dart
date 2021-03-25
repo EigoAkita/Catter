@@ -4,7 +4,7 @@ class Ranking {
   Ranking(DocumentSnapshot doc) {
     this.documentReference = doc.reference;
     this.id = doc.id;
-    this.uid = doc.data()['uid'];
+    this.userId = doc.data()['userId'];
     this.createdAt = doc.data()['createdAt'];
     this.updatedAt = doc.data()['updatedAt'];
     this.displayName = doc.data()['displayName'];
@@ -13,7 +13,7 @@ class Ranking {
   }
 
   String id;
-  String uid;
+  String userId;
   Timestamp createdAt;
   Timestamp updatedAt;
   String displayName;
