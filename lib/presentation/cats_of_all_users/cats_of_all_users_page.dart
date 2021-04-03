@@ -68,50 +68,43 @@ class CatsOfAllUsersPage extends StatelessWidget {
                               child: Column(
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
-                                  SizedBox(
-                                    height: 15,
-                                  ),
-                                  Stack(
-                                    children: <Widget>[
-                                      Center(
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              1.10,
-                                          child: Neumorphic(
-                                            style: NeumorphicStyle(
-                                              boxShape:
-                                                  NeumorphicBoxShape.roundRect(
-                                                BorderRadius.circular(10),
-                                              ),
-                                              depth: 3,
-                                              color: CustomColors.brownSub,
-                                              border: NeumorphicBorder(
-                                                color: CustomColors.brownSub,
-                                                width: 5,
-                                              ),
-                                            ),
-                                            child: Image(
-                                              image: NetworkImage(
-                                                catLists.catPhotoURL,
-                                              ),
-                                            ),
-                                          ),
+                                  Visibility(
+                                    visible: catLists.userId ==
+                                        _auth.currentUser.uid,
+                                    child: Column(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 10,
                                         ),
-                                      ),
-                                      Visibility(
-                                        visible: catLists.userId ==
-                                            _auth.currentUser.uid,
-                                        child: Row(
+                                        Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(
-                                                MaterialCommunityIcons.delete,
+                                            NeumorphicButton(
+                                              child: Center(
+                                                child: Text(
+                                                  '削除',
+                                                  style: TextStyle(
+                                                    color: CustomColors
+                                                        .whiteMain,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                              style: NeumorphicStyle(
+                                                depth: 2,
+                                                boxShape: NeumorphicBoxShape
+                                                    .roundRect(
+                                                  BorderRadius.circular(5),
+                                                ),
                                                 color: CustomColors.grayMain,
-                                                size: 30,
+                                                border: NeumorphicBorder(
+                                                  color:
+                                                      CustomColors.whiteMain,
+                                                  width: 3,
+                                                ),
                                               ),
                                               onPressed: () async {
                                                 AwesomeDialog(
@@ -139,8 +132,8 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   btnOkOnPress: () async {
                                                     await model.deleteMyPost(
                                                       id: catLists.id,
-                                                      uid:
-                                                          _auth.currentUser.uid,
+                                                      uid: _auth
+                                                          .currentUser.uid,
                                                     );
                                                     await model.fetchPosts();
                                                   },
@@ -159,21 +152,51 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                      ),
-                                      Visibility(
-                                        visible: catLists.userId !=
-                                            _auth.currentUser.uid,
-                                        child: Row(
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Visibility(
+                                    visible: catLists.userId !=
+                                        _auth.currentUser.uid,
+                                    child: Column(
+                                      children: <Widget>[
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
                                           mainAxisAlignment:
                                               MainAxisAlignment.end,
                                           children: <Widget>[
-                                            IconButton(
-                                              icon: Icon(
-                                                MaterialCommunityIcons.alert_circle,
-                                                color: Colors.red,
-                                                size: 30,
+                                            NeumorphicButton(
+                                              child: Center(
+                                                child: const Text(
+                                                  '通報',
+                                                  style: TextStyle(
+                                                    color: CustomColors
+                                                        .whiteMain,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
                                               ),
-                                              onPressed: () {
+                                              style: NeumorphicStyle(
+                                                depth: 2,
+                                                boxShape: NeumorphicBoxShape
+                                                    .roundRect(
+                                                  BorderRadius.circular(5),
+                                                ),
+                                                color: Colors.orange,
+                                                border: NeumorphicBorder(
+                                                  color:
+                                                      CustomColors.whiteMain,
+                                                  width: 3,
+                                                ),
+                                              ),
+                                              onPressed: () async {
                                                 AwesomeDialog(
                                                   context: context,
                                                   animType:
@@ -198,11 +221,14 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   btnCancelText: 'いいえ',
                                                   btnOkOnPress: () async {
                                                     model.startLoading();
-                                                    await model.fetchContact();
+                                                    await model
+                                                        .fetchContact();
                                                     try {
                                                       await model.submitForm(
-                                                        inappropriatePost: catLists.id,
-                                                        anotherContributor: catLists.userId,
+                                                        inappropriatePost:
+                                                            catLists.id,
+                                                        anotherContributor:
+                                                            catLists.userId,
                                                       );
                                                       AwesomeDialog(
                                                         context: context,
@@ -225,8 +251,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                           ),
                                                         ),
                                                         btnOkOnPress: () {},
-                                                        btnOkColor: CustomColors
-                                                            .brownMain,
+                                                        btnOkColor:
+                                                            CustomColors
+                                                                .brownMain,
                                                         btnOkText: 'はい',
                                                         buttonsBorderRadius:
                                                             BorderRadius.all(
@@ -255,7 +282,149 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                             SizedBox(
                                               width: 15,
                                             ),
+                                            NeumorphicButton(
+                                              child: Center(
+                                                child: const Text(
+                                                  'ブロック',
+                                                  style: TextStyle(
+                                                    color: CustomColors
+                                                        .whiteMain,
+                                                    fontWeight:
+                                                        FontWeight.bold,
+                                                    fontSize: 15,
+                                                  ),
+                                                ),
+                                              ),
+                                              style: NeumorphicStyle(
+                                                depth: 2,
+                                                boxShape: NeumorphicBoxShape
+                                                    .roundRect(
+                                                  BorderRadius.circular(5),
+                                                ),
+                                                color: Colors.red,
+                                                border: NeumorphicBorder(
+                                                  color:
+                                                      CustomColors.whiteMain,
+                                                  width: 3,
+                                                ),
+                                              ),
+                                              onPressed: () async {
+                                                AwesomeDialog(
+                                                  context: context,
+                                                  animType:
+                                                      AnimType.BOTTOMSLIDE,
+                                                  dialogType:
+                                                      DialogType.WARNING,
+                                                  body: Center(
+                                                    child: Text(
+                                                      'この投稿をブロックしますか？',
+                                                      style: TextStyle(
+                                                        color: CustomColors
+                                                            .grayMain,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        fontSize: 15,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  btnCancelOnPress: () {},
+                                                  btnCancelColor:
+                                                      CustomColors.brownMain,
+                                                  btnCancelText: 'いいえ',
+                                                  btnOkOnPress: () async {
+                                                    model.startLoading();
+                                                    try {
+                                                      await model
+                                                          .blockUserPosts(
+                                                        id: catLists.id,
+                                                      );
+                                                      AwesomeDialog(
+                                                        context: context,
+                                                        animType: AnimType
+                                                            .BOTTOMSLIDE,
+                                                        dialogType: DialogType
+                                                            .NO_HEADER,
+                                                        body: Center(
+                                                          child: Text(
+                                                            '投稿をブロックしました',
+                                                            style: TextStyle(
+                                                              color:
+                                                                  CustomColors
+                                                                      .grayMain,
+                                                              fontWeight:
+                                                                  FontWeight
+                                                                      .bold,
+                                                              fontSize: 15,
+                                                            ),
+                                                          ),
+                                                        ),
+                                                        btnOkOnPress: () {},
+                                                        btnOkColor:
+                                                            CustomColors
+                                                                .brownMain,
+                                                        btnOkText: 'はい',
+                                                        buttonsBorderRadius:
+                                                            BorderRadius.all(
+                                                          Radius.circular(5),
+                                                        ),
+                                                      )..show();
+                                                      model.endLoading();
+                                                    } catch (e) {
+                                                      model.endLoading();
+                                                      errorShowDialog(
+                                                          loginErrorText:
+                                                              'エラーが発生しました',
+                                                          context: context);
+                                                    }
+                                                  },
+                                                  btnOkColor:
+                                                      CustomColors.brownMain,
+                                                  btnOkText: 'ブロックする',
+                                                  buttonsBorderRadius:
+                                                      BorderRadius.all(
+                                                    Radius.circular(5),
+                                                  ),
+                                                )..show();
+                                              },
+                                            ),
+                                            SizedBox(
+                                              width: 15,
+                                            ),
                                           ],
+                                        ),
+                                        SizedBox(
+                                          height: 15,
+                                        ),
+                                      ],
+                                    ),
+                                  ),
+                                  Stack(
+                                    children: <Widget>[
+                                      Center(
+                                        child: Container(
+                                          width: MediaQuery.of(context)
+                                                  .size
+                                                  .width /
+                                              1.10,
+                                          child: Neumorphic(
+                                            style: NeumorphicStyle(
+                                              boxShape: NeumorphicBoxShape
+                                                  .roundRect(
+                                                BorderRadius.circular(10),
+                                              ),
+                                              depth: 3,
+                                              color: CustomColors.brownSub,
+                                              border: NeumorphicBorder(
+                                                color: CustomColors.brownSub,
+                                                width: 5,
+                                              ),
+                                            ),
+                                            child: Image(
+                                              image: NetworkImage(
+                                                catLists.catPhotoURL,
+                                              ),
+                                            ),
+                                          ),
                                         ),
                                       ),
                                       Column(
@@ -312,12 +481,13 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                     height: 15,
                                   ),
                                   Visibility(
-                                    visible:
-                                        catLists.userId != _auth.currentUser.uid,
+                                    visible: catLists.userId !=
+                                        _auth.currentUser.uid,
                                     child: Column(
                                       children: <Widget>[
                                         Row(
-                                          mainAxisAlignment: MainAxisAlignment.center,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
                                           children: <Widget>[
                                             SizedBox(
                                               width: 10,
@@ -335,13 +505,12 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 ),
                                               ),
                                               child: Icon(
-                                              MaterialCommunityIcons.star,
+                                                MaterialCommunityIcons.star,
                                                 size: 30,
                                                 color: catLists
                                                         .isFavoritePhotos
                                                     ? CustomColors.grayMain
-                                                    : CustomColors
-                                                        .whiteMain,
+                                                    : CustomColors.whiteMain,
                                               ),
                                               onPressed: () async {
                                                 catLists.isFavoritePhotos =
@@ -352,8 +521,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   isFavoritePhotos: catLists
                                                       .isFavoritePhotos,
                                                   id: catLists.id,
-                                                  uid:
-                                                      _auth.currentUser.uid,
+                                                  uid: _auth.currentUser.uid,
                                                 );
                                               },
                                             ),
@@ -364,11 +532,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                               'or',
                                               style: NeumorphicStyle(
                                                 depth: 1,
-                                                color:
-                                                    CustomColors.whiteMain,
+                                                color: CustomColors.whiteMain,
                                               ),
-                                              textStyle:
-                                                  NeumorphicTextStyle(
+                                              textStyle: NeumorphicTextStyle(
                                                 fontSize: 25,
                                                 fontWeight: FontWeight.bold,
                                               ),
@@ -392,8 +558,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 size: 30,
                                                 color: catLists.isLikePhotos
                                                     ? CustomColors.grayMain
-                                                    : CustomColors
-                                                        .whiteMain,
+                                                    : CustomColors.whiteMain,
                                               ),
                                               onPressed: () {
                                                 catLists.isLikePhotos =
@@ -402,8 +567,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                   isLikePhotos:
                                                       catLists.isLikePhotos,
                                                   id: catLists.id,
-                                                  uid:
-                                                      _auth.currentUser.uid,
+                                                  uid: _auth.currentUser.uid,
                                                   anotherUid: catLists.userId,
                                                 );
                                               },

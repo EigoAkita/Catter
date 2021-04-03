@@ -13,6 +13,7 @@ class CatsOfAllUsers {
     this.catType = doc.data()['catType'];
     this.favoriteAt = doc.data()['favoriteAt'];
     this.likedAt = doc.data()['likedAt'];
+    this.blockedUserId = doc.data()['blockedUserId'];
     this.isLikePhotos = true;
     this.isFavoritePhotos =true;
   }
@@ -28,5 +29,6 @@ class CatsOfAllUsers {
   bool isLikePhotos;
   Timestamp favoriteAt;
   Timestamp likedAt;
+  List<dynamic> blockedUserId;
   DocumentReference documentReference;
 }

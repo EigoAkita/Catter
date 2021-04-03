@@ -47,12 +47,18 @@ class CatsOfAllUsersModel extends ChangeNotifier {
 
   Future<void> fetchPostsRealTime() async {
     startLoading();
+    //postsの中の投稿を150件しか表示させない
     final snapshots =
-        FirebaseFirestore.instance.collection('posts').snapshots();
+        FirebaseFirestore.instance.collection('posts').limit(150).snapshots();
     snapshots.listen((snapshot) {
       final docs = snapshot.docs;
       final catsOfAllUsersList =
           docs.map((doc) => CatsOfAllUsers(doc)).toList();
+      //ログインしている自身のuserIdまたはblockUserId内に既に自身のuidがある投稿は削除
+      catsOfAllUsersList.removeWhere(
+        (blockUserList) =>
+            blockUserList.blockedUserId.toString().contains(uid),
+      );
       catsOfAllUsersList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       this.catsOfAllUsersList = catsOfAllUsersList;
       endLoading();
@@ -171,6 +177,20 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     _batch.update(_myUserDoc, {'postedCount': FieldValue.increment(-1)});
 
     await _batch.commit();
+  }
+
+  Future<void> blockUserPosts({@required String id}) async {
+    try {
+      await FirebaseFirestore.instance.collection('posts').doc(id).update(
+        <String, FieldValue>{
+          'blockedUserId': FieldValue.arrayUnion(<String>[uid]),
+        },
+      );
+    } catch (e) {
+      print('ブロックした時にエラーが発生');
+      print(e);
+    }
+    notifyListeners();
   }
 
   void switchFavoriteState({
