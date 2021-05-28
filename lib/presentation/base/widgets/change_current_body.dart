@@ -8,6 +8,7 @@ Widget changeCurrentBody({
   @required BaseModel model,
 }) {
   return SafeArea(
+    //Stackウィジェットを使って画面を持ちつつ、Offstageで表示切り替え
     child: Stack(
       children: <Widget>[
         Offstage(

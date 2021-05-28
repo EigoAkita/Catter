@@ -1,8 +1,11 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/cat_type.dart';
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/main_dialog.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_model.dart';
+import 'package:catter_app/presentation/cat_posts/widgets/post_text.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_material_pickers/flutter_material_pickers.dart';
@@ -80,14 +83,7 @@ class CatPostsPage extends StatelessWidget {
                                         ),
                                         Expanded(
                                           flex: 11,
-                                          child: Text(
-                                            '猫の名前',
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: CustomColors.whiteMain,
-                                            ),
-                                          ),
+                                          child: postText(postName: '猫の名前'),
                                         ),
                                         const Expanded(
                                           flex: 1,
@@ -172,14 +168,7 @@ class CatPostsPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 6,
-                                    child: Text(
-                                      '猫の種類',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: CustomColors.whiteMain,
-                                      ),
-                                    ),
+                                    child: postText(postName: '猫の種類'),
                                   ),
                                   const Expanded(
                                     flex: 1,
@@ -294,14 +283,7 @@ class CatPostsPage extends StatelessWidget {
                                   ),
                                   Expanded(
                                     flex: 6,
-                                    child: Text(
-                                      '猫の写真',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: CustomColors.whiteMain,
-                                      ),
-                                    ),
+                                    child: postText(postName: '猫の写真'),
                                   ),
                                   const Expanded(
                                     flex: 1,
@@ -439,25 +421,15 @@ class CatPostsPage extends StatelessWidget {
                                         catTypes.contains(model.catType) &&
                                         model.imageFile != null
                                     ? () async {
-                                        AwesomeDialog(
+                                        mainDialog(
                                           context: context,
                                           animType: AnimType.BOTTOMSLIDE,
                                           dialogType: DialogType.QUESTION,
-                                          body: Center(
-                                            child: Text(
-                                              '猫の写真を投稿しますか？',
-                                              style: TextStyle(
-                                                color: CustomColors.grayMain,
-                                                fontWeight: FontWeight.bold,
-                                                fontSize: 15,
-                                              ),
-                                            ),
-                                          ),
-                                          btnCancelOnPress: () {},
-                                          btnCancelColor:
-                                              CustomColors.brownMain,
-                                          btnCancelText: 'いいえ',
-                                          btnOkOnPress: () async {
+                                          dialogText: '猫の写真を投稿しますか？',
+                                          cancelPress: () {},
+                                          isOKOnly: true,
+                                          subOKText: 'はい',
+                                          okPress: () async {
                                             model.startLoading();
                                             await model.addPostsToFirebase();
                                             model.endLoading();
@@ -469,12 +441,7 @@ class CatPostsPage extends StatelessWidget {
                                               ),
                                             );
                                           },
-                                          btnOkColor: CustomColors.brownMain,
-                                          btnOkText: 'はい',
-                                          buttonsBorderRadius: BorderRadius.all(
-                                            Radius.circular(5),
-                                          ),
-                                        )..show();
+                                        );
                                       }
                                     : null,
                               ),
@@ -494,18 +461,9 @@ class CatPostsPage extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CustomColors.brownSub,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),

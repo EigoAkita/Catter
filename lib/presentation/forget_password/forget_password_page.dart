@@ -1,6 +1,8 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/convert_error_message.dart';
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/main_dialog.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/config/will_pop_scope.dart';
 import 'package:catter_app/presentation/email_login/email_login_page.dart';
 import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
@@ -186,55 +188,17 @@ class ForgetPasswordPage extends StatelessWidget {
                                               model.startLoading();
                                               try {
                                                 await model.sendResetEmail();
-                                                AwesomeDialog(
+                                                mainDialog(
+                                                  isOKOnly: false,
                                                   context: context,
                                                   animType:
                                                       AnimType.BOTTOMSLIDE,
                                                   dialogType:
                                                       DialogType.NO_HEADER,
-                                                  body: Center(
-                                                    child: RichText(
-                                                      text: const TextSpan(
-                                                        style: TextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                          color: CustomColors
-                                                              .grayMain,
-                                                        ),
-                                                        children: [
-                                                          TextSpan(
-                                                            text:
-                                                                'パスワードの再設定用メール\nを送信しました。\n',
-                                                          ),
-                                                          TextSpan(
-                                                            text:
-                                                                'メールボックスをご確認ください。',
-                                                          ),
-                                                        ],
-                                                      ),
-                                                      textAlign:
-                                                          TextAlign.center,
-                                                    ),
-                                                  ),
-                                                  btnOkOnPress: () async {
-                                                    await Navigator
-                                                        .pushReplacement(
-                                                      context,
-                                                      MaterialPageRoute(
-                                                        builder: (context) =>
-                                                            EmailLoginPage(),
-                                                      ),
-                                                    );
-                                                  },
-                                                  btnOkColor:
-                                                      CustomColors.brownMain,
-                                                  btnOkText: 'はい',
-                                                  buttonsBorderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
-                                                )..show();
+                                                  dialogText:
+                                                      'パスワード再設定用メール\nを送信しました。\n\nメールボックスをご確認ください。',
+                                                  subOKText: 'はい',
+                                                );
                                                 model.endLoading();
                                               } catch (e) {
                                                 errorShowDialog(
@@ -284,18 +248,7 @@ class ForgetPasswordPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                model.isLoading
-                    ? Container(
-                        color: Colors.black.withOpacity(0.3),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              CustomColors.brownSub,
-                            ),
-                          ),
-                        ),
-                      )
-                    : SizedBox(),
+                screenLoading(isLoading: model.isLoading),
               ],
             );
           },

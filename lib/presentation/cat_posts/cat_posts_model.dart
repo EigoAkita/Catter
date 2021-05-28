@@ -9,13 +9,13 @@ import 'package:image_cropper/image_cropper.dart';
 import 'package:image_picker/image_picker.dart';
 
 class CatPostsModel extends ChangeNotifier {
-  bool isLoading = false;
-  String catName = '';
   var catType = '';
-  bool isCatNameValid = false;
-  bool isCatTypeValid = false;
+  String catName = '';
   String errorCatName = '';
   String errorCatType = '';
+  bool isCatNameValid = false;
+  bool isCatTypeValid = false;
+  bool isLoading = false;
   File imageFile;
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
@@ -57,9 +57,13 @@ class CatPostsModel extends ChangeNotifier {
   }
 
   Future<String> _uploadPostImage() async {
-    String _fileName = "postImage_" +
+    if (imageFile == null) {
+      return '';
+    }
+
+    String _fileName = 'postImage_' +
         DateTime.now().toString() +
-        "_" +
+        '_' +
         _auth.currentUser.uid +
         '.jpg';
     FirebaseStorage storage = FirebaseStorage.instance;

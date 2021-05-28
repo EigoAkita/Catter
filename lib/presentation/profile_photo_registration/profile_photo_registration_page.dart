@@ -1,7 +1,7 @@
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/variables.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
-import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_mode.dart';
+import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
