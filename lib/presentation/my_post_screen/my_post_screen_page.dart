@@ -1,4 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/my_post_screen/my_post_screen_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -60,8 +61,7 @@ class MyPostScreenPage extends StatelessWidget {
                                   width: 2,
                                   color: CustomColors.brownSub,
                                 ),
-                                boxShape:
-                                NeumorphicBoxShape.roundRect(
+                                boxShape: NeumorphicBoxShape.roundRect(
                                   BorderRadius.circular(0),
                                 ),
                               ),
@@ -74,18 +74,9 @@ class MyPostScreenPage extends StatelessWidget {
                     ),
                   ),
                 ),
-                model.isLoading
-                    ? Container(
-                        color: Colors.black.withOpacity(0.3),
-                        child: Center(
-                          child: CircularProgressIndicator(
-                            valueColor: AlwaysStoppedAnimation<Color>(
-                              CustomColors.brownSub,
-                            ),
-                          ),
-                        ),
-                      )
-                    : SizedBox(),
+                screenLoading(
+                  isLoading: model.isLoading,
+                ),
               ],
             ),
           );

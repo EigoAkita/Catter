@@ -489,7 +489,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                 ),
               ),
             ),
-            screenLoading(isLoading: model.isLoading),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),

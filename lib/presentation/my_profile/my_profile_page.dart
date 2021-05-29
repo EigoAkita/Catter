@@ -1,9 +1,10 @@
 import 'package:catter_app/config/custom_colors.dart';
-import 'package:catter_app/config/variables.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/my_favorite_post_screen/my_favorite_post_screen_page.dart';
 import 'package:catter_app/presentation/my_liked_post_screen/my_liked_post_screen_page.dart';
 import 'package:catter_app/presentation/my_post_screen/my_post_screen_page.dart';
 import 'package:catter_app/presentation/my_profile/my_profile_model.dart';
+import 'package:catter_app/presentation/my_profile/widgets/transition_button.dart';
 import 'package:catter_app/presentation/my_profile_change/my_profile_change_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -13,16 +14,7 @@ import 'package:provider/provider.dart';
 
 // ignore: must_be_immutable
 class MyProfilePage extends StatelessWidget {
-  final nicknameController = TextEditingController();
-  final List variables = Variables.inputFormTemplateInRegistrationVariables;
   final double radius = 130;
-
-  List<String> myProfileTextLists = <String>[
-    'マイプロフィール',
-    '自分の投稿',
-    'いいねした投稿',
-    'お気に入り',
-  ];
 
   @override
   Widget build(BuildContext context) {
@@ -185,304 +177,87 @@ class MyProfilePage extends StatelessWidget {
                       SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
+                      transitionButton(
+                        tapAction: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  MyProfileChangePage(),
+                              builder: (context) => MyProfileChangePage(),
                             ),
                           );
                         },
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints.expand(height: 65),
-                          child: Neumorphic(
-                            style: NeumorphicStyle(
-                              depth: 1,
-                              color: CustomColors.whiteMain,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(0),
-                              ),
-                            ),
-                            child: Container(
-                              color: CustomColors.whiteMain,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      const Icon(
-                                        MaterialCommunityIcons.human,
-                                        size: 30,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      Text(
-                                        '${myProfileTextLists[0]}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: CustomColors.brownMain,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 25,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                        transitionIcon: Icon(
+                          MaterialCommunityIcons.human,
+                          size: 30,
+                          color: CustomColors.brownMain,
                         ),
+                        myProfileText: 'マイプロフィール',
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
+                      transitionButton(
+                        tapAction: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  MyPostScreenPage(),
+                              builder: (context) => MyPostScreenPage(),
                             ),
                           );
                         },
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints.expand(height: 65),
-                          child: Neumorphic(
-                            style: NeumorphicStyle(
-                              depth: 1,
-                              color: CustomColors.whiteMain,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(0),
-                              ),
-                            ),
-                            child: Container(
-                              color: CustomColors.whiteMain,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      const Icon(
-                                        MaterialCommunityIcons.file_document_box,
-                                        size: 30,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      Text(
-                                        '${myProfileTextLists[1]}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: CustomColors.brownMain,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 25,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                        transitionIcon: Icon(
+                          MaterialCommunityIcons.file_document_box,
+                          size: 30,
+                          color: CustomColors.brownMain,
                         ),
+                        myProfileText: '自分の投稿',
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
+                      transitionButton(
+                        tapAction: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  MyLikedPostScreenPage(),
+                              builder: (context) => MyLikedPostScreenPage(),
                             ),
                           );
                         },
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints.expand(height: 65),
-                          child: Neumorphic(
-                            style: NeumorphicStyle(
-                              depth: 1,
-                              color: CustomColors.whiteMain,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(0),
-                              ),
-                            ),
-                            child: Container(
-                              color: CustomColors.whiteMain,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      const Icon(
-                                        MaterialCommunityIcons.heart,
-                                        size: 30,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      Text(
-                                        '${myProfileTextLists[2]}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: CustomColors.brownMain,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 25,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                        transitionIcon: Icon(
+                          MaterialCommunityIcons.heart,
+                          size: 30,
+                          color: CustomColors.brownMain,
                         ),
+                        myProfileText: 'いいねした投稿',
                       ),
                       SizedBox(
                         height: 10,
                       ),
-                      GestureDetector(
-                        behavior: HitTestBehavior.opaque,
-                        onTap: () {
+                      transitionButton(
+                        tapAction: () {
                           Navigator.pushReplacement(
                             context,
                             MaterialPageRoute(
-                              builder: (context) =>
-                                  MyFavoritePostScreenPage(),
+                              builder: (context) => MyFavoritePostScreenPage(),
                             ),
                           );
                         },
-                        child: ConstrainedBox(
-                          constraints: const BoxConstraints.expand(height: 65),
-                          child: Neumorphic(
-                            style: NeumorphicStyle(
-                              depth: 1,
-                              color: CustomColors.whiteMain,
-                              boxShape: NeumorphicBoxShape.roundRect(
-                                BorderRadius.circular(0),
-                              ),
-                            ),
-                            child: Container(
-                              color: CustomColors.whiteMain,
-                              child: Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: <Widget>[
-                                  Row(
-                                    children: <Widget>[
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      const Icon(
-                                        MaterialCommunityIcons.star,
-                                        size: 30,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                      Text(
-                                        '${myProfileTextLists[3]}',
-                                        style: const TextStyle(
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.bold,
-                                          color: CustomColors.brownMain,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      const Icon(
-                                        Icons.arrow_forward_ios,
-                                        size: 25,
-                                        color: CustomColors.brownMain,
-                                      ),
-                                      const SizedBox(
-                                        width: 15,
-                                      ),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
+                        transitionIcon: Icon(
+                          MaterialCommunityIcons.star,
+                          size: 30,
+                          color: CustomColors.brownMain,
                         ),
+                        myProfileText: 'お気に入り',
                       ),
                     ],
                   ),
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CustomColors.brownSub,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),

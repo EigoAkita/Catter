@@ -1,5 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/main_dialog.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/my_profile_change/my_profile_change_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -65,7 +67,7 @@ class MyProfileChangePage extends StatelessWidget {
                               ConstrainedBox(
                                 constraints: BoxConstraints(
                                   maxWidth:
-                                  MediaQuery.of(context).size.width / 1.15,
+                                      MediaQuery.of(context).size.width / 1.15,
                                 ),
                                 child: Column(
                                   children: <Widget>[
@@ -109,7 +111,7 @@ class MyProfileChangePage extends StatelessWidget {
                                               depth: 1,
                                               color: CustomColors.whiteMain,
                                               shadowDarkColorEmboss:
-                                              Colors.blueGrey,
+                                                  Colors.blueGrey,
                                             ),
                                             child: Column(
                                               children: <Widget>[
@@ -118,27 +120,30 @@ class MyProfileChangePage extends StatelessWidget {
                                                 ),
                                                 TextFormField(
                                                   textAlign: TextAlign.center,
-                                                  controller: newDisplayNameController,
+                                                  controller:
+                                                      newDisplayNameController,
                                                   onChanged: (text) {
-                                                    model.changeDisplayName(text);
+                                                    model.changeDisplayName(
+                                                        text);
                                                   },
                                                   obscureText: false,
                                                   maxLines: 1,
                                                   decoration: InputDecoration(
-                                                    errorText:
-                                                    model.errorNewDisplayName == ''
+                                                    errorText: model
+                                                                .errorNewDisplayName ==
+                                                            ''
                                                         ? null
                                                         : model
-                                                        .errorNewDisplayName,
+                                                            .errorNewDisplayName,
                                                     filled: true,
                                                     fillColor:
-                                                    CustomColors.whiteMain,
+                                                        CustomColors.whiteMain,
                                                     border: InputBorder.none,
                                                     hintText: 'ラテ丸',
                                                     hintStyle: TextStyle(
                                                       fontSize: 25,
                                                       fontWeight:
-                                                      FontWeight.bold,
+                                                          FontWeight.bold,
                                                     ),
                                                   ),
                                                 ),
@@ -193,80 +198,80 @@ class MyProfileChangePage extends StatelessWidget {
                                 },
                                 child: model.imageFile != null
                                     ? Stack(
-                                  children: <Widget>[
-                                    Center(
-                                      child: Container(
-                                        width: 200,
-                                        height: 200,
-                                        child: Neumorphic(
-                                          style: NeumorphicStyle(
-                                            depth: 1,
-                                            color: CustomColors.brownSub,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                    Center(
-                                      child: Container(
-                                        width: 200,
-                                        height: 200,
-                                        decoration: BoxDecoration(
-                                          border: Border.all(
-                                            color: CustomColors.brownSub,
-                                            width: 5,
-                                          ),
-                                        ),
-                                        child: Image(
-                                          image: FileImage(
-                                            model.imageFile,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                )
-                                    : Stack(
-                                  children: <Widget>[
-                                    Center(
-                                      child: Neumorphic(
-                                        style: NeumorphicStyle(
-                                          depth: 1,
-                                          color: CustomColors.brownSub,
-                                        ),
-                                        child: Container(
-                                          width: 200,
-                                          height: 200,
-                                          decoration: BoxDecoration(
-                                            border: Border.all(
-                                              color:
-                                              CustomColors.brownSub,
-                                              width: 5,
+                                        children: <Widget>[
+                                          Center(
+                                            child: Container(
+                                              width: 200,
+                                              height: 200,
+                                              child: Neumorphic(
+                                                style: NeumorphicStyle(
+                                                  depth: 1,
+                                                  color: CustomColors.brownSub,
+                                                ),
+                                              ),
                                             ),
-                                            color: CustomColors.whiteMain,
                                           ),
-                                          child: Container(
-                                            width: 200,
-                                            height: 200,
+                                          Center(
+                                            child: Container(
+                                              width: 200,
+                                              height: 200,
+                                              decoration: BoxDecoration(
+                                                border: Border.all(
+                                                  color: CustomColors.brownSub,
+                                                  width: 5,
+                                                ),
+                                              ),
+                                              child: Image(
+                                                image: FileImage(
+                                                  model.imageFile,
+                                                ),
+                                              ),
+                                            ),
                                           ),
-                                        ),
+                                        ],
+                                      )
+                                    : Stack(
+                                        children: <Widget>[
+                                          Center(
+                                            child: Neumorphic(
+                                              style: NeumorphicStyle(
+                                                depth: 1,
+                                                color: CustomColors.brownSub,
+                                              ),
+                                              child: Container(
+                                                width: 200,
+                                                height: 200,
+                                                decoration: BoxDecoration(
+                                                  border: Border.all(
+                                                    color:
+                                                        CustomColors.brownSub,
+                                                    width: 5,
+                                                  ),
+                                                  color: CustomColors.whiteMain,
+                                                ),
+                                                child: Container(
+                                                  width: 200,
+                                                  height: 200,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Column(
+                                            children: <Widget>[
+                                              SizedBox(
+                                                height: 85,
+                                              ),
+                                              Center(
+                                                child: Icon(
+                                                  Icons.add_a_photo,
+                                                  size: 30,
+                                                  color: CustomColors.grayMain,
+                                                ),
+                                              ),
+                                            ],
+                                          ),
+                                        ],
                                       ),
-                                    ),
-                                    Column(
-                                      children: <Widget>[
-                                        SizedBox(
-                                          height: 85,
-                                        ),
-                                        Center(
-                                          child: Icon(
-                                            Icons.add_a_photo,
-                                            size: 30,
-                                            color: CustomColors.grayMain,
-                                          ),
-                                        ),
-                                      ],
-                                    ),
-                                  ],
-                                ),
                               ),
                               SizedBox(
                                 height: 40,
@@ -301,7 +306,7 @@ class MyProfileChangePage extends StatelessWidget {
                                     BorderRadius.circular(15),
                                   ),
                                   color: model.isNewDisplayNameValid == true &&
-                                      model.imageFile != null
+                                          model.imageFile != null
                                       ? CustomColors.brownMain
                                       : CustomColors.grayMain,
                                   border: NeumorphicBorder(
@@ -309,47 +314,34 @@ class MyProfileChangePage extends StatelessWidget {
                                     width: 3,
                                   ),
                                 ),
-                                onPressed: model.isNewDisplayNameValid == true &&
-                                    model.imageFile != null
-                                    ? () async {
-                                  AwesomeDialog(
-                                    context: context,
-                                    animType: AnimType.BOTTOMSLIDE,
-                                    dialogType: DialogType.QUESTION,
-                                    body: Center(
-                                      child: Text(
-                                        'プロフィールを変更しますか？',
-                                        style: TextStyle(
-                                          color: CustomColors.grayMain,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 15,
-                                        ),
-                                      ),
-                                    ),
-                                    btnCancelOnPress: () {},
-                                    btnCancelColor:
-                                    CustomColors.brownMain,
-                                    btnCancelText: 'いいえ',
-                                    btnOkOnPress: () async {
-                                      model.startLoading();
-                                      await model.changeProfileToFirebase();
-                                      model.endLoading();
-                                      Navigator.pushReplacement(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              BasePage(),
-                                        ),
-                                      );
-                                    },
-                                    btnOkColor: CustomColors.brownMain,
-                                    btnOkText: 'はい',
-                                    buttonsBorderRadius: BorderRadius.all(
-                                      Radius.circular(5),
-                                    ),
-                                  )..show();
-                                }
-                                    : null,
+                                onPressed:
+                                    model.isNewDisplayNameValid == true &&
+                                            model.imageFile != null
+                                        ? () async {
+                                            mainDialog(
+                                              isOKOnly: true,
+                                              context: context,
+                                              animType: AnimType.BOTTOMSLIDE,
+                                              dialogType: DialogType.QUESTION,
+                                              dialogText: 'プロフィールを変更しますか？',
+                                              subOKText: 'はい',
+                                              cancelPress: () {},
+                                              okPress: () async {
+                                                model.startLoading();
+                                                await model
+                                                    .changeProfileToFirebase();
+                                                model.endLoading();
+                                                Navigator.pushReplacement(
+                                                  context,
+                                                  MaterialPageRoute(
+                                                    builder: (context) =>
+                                                        BasePage(),
+                                                  ),
+                                                );
+                                              },
+                                            );
+                                          }
+                                        : null,
                               ),
                             ),
                             const Expanded(
@@ -364,18 +356,9 @@ class MyProfileChangePage extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-              color: Colors.black.withOpacity(0.3),
-              child: Center(
-                child: CircularProgressIndicator(
-                  valueColor: AlwaysStoppedAnimation<Color>(
-                    CustomColors.brownSub,
-                  ),
-                ),
-              ),
-            )
-                : SizedBox(),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),

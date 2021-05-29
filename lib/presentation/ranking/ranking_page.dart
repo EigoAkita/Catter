@@ -1,4 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/ranking/ranking_model.dart';
 import 'package:catter_app/presentation/ranking/widgets/animated_ranking_list.dart';
 import 'package:flutter/cupertino.dart';
@@ -19,18 +20,9 @@ class RankingPage extends StatelessWidget {
                 AnimatedRankingList(
                   rankingModel: model,
                 ),
-                model.isLoading
-                    ? Container(
-                  color: Colors.black.withOpacity(0.3),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        CustomColors.brownSub,
-                      ),
-                    ),
-                  ),
-                )
-                    : SizedBox(),
+                screenLoading(
+                  isLoading: model.isLoading,
+                ),
               ],
             ),
           );

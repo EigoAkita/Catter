@@ -1,4 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/config/variables.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_model.dart';
@@ -9,7 +10,6 @@ import 'package:image_picker/image_picker.dart';
 import 'package:provider/provider.dart';
 
 class ProfilePhotoRegistrationPage extends StatelessWidget {
-
   final nicknameController = TextEditingController();
   final List variables = Variables.inputFormTemplateInRegistrationVariables;
   final picker = ImagePicker();
@@ -210,18 +210,9 @@ class ProfilePhotoRegistrationPage extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CustomColors.brownSub,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),

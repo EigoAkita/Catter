@@ -1,4 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/my_favorite_post_screen/my_favorite_post_screen_model.dart';
 import 'package:flutter/cupertino.dart';
@@ -53,39 +54,30 @@ class MyFavoritePostScreenPage extends StatelessWidget {
                       children: model.myFavoritePostScreenList
                           .map(
                             (myFavoritePosts) => Neumorphic(
-                          style: NeumorphicStyle(
-                            depth: 1,
-                            color: CustomColors.brownSub,
-                            border: NeumorphicBorder(
-                              width: 2,
-                              color: CustomColors.brownSub,
+                              style: NeumorphicStyle(
+                                depth: 1,
+                                color: CustomColors.brownSub,
+                                border: NeumorphicBorder(
+                                  width: 2,
+                                  color: CustomColors.brownSub,
+                                ),
+                                boxShape: NeumorphicBoxShape.roundRect(
+                                  BorderRadius.circular(0),
+                                ),
+                              ),
+                              child: Image(
+                                image: NetworkImage(
+                                    '${myFavoritePosts.catPhotoURL}'),
+                              ),
                             ),
-                            boxShape:
-                            NeumorphicBoxShape.roundRect(
-                              BorderRadius.circular(0),
-                            ),
-                          ),
-                          child: Image(
-                            image: NetworkImage('${myFavoritePosts.catPhotoURL}'),
-                          ),
-                        ),
-                      )
+                          )
                           .toList(),
                     ),
                   ),
                 ),
-                model.isLoading
-                    ? Container(
-                  color: Colors.black.withOpacity(0.3),
-                  child: Center(
-                    child: CircularProgressIndicator(
-                      valueColor: AlwaysStoppedAnimation<Color>(
-                        CustomColors.brownSub,
-                      ),
-                    ),
-                  ),
-                )
-                    : SizedBox(),
+                screenLoading(
+                  isLoading: model.isLoading,
+                ),
               ],
             ),
           );
