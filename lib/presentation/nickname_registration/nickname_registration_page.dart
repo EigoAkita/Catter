@@ -1,4 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/config/variables.dart';
 import 'package:catter_app/presentation/nickname_registration/widgets/nickname_registration_text_form_widget.dart';
 import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_page.dart';
@@ -128,18 +129,9 @@ class NicknameRegistrationPage extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CustomColors.brownSub,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),

@@ -11,7 +11,7 @@ import 'package:catter_app/presentation/my_profile/my_profile_model.dart';
 import 'package:catter_app/presentation/my_profile_change/my_profile_change_model.dart';
 import 'package:catter_app/presentation/new_member_registration/new_member_registration_model.dart';
 import 'package:catter_app/presentation/nickname_registration/nickname_registration_model.dart';
-import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_mode.dart';
+import 'package:catter_app/presentation/profile_photo_registration/profile_photo_registration_model.dart';
 import 'package:catter_app/presentation/ranking/ranking_model.dart';
 import 'package:catter_app/presentation/setting/setting_model.dart';
 import 'package:firebase_core/firebase_core.dart';

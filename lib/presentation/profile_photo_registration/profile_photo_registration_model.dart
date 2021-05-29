@@ -13,7 +13,7 @@ class ProfilePhotoRegistrationModel extends ChangeNotifier {
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
   Future<void> addProfilePhotoToFirebase() async {
-    final String profilePhotoURL =await _uploadImageFile();
+    final String profilePhotoURL = await _uploadImageFile();
 
     await UsersApi().registerProfilePhoto(
       uid: _auth.currentUser.uid,
@@ -26,7 +26,7 @@ class ProfilePhotoRegistrationModel extends ChangeNotifier {
 
     try {
       PickedFile _pickedFile =
-      await _picker.getImage(source: ImageSource.gallery);
+          await _picker.getImage(source: ImageSource.gallery);
 
       // 選択した画像ファイルのパスを保存
       File _pickedImage = File(_pickedFile.path);
@@ -35,7 +35,10 @@ class ProfilePhotoRegistrationModel extends ChangeNotifier {
       File _croppedImageFile = await ImageCropper.cropImage(
         sourcePath: _pickedImage.path,
         maxHeight: 150,
-        aspectRatio: CropAspectRatio(ratioX: 3, ratioY: 3,),
+        aspectRatio: CropAspectRatio(
+          ratioX: 3,
+          ratioY: 3,
+        ),
         compressFormat: ImageCompressFormat.jpg,
         compressQuality: 10,
         iosUiSettings: IOSUiSettings(
@@ -49,7 +52,6 @@ class ProfilePhotoRegistrationModel extends ChangeNotifier {
         targetWidth: 500,
         targetHeight: 500,
       );
-
     } catch (e) {
       print('Image Picker から画像の圧縮の過程でエラーが発生');
       print(e.toString());
@@ -64,7 +66,7 @@ class ProfilePhotoRegistrationModel extends ChangeNotifier {
       return '';
     }
 
-    String newProfilePhotoName = "profilePhoto_" +
+    String _newProfilePhotoName = "profilePhoto_" +
         DateTime.now().toString() +
         "_" +
         this._auth.currentUser.uid +
@@ -72,7 +74,10 @@ class ProfilePhotoRegistrationModel extends ChangeNotifier {
     FirebaseStorage storage = FirebaseStorage.instance;
     StorageTaskSnapshot snapshot = await storage
         .ref()
-        .child('users/${this._auth.currentUser.uid}/profilePhotos/' + newProfilePhotoName)
+        .child('users/' +
+            _auth.currentUser.uid +
+            '/profilePhotos/' +
+            _newProfilePhotoName)
         .putFile(this.imageFile)
         .onComplete;
     final String newProfilePhotoURL = await snapshot.ref.getDownloadURL();

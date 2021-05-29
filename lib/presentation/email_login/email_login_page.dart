@@ -1,5 +1,6 @@
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/file_path.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/config/variables.dart';
 import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/email_login/email_login_model.dart';
@@ -243,18 +244,9 @@ class EmailLoginPage extends StatelessWidget {
                           ),
                         ),
                       ),
-                      model.isLoading
-                          ? Container(
-                              color: Colors.black.withOpacity(0.3),
-                              child: Center(
-                                child: CircularProgressIndicator(
-                                  valueColor: AlwaysStoppedAnimation<Color>(
-                                    CustomColors.brownSub,
-                                  ),
-                                ),
-                              ),
-                            )
-                          : SizedBox(),
+                      screenLoading(
+                        isLoading: model.isLoading,
+                      ),
                     ],
                   );
                 },

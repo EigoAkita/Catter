@@ -1,5 +1,6 @@
 import 'package:catter_app/config/convert_error_message.dart';
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/config/variables.dart';
 import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
 import 'package:catter_app/presentation/email_login/widgets/login_text_button.dart';
@@ -198,18 +199,9 @@ class NewMemberRegistrationPage extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CustomColors.brownSub,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),

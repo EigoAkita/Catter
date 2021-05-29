@@ -1,5 +1,7 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/custom_colors.dart';
+import 'package:catter_app/config/main_dialog.dart';
+import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
 import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
@@ -85,10 +87,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 child: Text(
                                                   '削除',
                                                   style: TextStyle(
-                                                    color: CustomColors
-                                                        .whiteMain,
-                                                    fontWeight:
-                                                        FontWeight.bold,
+                                                    color:
+                                                        CustomColors.whiteMain,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 15,
                                                   ),
                                                 ),
@@ -101,50 +102,30 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 ),
                                                 color: CustomColors.grayMain,
                                                 border: NeumorphicBorder(
-                                                  color:
-                                                      CustomColors.whiteMain,
+                                                  color: CustomColors.whiteMain,
                                                   width: 3,
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                AwesomeDialog(
+                                                mainDialog(
+                                                  isOKOnly: true,
                                                   context: context,
                                                   animType:
                                                       AnimType.BOTTOMSLIDE,
                                                   dialogType:
                                                       DialogType.QUESTION,
-                                                  body: Center(
-                                                    child: Text(
-                                                      '投稿を削除しますか？',
-                                                      style: TextStyle(
-                                                        color: CustomColors
-                                                            .grayMain,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  btnCancelOnPress: () {},
-                                                  btnCancelColor:
-                                                      CustomColors.brownMain,
-                                                  btnCancelText: 'いいえ',
-                                                  btnOkOnPress: () async {
+                                                  dialogText: '投稿を削除しますか？',
+                                                  subOKText: 'はい',
+                                                  cancelPress: () {},
+                                                  okPress: () async {
                                                     await model.deleteMyPost(
                                                       id: catLists.id,
-                                                      uid: _auth
-                                                          .currentUser.uid,
+                                                      uid:
+                                                          _auth.currentUser.uid,
                                                     );
                                                     await model.fetchPosts();
                                                   },
-                                                  btnOkColor:
-                                                      CustomColors.brownMain,
-                                                  btnOkText: 'はい',
-                                                  buttonsBorderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
-                                                )..show();
+                                                );
                                               },
                                             ),
                                             SizedBox(
@@ -175,10 +156,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 child: const Text(
                                                   '通報',
                                                   style: TextStyle(
-                                                    color: CustomColors
-                                                        .whiteMain,
-                                                    fontWeight:
-                                                        FontWeight.bold,
+                                                    color:
+                                                        CustomColors.whiteMain,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 15,
                                                   ),
                                                 ),
@@ -191,38 +171,25 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 ),
                                                 color: Colors.orange,
                                                 border: NeumorphicBorder(
-                                                  color:
-                                                      CustomColors.whiteMain,
+                                                  color: CustomColors.whiteMain,
                                                   width: 3,
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                AwesomeDialog(
+                                                mainDialog(
+                                                  isOKOnly: true,
                                                   context: context,
                                                   animType:
                                                       AnimType.BOTTOMSLIDE,
                                                   dialogType:
                                                       DialogType.WARNING,
-                                                  body: Center(
-                                                    child: Text(
+                                                  dialogText:
                                                       '不適切な内容や画像として\n報告（通報）しますか？',
-                                                      style: TextStyle(
-                                                        color: CustomColors
-                                                            .grayMain,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  btnCancelOnPress: () {},
-                                                  btnCancelColor:
-                                                      CustomColors.brownMain,
-                                                  btnCancelText: 'いいえ',
-                                                  btnOkOnPress: () async {
+                                                  cancelPress: () {},
+                                                  subOKText: 'はい',
+                                                  okPress: () async {
                                                     model.startLoading();
-                                                    await model
-                                                        .fetchContact();
+                                                    await model.fetchContact();
                                                     try {
                                                       await model.submitForm(
                                                         inappropriatePost:
@@ -230,36 +197,16 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                         anotherContributor:
                                                             catLists.userId,
                                                       );
-                                                      AwesomeDialog(
-                                                        context: context,
-                                                        animType: AnimType
-                                                            .BOTTOMSLIDE,
-                                                        dialogType: DialogType
-                                                            .NO_HEADER,
-                                                        body: Center(
-                                                          child: Text(
-                                                            '報告（通報）が完了しました',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  CustomColors
-                                                                      .grayMain,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 15,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        btnOkOnPress: () {},
-                                                        btnOkColor:
-                                                            CustomColors
-                                                                .brownMain,
-                                                        btnOkText: 'はい',
-                                                        buttonsBorderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(5),
-                                                        ),
-                                                      )..show();
+                                                      mainDialog(
+                                                          isOKOnly: false,
+                                                          context: context,
+                                                          animType: AnimType
+                                                              .BOTTOMSLIDE,
+                                                          dialogType: DialogType
+                                                              .NO_HEADER,
+                                                          dialogText:
+                                                              '報告（通報）が完了しました',
+                                                          subOKText: 'はい');
                                                       model.endLoading();
                                                     } catch (e) {
                                                       model.endLoading();
@@ -269,14 +216,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                           context: context);
                                                     }
                                                   },
-                                                  btnOkColor:
-                                                      CustomColors.brownMain,
-                                                  btnOkText: '報告する',
-                                                  buttonsBorderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
-                                                )..show();
+                                                );
                                               },
                                             ),
                                             SizedBox(
@@ -287,10 +227,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 child: const Text(
                                                   'ブロック',
                                                   style: TextStyle(
-                                                    color: CustomColors
-                                                        .whiteMain,
-                                                    fontWeight:
-                                                        FontWeight.bold,
+                                                    color:
+                                                        CustomColors.whiteMain,
+                                                    fontWeight: FontWeight.bold,
                                                     fontSize: 15,
                                                   ),
                                                 ),
@@ -303,71 +242,38 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 ),
                                                 color: Colors.red,
                                                 border: NeumorphicBorder(
-                                                  color:
-                                                      CustomColors.whiteMain,
+                                                  color: CustomColors.whiteMain,
                                                   width: 3,
                                                 ),
                                               ),
                                               onPressed: () async {
-                                                AwesomeDialog(
+                                                mainDialog(
+                                                  isOKOnly: true,
                                                   context: context,
                                                   animType:
                                                       AnimType.BOTTOMSLIDE,
                                                   dialogType:
                                                       DialogType.WARNING,
-                                                  body: Center(
-                                                    child: Text(
-                                                      'この投稿をブロックしますか？',
-                                                      style: TextStyle(
-                                                        color: CustomColors
-                                                            .grayMain,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        fontSize: 15,
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  btnCancelOnPress: () {},
-                                                  btnCancelColor:
-                                                      CustomColors.brownMain,
-                                                  btnCancelText: 'いいえ',
-                                                  btnOkOnPress: () async {
+                                                  dialogText: 'この投稿をブロックしますか？',
+                                                  subOKText: 'ブロックする',
+                                                  cancelPress: () {},
+                                                  okPress: () async {
                                                     model.startLoading();
                                                     try {
                                                       await model
                                                           .blockUserPosts(
                                                         id: catLists.id,
                                                       );
-                                                      AwesomeDialog(
-                                                        context: context,
-                                                        animType: AnimType
-                                                            .BOTTOMSLIDE,
-                                                        dialogType: DialogType
-                                                            .NO_HEADER,
-                                                        body: Center(
-                                                          child: Text(
-                                                            '投稿をブロックしました',
-                                                            style: TextStyle(
-                                                              color:
-                                                                  CustomColors
-                                                                      .grayMain,
-                                                              fontWeight:
-                                                                  FontWeight
-                                                                      .bold,
-                                                              fontSize: 15,
-                                                            ),
-                                                          ),
-                                                        ),
-                                                        btnOkOnPress: () {},
-                                                        btnOkColor:
-                                                            CustomColors
-                                                                .brownMain,
-                                                        btnOkText: 'はい',
-                                                        buttonsBorderRadius:
-                                                            BorderRadius.all(
-                                                          Radius.circular(5),
-                                                        ),
-                                                      )..show();
+                                                      mainDialog(
+                                                          isOKOnly: false,
+                                                          context: context,
+                                                          animType: AnimType
+                                                              .BOTTOMSLIDE,
+                                                          dialogType: DialogType
+                                                              .NO_HEADER,
+                                                          dialogText:
+                                                              '投稿をブロックしました',
+                                                          subOKText: 'はい');
                                                       model.endLoading();
                                                     } catch (e) {
                                                       model.endLoading();
@@ -377,14 +283,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                           context: context);
                                                     }
                                                   },
-                                                  btnOkColor:
-                                                      CustomColors.brownMain,
-                                                  btnOkText: 'ブロックする',
-                                                  buttonsBorderRadius:
-                                                      BorderRadius.all(
-                                                    Radius.circular(5),
-                                                  ),
-                                                )..show();
+                                                );
                                               },
                                             ),
                                             SizedBox(
@@ -408,8 +307,8 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                               1.10,
                                           child: Neumorphic(
                                             style: NeumorphicStyle(
-                                              boxShape: NeumorphicBoxShape
-                                                  .roundRect(
+                                              boxShape:
+                                                  NeumorphicBoxShape.roundRect(
                                                 BorderRadius.circular(10),
                                               ),
                                               depth: 3,
@@ -495,8 +394,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                             NeumorphicFloatingActionButton(
                                               style: NeumorphicStyle(
                                                 depth: 1,
-                                                color: catLists
-                                                        .isFavoritePhotos
+                                                color: catLists.isFavoritePhotos
                                                     ? CustomColors.whiteMain
                                                     : Colors.amberAccent,
                                                 boxShape: NeumorphicBoxShape
@@ -507,19 +405,17 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                               child: Icon(
                                                 MaterialCommunityIcons.star,
                                                 size: 30,
-                                                color: catLists
-                                                        .isFavoritePhotos
+                                                color: catLists.isFavoritePhotos
                                                     ? CustomColors.grayMain
                                                     : CustomColors.whiteMain,
                                               ),
                                               onPressed: () async {
                                                 catLists.isFavoritePhotos =
-                                                    !catLists
-                                                        .isFavoritePhotos;
+                                                    !catLists.isFavoritePhotos;
                                                 await model
                                                     .pressedFavoriteButton(
-                                                  isFavoritePhotos: catLists
-                                                      .isFavoritePhotos,
+                                                  isFavoritePhotos:
+                                                      catLists.isFavoritePhotos,
                                                   id: catLists.id,
                                                   uid: _auth.currentUser.uid,
                                                 );
@@ -593,18 +489,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                 ),
               ),
             ),
-            model.isLoading
-                ? Container(
-                    color: Colors.black.withOpacity(0.3),
-                    child: Center(
-                      child: CircularProgressIndicator(
-                        valueColor: AlwaysStoppedAnimation<Color>(
-                          CustomColors.brownSub,
-                        ),
-                      ),
-                    ),
-                  )
-                : SizedBox(),
+            screenLoading(
+              isLoading: model.isLoading,
+            ),
           ],
         );
       }),
