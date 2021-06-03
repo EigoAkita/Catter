@@ -1,10 +1,8 @@
-import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/custom_colors.dart';
-import 'package:catter_app/config/main_dialog.dart';
 import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
-import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
+import 'package:catter_app/presentation/cats_of_all_users/widgets/popup_menu.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -75,66 +73,11 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                         _auth.currentUser.uid,
                                     child: Column(
                                       children: <Widget>[
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            NeumorphicButton(
-                                              child: Center(
-                                                child: Text(
-                                                  '削除',
-                                                  style: TextStyle(
-                                                    color:
-                                                        CustomColors.whiteMain,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                              ),
-                                              style: NeumorphicStyle(
-                                                depth: 2,
-                                                boxShape: NeumorphicBoxShape
-                                                    .roundRect(
-                                                  BorderRadius.circular(5),
-                                                ),
-                                                color: CustomColors.grayMain,
-                                                border: NeumorphicBorder(
-                                                  color: CustomColors.whiteMain,
-                                                  width: 3,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                mainDialog(
-                                                  isOKOnly: true,
-                                                  context: context,
-                                                  animType:
-                                                      AnimType.BOTTOMSLIDE,
-                                                  dialogType:
-                                                      DialogType.QUESTION,
-                                                  dialogText: '投稿を削除しますか？',
-                                                  subOKText: 'はい',
-                                                  cancelPress: () {},
-                                                  okPress: () async {
-                                                    await model.deleteMyPost(
-                                                      id: catLists.id,
-                                                      uid:
-                                                          _auth.currentUser.uid,
-                                                    );
-                                                    await model.fetchPosts();
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 15,
+                                        popupMenu(
+                                          isCurrentUser: true,
+                                          model: model,
+                                          id: catLists.id,
+                                          authUid: _auth.currentUser.uid,
                                         ),
                                       ],
                                     ),
@@ -144,156 +87,12 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                         _auth.currentUser.uid,
                                     child: Column(
                                       children: <Widget>[
-                                        SizedBox(
-                                          height: 10,
-                                        ),
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.end,
-                                          children: <Widget>[
-                                            NeumorphicButton(
-                                              child: Center(
-                                                child: const Text(
-                                                  '通報',
-                                                  style: TextStyle(
-                                                    color:
-                                                        CustomColors.whiteMain,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                              ),
-                                              style: NeumorphicStyle(
-                                                depth: 2,
-                                                boxShape: NeumorphicBoxShape
-                                                    .roundRect(
-                                                  BorderRadius.circular(5),
-                                                ),
-                                                color: Colors.orange,
-                                                border: NeumorphicBorder(
-                                                  color: CustomColors.whiteMain,
-                                                  width: 3,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                mainDialog(
-                                                  isOKOnly: true,
-                                                  context: context,
-                                                  animType:
-                                                      AnimType.BOTTOMSLIDE,
-                                                  dialogType:
-                                                      DialogType.WARNING,
-                                                  dialogText:
-                                                      '不適切な内容や画像として\n報告（通報）しますか？',
-                                                  cancelPress: () {},
-                                                  subOKText: 'はい',
-                                                  okPress: () async {
-                                                    model.startLoading();
-                                                    await model.fetchContact();
-                                                    try {
-                                                      await model.submitForm(
-                                                        inappropriatePost:
-                                                            catLists.id,
-                                                        anotherContributor:
-                                                            catLists.userId,
-                                                      );
-                                                      mainDialog(
-                                                          isOKOnly: false,
-                                                          context: context,
-                                                          animType: AnimType
-                                                              .BOTTOMSLIDE,
-                                                          dialogType: DialogType
-                                                              .NO_HEADER,
-                                                          dialogText:
-                                                              '報告（通報）が完了しました',
-                                                          subOKText: 'はい');
-                                                      model.endLoading();
-                                                    } catch (e) {
-                                                      model.endLoading();
-                                                      errorShowDialog(
-                                                          loginErrorText:
-                                                              'エラーが発生しました',
-                                                          context: context);
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                            NeumorphicButton(
-                                              child: Center(
-                                                child: const Text(
-                                                  'ブロック',
-                                                  style: TextStyle(
-                                                    color:
-                                                        CustomColors.whiteMain,
-                                                    fontWeight: FontWeight.bold,
-                                                    fontSize: 15,
-                                                  ),
-                                                ),
-                                              ),
-                                              style: NeumorphicStyle(
-                                                depth: 2,
-                                                boxShape: NeumorphicBoxShape
-                                                    .roundRect(
-                                                  BorderRadius.circular(5),
-                                                ),
-                                                color: Colors.red,
-                                                border: NeumorphicBorder(
-                                                  color: CustomColors.whiteMain,
-                                                  width: 3,
-                                                ),
-                                              ),
-                                              onPressed: () async {
-                                                mainDialog(
-                                                  isOKOnly: true,
-                                                  context: context,
-                                                  animType:
-                                                      AnimType.BOTTOMSLIDE,
-                                                  dialogType:
-                                                      DialogType.WARNING,
-                                                  dialogText: 'この投稿をブロックしますか？',
-                                                  subOKText: 'ブロックする',
-                                                  cancelPress: () {},
-                                                  okPress: () async {
-                                                    model.startLoading();
-                                                    try {
-                                                      await model
-                                                          .blockUserPosts(
-                                                        id: catLists.id,
-                                                      );
-                                                      mainDialog(
-                                                          isOKOnly: false,
-                                                          context: context,
-                                                          animType: AnimType
-                                                              .BOTTOMSLIDE,
-                                                          dialogType: DialogType
-                                                              .NO_HEADER,
-                                                          dialogText:
-                                                              '投稿をブロックしました',
-                                                          subOKText: 'はい');
-                                                      model.endLoading();
-                                                    } catch (e) {
-                                                      model.endLoading();
-                                                      errorShowDialog(
-                                                          loginErrorText:
-                                                              'エラーが発生しました',
-                                                          context: context);
-                                                    }
-                                                  },
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                          ],
-                                        ),
-                                        SizedBox(
-                                          height: 15,
-                                        ),
+                                        popupMenu(
+                                          isCurrentUser: false,
+                                          model: model,
+                                          id: catLists.id,
+                                          catListsUid: catLists.userId,
+                                        )
                                       ],
                                     ),
                                   ),
