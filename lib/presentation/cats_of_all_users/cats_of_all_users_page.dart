@@ -1,14 +1,16 @@
+import 'dart:ui';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
-import 'package:catter_app/presentation/cats_of_all_users/widgets/popup_menu.dart';
+import 'package:catter_app/presentation/cats_of_all_users/widgets/card_bar.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:lite_rolling_switch/lite_rolling_switch.dart';
 import 'package:provider/provider.dart';
 
 class CatsOfAllUsersPage extends StatelessWidget {
@@ -28,29 +30,65 @@ class CatsOfAllUsersPage extends StatelessWidget {
               height: data.size.height,
               width: data.size.width,
               child: Scaffold(
-                floatingActionButton: NeumorphicFloatingActionButton(
-                  style: NeumorphicStyle(
-                    depth: 1,
-                    color: CustomColors.brownSub,
-                    boxShape: NeumorphicBoxShape.roundRect(
-                      BorderRadius.circular(170),
-                    ),
-                  ),
-                  child: Icon(
-                    MaterialCommunityIcons.plus,
-                    size: 40,
-                    color: CustomColors.whiteMain,
-                  ),
-                  onPressed: () {
-                    model.startLoading();
-                    Navigator.pushReplacement(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => CatPostsPage(),
+                floatingActionButton: Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: <Widget>[
+                    Neumorphic(
+                      style: NeumorphicStyle(
+                        depth: 1,
+                        boxShape: NeumorphicBoxShape.roundRect(
+                          BorderRadius.circular(30),
+                        ),
                       ),
-                    );
-                    model.endLoading();
-                  },
+                      child: LiteRollingSwitch(
+                          value: model.isCurrentUserPost,
+                          textOn: 'じぶん',
+                          textOff: 'みんな',
+                          colorOn: CustomColors.brownSub,
+                          colorOff: CustomColors.brownMain,
+                          iconOn: MaterialCommunityIcons.human_male,
+                          iconOff: MaterialCommunityIcons.human_male_male,
+                          animationDuration: Duration(milliseconds: 600),
+                          onChanged: (value) {
+                            WidgetsBinding.instance.addPostFrameCallback((_) {
+                              model.changeCurrentUserPosts();
+                            });
+                          }),
+                    ),
+                    SizedBox(
+                      width: 10,
+                    ),
+                    Container(
+                      width: 50,
+                      height: 50,
+                      child: NeumorphicFloatingActionButton(
+                        style: NeumorphicStyle(
+                          depth: 1,
+                          color: CustomColors.brownSub,
+                          boxShape: NeumorphicBoxShape.roundRect(
+                            BorderRadius.circular(25),
+                          ),
+                        ),
+                        child: Icon(
+                          MaterialCommunityIcons.plus,
+                          size: 35,
+                          color: CustomColors.whiteMain,
+                        ),
+                        onPressed: () {
+                          model.startLoading();
+                          WidgetsBinding.instance.addPostFrameCallback((_) {
+                            Navigator.pushReplacement(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => CatPostsPage(),
+                              ),
+                            );
+                          });
+                          model.endLoading();
+                        },
+                      ),
+                    ),
+                  ],
                 ),
                 body: Center(
                   child: SingleChildScrollView(
@@ -66,34 +104,31 @@ class CatsOfAllUsersPage extends StatelessWidget {
                               ),
                               color: CustomColors.brownSub,
                               child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
                                 children: <Widget>[
                                   Visibility(
                                     visible: catLists.userId ==
                                         _auth.currentUser.uid,
-                                    child: Column(
-                                      children: <Widget>[
-                                        popupMenu(
-                                          isCurrentUser: true,
-                                          model: model,
-                                          id: catLists.id,
-                                          authUid: _auth.currentUser.uid,
-                                        ),
-                                      ],
+                                    child: cardBar(
+                                      model: model,
+                                      profilePhotoURL: catLists.profilePhotoURL,
+                                      displayName: catLists.displayName,
+                                      updatedAt: catLists.updatedAt,
+                                      isCurrentUser: true,
+                                      id: catLists.id,
+                                      uid: _auth.currentUser.uid,
                                     ),
                                   ),
                                   Visibility(
                                     visible: catLists.userId !=
                                         _auth.currentUser.uid,
-                                    child: Column(
-                                      children: <Widget>[
-                                        popupMenu(
-                                          isCurrentUser: false,
-                                          model: model,
-                                          id: catLists.id,
-                                          catListsUid: catLists.userId,
-                                        )
-                                      ],
+                                    child: cardBar(
+                                      model: model,
+                                      profilePhotoURL: catLists.profilePhotoURL,
+                                      displayName: catLists.displayName,
+                                      updatedAt: catLists.updatedAt,
+                                      isCurrentUser: false,
+                                      id: catLists.id,
+                                      userId: catLists.userId,
                                     ),
                                   ),
                                   Stack(

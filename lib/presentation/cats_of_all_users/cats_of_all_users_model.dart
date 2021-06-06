@@ -6,6 +6,7 @@ import 'package:flutter/material.dart';
 class CatsOfAllUsersModel extends ChangeNotifier {
   String uid = FirebaseAuth.instance.currentUser.uid;
   bool isLoading = false;
+  bool isCurrentUserPost = false;
   String mail = '';
   List<CatsOfAllUsers> catsOfAllUsersList = [];
 
@@ -54,10 +55,16 @@ class CatsOfAllUsersModel extends ChangeNotifier {
       final docs = snapshot.docs;
       final catsOfAllUsersList =
           docs.map((doc) => CatsOfAllUsers(doc)).toList();
+      //スイッチの切り替えで自分の投稿
+      if (!isCurrentUserPost) {
+        catsOfAllUsersList.removeWhere(
+          (blockUserList) =>
+              blockUserList.userId != FirebaseAuth.instance.currentUser.uid,
+        );
+      }
       //ログインしている自身のuserIdまたはblockUserId内に既に自身のuidがある投稿は削除
       catsOfAllUsersList.removeWhere(
-        (blockUserList) =>
-            blockUserList.blockedUserId.toString().contains(uid),
+        (blockUserList) => blockUserList.blockedUserId.toString().contains(uid),
       );
       catsOfAllUsersList.sort((a, b) => b.createdAt.compareTo(a.createdAt));
       this.catsOfAllUsersList = catsOfAllUsersList;
@@ -206,6 +213,17 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     @required bool isLikePhotos,
   }) {
     isLikePhotos = !input;
+    notifyListeners();
+  }
+
+  Future<void> changeCurrentUserPosts() async {
+    if (isCurrentUserPost) {
+      isCurrentUserPost = false;
+      await fetchPostsRealTime();
+    } else {
+      isCurrentUserPost = true;
+      await fetchPostsRealTime();
+    }
     notifyListeners();
   }
 

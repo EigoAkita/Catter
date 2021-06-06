@@ -11,6 +11,8 @@ class CatsOfAllUsers {
     this.catName = doc.data()['catName'];
     this.catPhotoURL = doc.data()['catPhotoURL'];
     this.catType = doc.data()['catType'];
+    this.profilePhotoURL = doc.data()['profilePhotoURL'];
+    this.displayName = doc.data()['displayName'];
     this.favoriteAt = doc.data()['favoriteAt'];
     this.likedAt = doc.data()['likedAt'];
     this.blockedUserId = doc.data()['blockedUserId'];
@@ -25,6 +27,8 @@ class CatsOfAllUsers {
   String catName;
   String catPhotoURL;
   String catType;
+  String profilePhotoURL;
+  String displayName;
   bool isFavoritePhotos;
   bool isLikePhotos;
   Timestamp favoriteAt;
