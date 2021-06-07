@@ -1,4 +1,5 @@
 import 'dart:ui';
+import 'package:catter_app/config/convert_weekday_name.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
@@ -105,6 +106,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                               color: CustomColors.brownSub,
                               child: Column(
                                 children: <Widget>[
+                                  SizedBox(
+                                    height: 10,
+                                  ),
                                   Visibility(
                                     visible: catLists.userId ==
                                         _auth.currentUser.uid,
@@ -130,6 +134,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                       id: catLists.id,
                                       userId: catLists.userId,
                                     ),
+                                  ),
+                                  SizedBox(
+                                    height: 5,
                                   ),
                                   Stack(
                                     children: <Widget>[
