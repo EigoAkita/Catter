@@ -1,10 +1,10 @@
 import 'dart:ui';
-import 'package:catter_app/config/convert_weekday_name.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
 import 'package:catter_app/presentation/cats_of_all_users/widgets/card_bar.dart';
+import 'package:catter_app/presentation/user_posts/user_posts_page.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -78,10 +78,11 @@ class CatsOfAllUsersPage extends StatelessWidget {
                         onPressed: () {
                           model.startLoading();
                           WidgetsBinding.instance.addPostFrameCallback((_) {
-                            Navigator.pushReplacement(
+                            Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CatPostsPage(),
+                                builder: (context) => CatPostsPage(
+                                ),
                               ),
                             );
                           });
@@ -120,6 +121,16 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                       isCurrentUser: true,
                                       id: catLists.id,
                                       uid: _auth.currentUser.uid,
+                                      userImageTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserPostsPage(
+                                              userId: catLists.userId,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                   Visibility(
@@ -133,92 +144,85 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                       isCurrentUser: false,
                                       id: catLists.id,
                                       userId: catLists.userId,
+                                      userImageTap: () {
+                                        Navigator.push(
+                                          context,
+                                          MaterialPageRoute(
+                                            builder: (context) => UserPostsPage(
+                                              userId: catLists.userId,
+                                            ),
+                                          ),
+                                        );
+                                      },
                                     ),
                                   ),
                                   SizedBox(
                                     height: 5,
                                   ),
-                                  Stack(
-                                    children: <Widget>[
-                                      Center(
-                                        child: Container(
-                                          width: MediaQuery.of(context)
-                                                  .size
-                                                  .width /
-                                              1.10,
-                                          child: Neumorphic(
-                                            style: NeumorphicStyle(
-                                              boxShape:
-                                                  NeumorphicBoxShape.roundRect(
-                                                BorderRadius.circular(10),
-                                              ),
-                                              depth: 3,
-                                              color: CustomColors.brownSub,
-                                              border: NeumorphicBorder(
-                                                color: CustomColors.brownSub,
-                                                width: 5,
-                                              ),
-                                            ),
-                                            child: Image(
-                                              image: NetworkImage(
-                                                catLists.catPhotoURL,
-                                              ),
-                                            ),
+                                  Center(
+                                    child: Container(
+                                      width: MediaQuery.of(context).size.width /
+                                          1.10,
+                                      child: Neumorphic(
+                                        style: NeumorphicStyle(
+                                          boxShape:
+                                              NeumorphicBoxShape.roundRect(
+                                            BorderRadius.circular(10),
+                                          ),
+                                          depth: 3,
+                                          color: CustomColors.brownSub,
+                                          border: NeumorphicBorder(
+                                            color: CustomColors.brownSub,
+                                            width: 5,
+                                          ),
+                                        ),
+                                        child: Image(
+                                          image: NetworkImage(
+                                            catLists.catPhotoURL,
                                           ),
                                         ),
                                       ),
-                                      Column(
-                                        children: <Widget>[
-                                          SizedBox(
-                                            height: MediaQuery.of(context)
-                                                    .size
-                                                    .shortestSide /
-                                                1.26,
-                                          ),
-                                          Column(
-                                            children: <Widget>[
-                                              Row(
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    width: 25,
-                                                  ),
-                                                  Text(
-                                                    '名前 : ${catLists.catName}',
-                                                    style: TextStyle(
-                                                      fontSize: 12.5,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: CustomColors
-                                                          .whiteMain,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                              Row(
-                                                children: <Widget>[
-                                                  SizedBox(
-                                                    width: 25,
-                                                  ),
-                                                  Text(
-                                                    '種類 : ${catLists.catType}',
-                                                    style: TextStyle(
-                                                      fontSize: 12.5,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: CustomColors
-                                                          .whiteMain,
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ],
-                                          ),
-                                        ],
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    height: 10,
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 25,
+                                      ),
+                                      NeumorphicText(
+                                        '名前 : ${catLists.catName}',
+                                        textStyle: NeumorphicTextStyle(
+                                            fontSize: 12.5,
+                                            fontWeight: FontWeight.bold),
+                                        style: NeumorphicStyle(
+                                          depth: 1,
+                                          color: CustomColors.whiteMain,
+                                        ),
+                                      ),
+                                    ],
+                                  ),
+                                  Row(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        width: 25,
+                                      ),
+                                      NeumorphicText(
+                                        '種類 : ${catLists.catType}',
+                                        textStyle: NeumorphicTextStyle(
+                                            fontSize: 12.5,
+                                            fontWeight: FontWeight.bold),
+                                        style: NeumorphicStyle(
+                                          depth: 1,
+                                          color: CustomColors.whiteMain,
+                                        ),
                                       ),
                                     ],
                                   ),
                                   SizedBox(
-                                    height: 15,
+                                    height: 10,
                                   ),
                                   Visibility(
                                     visible: catLists.userId !=

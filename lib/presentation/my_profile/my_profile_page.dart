@@ -179,10 +179,11 @@ class MyProfilePage extends StatelessWidget {
                       ),
                       transitionButton(
                         tapAction: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyProfileChangePage(),
+                              builder: (context) => MyProfileChangePage(
+                              ),
                             ),
                           );
                         },
@@ -198,10 +199,11 @@ class MyProfilePage extends StatelessWidget {
                       ),
                       transitionButton(
                         tapAction: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyPostScreenPage(),
+                              builder: (context) => MyPostScreenPage(
+                              ),
                             ),
                           );
                         },
@@ -217,10 +219,11 @@ class MyProfilePage extends StatelessWidget {
                       ),
                       transitionButton(
                         tapAction: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyLikedPostScreenPage(),
+                              builder: (context) => MyLikedPostScreenPage(
+                              ),
                             ),
                           );
                         },
@@ -236,10 +239,11 @@ class MyProfilePage extends StatelessWidget {
                       ),
                       transitionButton(
                         tapAction: () {
-                          Navigator.pushReplacement(
+                          Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyFavoritePostScreenPage(),
+                              builder: (context) => MyFavoritePostScreenPage(
+                              ),
                             ),
                           );
                         },

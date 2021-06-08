@@ -43,34 +43,41 @@ class MyPostScreenPage extends StatelessWidget {
             body: Stack(
               children: <Widget>[
                 SingleChildScrollView(
-                  child: SizedBox(
-                    height: data.size.height,
-                    width: data.size.width,
-                    child: GridView.extent(
-                      maxCrossAxisExtent: data.size.width / 3,
-                      padding: const EdgeInsets.all(6),
-                      mainAxisSpacing: 6,
-                      crossAxisSpacing: 6,
-                      children: model.myPostScreenList
-                          .map(
-                            (myPosts) => Neumorphic(
-                              style: NeumorphicStyle(
-                                depth: 1,
-                                color: CustomColors.brownSub,
-                                border: NeumorphicBorder(
-                                  width: 2,
+                  child: GestureDetector(
+                    onHorizontalDragUpdate: (details) {
+                      if (details.delta.dx > 20) {
+                        Navigator.of(context).pop();
+                      }
+                    },
+                    child: SizedBox(
+                      height: data.size.height,
+                      width: data.size.width,
+                      child: GridView.extent(
+                        maxCrossAxisExtent: data.size.width / 3,
+                        padding: const EdgeInsets.all(6),
+                        mainAxisSpacing: 6,
+                        crossAxisSpacing: 6,
+                        children: model.myPostScreenList
+                            .map(
+                              (myPosts) => Neumorphic(
+                                style: NeumorphicStyle(
+                                  depth: 1,
                                   color: CustomColors.brownSub,
+                                  border: NeumorphicBorder(
+                                    width: 2,
+                                    color: CustomColors.brownSub,
+                                  ),
+                                  boxShape: NeumorphicBoxShape.roundRect(
+                                    BorderRadius.circular(0),
+                                  ),
                                 ),
-                                boxShape: NeumorphicBoxShape.roundRect(
-                                  BorderRadius.circular(0),
+                                child: Image(
+                                  image: NetworkImage('${myPosts.catPhotoURL}'),
                                 ),
                               ),
-                              child: Image(
-                                image: NetworkImage('${myPosts.catPhotoURL}'),
-                              ),
-                            ),
-                          )
-                          .toList(),
+                            )
+                            .toList(),
+                      ),
                     ),
                   ),
                 ),

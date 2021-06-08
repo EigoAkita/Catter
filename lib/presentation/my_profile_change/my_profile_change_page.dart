@@ -50,194 +50,176 @@ class MyProfileChangePage extends StatelessWidget {
                 ),
                 body: Center(
                   child: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        Card(
-                          shadowColor: CustomColors.grayMain,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(15),
-                          ),
-                          color: CustomColors.brownSub,
-                          child: Column(
-                            children: [
-                              SizedBox(
-                                height: 40,
-                              ),
-                              ConstrainedBox(
-                                constraints: BoxConstraints(
-                                  maxWidth:
-                                      MediaQuery.of(context).size.width / 1.15,
+                    child: GestureDetector(
+                      onHorizontalDragUpdate: (details) {
+                        if (details.delta.dx > 20) {
+                          Navigator.of(context).pop();
+                        }
+                      },
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: <Widget>[
+                          Card(
+                            shadowColor: CustomColors.grayMain,
+                            shape: RoundedRectangleBorder(
+                              borderRadius: BorderRadius.circular(15),
+                            ),
+                            color: CustomColors.brownSub,
+                            child: Column(
+                              children: [
+                                SizedBox(
+                                  height: 40,
                                 ),
-                                child: Column(
-                                  children: <Widget>[
-                                    Row(
-                                      children: <Widget>[
-                                        const Expanded(
-                                          flex: 1,
-                                          child: SizedBox(),
-                                        ),
-                                        Expanded(
-                                          flex: 11,
-                                          child: Text(
-                                            '新しいニックネーム',
-                                            style: TextStyle(
-                                              fontSize: 20,
-                                              fontWeight: FontWeight.bold,
-                                              color: CustomColors.whiteMain,
+                                ConstrainedBox(
+                                  constraints: BoxConstraints(
+                                    maxWidth:
+                                        MediaQuery.of(context).size.width /
+                                            1.15,
+                                  ),
+                                  child: Column(
+                                    children: <Widget>[
+                                      Row(
+                                        children: <Widget>[
+                                          const Expanded(
+                                            flex: 1,
+                                            child: SizedBox(),
+                                          ),
+                                          Expanded(
+                                            flex: 11,
+                                            child: Text(
+                                              '新しいニックネーム',
+                                              style: TextStyle(
+                                                fontSize: 20,
+                                                fontWeight: FontWeight.bold,
+                                                color: CustomColors.whiteMain,
+                                              ),
                                             ),
                                           ),
-                                        ),
-                                        const Expanded(
-                                          flex: 1,
-                                          child: SizedBox(),
-                                        ),
-                                      ],
-                                    ),
-                                    SizedBox(
-                                      height: 10,
-                                    ),
-                                    Row(
-                                      children: <Widget>[
-                                        const Expanded(
-                                          flex: 1,
-                                          child: SizedBox(),
-                                        ),
-                                        Expanded(
-                                          flex: 11,
-                                          child: Neumorphic(
-                                            style: const NeumorphicStyle(
-                                              shape: NeumorphicShape.flat,
-                                              depth: 1,
-                                              color: CustomColors.whiteMain,
-                                              shadowDarkColorEmboss:
-                                                  Colors.blueGrey,
-                                            ),
-                                            child: Column(
-                                              children: <Widget>[
-                                                SizedBox(
-                                                  height: 2,
-                                                ),
-                                                TextFormField(
-                                                  textAlign: TextAlign.center,
-                                                  controller:
-                                                      newDisplayNameController,
-                                                  onChanged: (text) {
-                                                    model.changeDisplayName(
-                                                        text);
-                                                  },
-                                                  obscureText: false,
-                                                  maxLines: 1,
-                                                  decoration: InputDecoration(
-                                                    errorText: model
-                                                                .errorNewDisplayName ==
-                                                            ''
-                                                        ? null
-                                                        : model
-                                                            .errorNewDisplayName,
-                                                    filled: true,
-                                                    fillColor:
-                                                        CustomColors.whiteMain,
-                                                    border: InputBorder.none,
-                                                    hintText: 'ラテ丸',
-                                                    hintStyle: TextStyle(
-                                                      fontSize: 25,
-                                                      fontWeight:
-                                                          FontWeight.bold,
+                                          const Expanded(
+                                            flex: 1,
+                                            child: SizedBox(),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
+                                      ),
+                                      Row(
+                                        children: <Widget>[
+                                          const Expanded(
+                                            flex: 1,
+                                            child: SizedBox(),
+                                          ),
+                                          Expanded(
+                                            flex: 11,
+                                            child: Neumorphic(
+                                              style: const NeumorphicStyle(
+                                                shape: NeumorphicShape.flat,
+                                                depth: 1,
+                                                color: CustomColors.whiteMain,
+                                                shadowDarkColorEmboss:
+                                                    Colors.blueGrey,
+                                              ),
+                                              child: Column(
+                                                children: <Widget>[
+                                                  SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                  TextFormField(
+                                                    textAlign: TextAlign.center,
+                                                    controller:
+                                                        newDisplayNameController,
+                                                    onChanged: (text) {
+                                                      model.changeDisplayName(
+                                                          text);
+                                                    },
+                                                    obscureText: false,
+                                                    maxLines: 1,
+                                                    decoration: InputDecoration(
+                                                      errorText: model
+                                                                  .errorNewDisplayName ==
+                                                              ''
+                                                          ? null
+                                                          : model
+                                                              .errorNewDisplayName,
+                                                      filled: true,
+                                                      fillColor: CustomColors
+                                                          .whiteMain,
+                                                      border: InputBorder.none,
+                                                      hintText: 'ラテ丸',
+                                                      hintStyle: TextStyle(
+                                                        fontSize: 25,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
                                                     ),
                                                   ),
-                                                ),
-                                                SizedBox(
-                                                  height: 2,
-                                                ),
-                                              ],
+                                                  SizedBox(
+                                                    height: 2,
+                                                  ),
+                                                ],
+                                              ),
                                             ),
                                           ),
+                                          const Expanded(
+                                            flex: 1,
+                                            child: SizedBox(),
+                                          ),
+                                        ],
+                                      ),
+                                    ],
+                                  ),
+                                ),
+                                SizedBox(
+                                  height: 30,
+                                ),
+                                Row(
+                                  children: <Widget>[
+                                    const Expanded(
+                                      flex: 1,
+                                      child: SizedBox(),
+                                    ),
+                                    Expanded(
+                                      flex: 6,
+                                      child: Text(
+                                        '新しいプロフィール写真',
+                                        style: TextStyle(
+                                          fontSize: 20,
+                                          fontWeight: FontWeight.bold,
+                                          color: CustomColors.whiteMain,
                                         ),
-                                        const Expanded(
-                                          flex: 1,
-                                          child: SizedBox(),
-                                        ),
-                                      ],
+                                      ),
+                                    ),
+                                    const Expanded(
+                                      flex: 1,
+                                      child: SizedBox(),
                                     ),
                                   ],
                                 ),
-                              ),
-                              SizedBox(
-                                height: 30,
-                              ),
-                              Row(
-                                children: <Widget>[
-                                  const Expanded(
-                                    flex: 1,
-                                    child: SizedBox(),
-                                  ),
-                                  Expanded(
-                                    flex: 6,
-                                    child: Text(
-                                      '新しいプロフィール写真',
-                                      style: TextStyle(
-                                        fontSize: 20,
-                                        fontWeight: FontWeight.bold,
-                                        color: CustomColors.whiteMain,
-                                      ),
-                                    ),
-                                  ),
-                                  const Expanded(
-                                    flex: 1,
-                                    child: SizedBox(),
-                                  ),
-                                ],
-                              ),
-                              SizedBox(
-                                height: 10,
-                              ),
-                              InkWell(
-                                onTap: () async {
-                                  await model.showImagePicker();
-                                },
-                                child: model.imageFile != null
-                                    ? Stack(
-                                        children: <Widget>[
-                                          Center(
-                                            child: Container(
-                                              width: 200,
-                                              height: 200,
-                                              child: Neumorphic(
-                                                style: NeumorphicStyle(
-                                                  depth: 1,
-                                                  color: CustomColors.brownSub,
+                                SizedBox(
+                                  height: 10,
+                                ),
+                                InkWell(
+                                  onTap: () async {
+                                    await model.showImagePicker();
+                                  },
+                                  child: model.imageFile != null
+                                      ? Stack(
+                                          children: <Widget>[
+                                            Center(
+                                              child: Container(
+                                                width: 200,
+                                                height: 200,
+                                                child: Neumorphic(
+                                                  style: NeumorphicStyle(
+                                                    depth: 1,
+                                                    color:
+                                                        CustomColors.brownSub,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Center(
-                                            child: Container(
-                                              width: 200,
-                                              height: 200,
-                                              decoration: BoxDecoration(
-                                                border: Border.all(
-                                                  color: CustomColors.brownSub,
-                                                  width: 5,
-                                                ),
-                                              ),
-                                              child: Image(
-                                                image: FileImage(
-                                                  model.imageFile,
-                                                ),
-                                              ),
-                                            ),
-                                          ),
-                                        ],
-                                      )
-                                    : Stack(
-                                        children: <Widget>[
-                                          Center(
-                                            child: Neumorphic(
-                                              style: NeumorphicStyle(
-                                                depth: 1,
-                                                color: CustomColors.brownSub,
-                                              ),
+                                            Center(
                                               child: Container(
                                                 width: 200,
                                                 height: 200,
@@ -247,110 +229,141 @@ class MyProfileChangePage extends StatelessWidget {
                                                         CustomColors.brownSub,
                                                     width: 5,
                                                   ),
-                                                  color: CustomColors.whiteMain,
+                                                ),
+                                                child: Image(
+                                                  image: FileImage(
+                                                    model.imageFile,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ],
+                                        )
+                                      : Stack(
+                                          children: <Widget>[
+                                            Center(
+                                              child: Neumorphic(
+                                                style: NeumorphicStyle(
+                                                  depth: 1,
+                                                  color: CustomColors.brownSub,
                                                 ),
                                                 child: Container(
                                                   width: 200,
                                                   height: 200,
+                                                  decoration: BoxDecoration(
+                                                    border: Border.all(
+                                                      color:
+                                                          CustomColors.brownSub,
+                                                      width: 5,
+                                                    ),
+                                                    color:
+                                                        CustomColors.whiteMain,
+                                                  ),
+                                                  child: Container(
+                                                    width: 200,
+                                                    height: 200,
+                                                  ),
                                                 ),
                                               ),
                                             ),
-                                          ),
-                                          Column(
-                                            children: <Widget>[
-                                              SizedBox(
-                                                height: 85,
-                                              ),
-                                              Center(
-                                                child: Icon(
-                                                  Icons.add_a_photo,
-                                                  size: 30,
-                                                  color: CustomColors.grayMain,
+                                            Column(
+                                              children: <Widget>[
+                                                SizedBox(
+                                                  height: 85,
                                                 ),
-                                              ),
-                                            ],
-                                          ),
-                                        ],
-                                      ),
+                                                Center(
+                                                  child: Icon(
+                                                    Icons.add_a_photo,
+                                                    size: 30,
+                                                    color:
+                                                        CustomColors.grayMain,
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ],
+                                        ),
+                                ),
+                                SizedBox(
+                                  height: 40,
+                                ),
+                              ],
+                            ),
+                          ),
+                          SizedBox(
+                            height: 30,
+                          ),
+                          Row(
+                            children: <Widget>[
+                              const Expanded(
+                                flex: 1,
+                                child: SizedBox(),
                               ),
-                              SizedBox(
-                                height: 40,
+                              Expanded(
+                                flex: 8,
+                                child: NeumorphicButton(
+                                  child: Center(
+                                    child: const Text(
+                                      '変更する',
+                                      style: TextStyle(
+                                        color: CustomColors.whiteMain,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 20,
+                                      ),
+                                    ),
+                                  ),
+                                  style: NeumorphicStyle(
+                                    boxShape: NeumorphicBoxShape.roundRect(
+                                      BorderRadius.circular(15),
+                                    ),
+                                    color:
+                                        model.isNewDisplayNameValid == true &&
+                                                model.imageFile != null
+                                            ? CustomColors.brownMain
+                                            : CustomColors.grayMain,
+                                    border: NeumorphicBorder(
+                                      color: CustomColors.whiteMain,
+                                      width: 3,
+                                    ),
+                                  ),
+                                  onPressed:
+                                      model.isNewDisplayNameValid == true &&
+                                              model.imageFile != null
+                                          ? () async {
+                                              mainDialog(
+                                                isOKOnly: true,
+                                                context: context,
+                                                animType: AnimType.BOTTOMSLIDE,
+                                                dialogType: DialogType.QUESTION,
+                                                dialogText: 'プロフィールを変更しますか？',
+                                                subOKText: 'はい',
+                                                cancelPress: () {},
+                                                okPress: () async {
+                                                  model.startLoading();
+                                                  await model
+                                                      .changeProfileToFirebase();
+                                                  model.endLoading();
+                                                  Navigator.pushReplacement(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          BasePage(),
+                                                    ),
+                                                  );
+                                                },
+                                              );
+                                            }
+                                          : null,
+                                ),
+                              ),
+                              const Expanded(
+                                flex: 1,
+                                child: SizedBox(),
                               ),
                             ],
                           ),
-                        ),
-                        SizedBox(
-                          height: 30,
-                        ),
-                        Row(
-                          children: <Widget>[
-                            const Expanded(
-                              flex: 1,
-                              child: SizedBox(),
-                            ),
-                            Expanded(
-                              flex: 8,
-                              child: NeumorphicButton(
-                                child: Center(
-                                  child: const Text(
-                                    '変更する',
-                                    style: TextStyle(
-                                      color: CustomColors.whiteMain,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 20,
-                                    ),
-                                  ),
-                                ),
-                                style: NeumorphicStyle(
-                                  boxShape: NeumorphicBoxShape.roundRect(
-                                    BorderRadius.circular(15),
-                                  ),
-                                  color: model.isNewDisplayNameValid == true &&
-                                          model.imageFile != null
-                                      ? CustomColors.brownMain
-                                      : CustomColors.grayMain,
-                                  border: NeumorphicBorder(
-                                    color: CustomColors.whiteMain,
-                                    width: 3,
-                                  ),
-                                ),
-                                onPressed:
-                                    model.isNewDisplayNameValid == true &&
-                                            model.imageFile != null
-                                        ? () async {
-                                            mainDialog(
-                                              isOKOnly: true,
-                                              context: context,
-                                              animType: AnimType.BOTTOMSLIDE,
-                                              dialogType: DialogType.QUESTION,
-                                              dialogText: 'プロフィールを変更しますか？',
-                                              subOKText: 'はい',
-                                              cancelPress: () {},
-                                              okPress: () async {
-                                                model.startLoading();
-                                                await model
-                                                    .changeProfileToFirebase();
-                                                model.endLoading();
-                                                Navigator.pushReplacement(
-                                                  context,
-                                                  MaterialPageRoute(
-                                                    builder: (context) =>
-                                                        BasePage(),
-                                                  ),
-                                                );
-                                              },
-                                            );
-                                          }
-                                        : null,
-                              ),
-                            ),
-                            const Expanded(
-                              flex: 1,
-                              child: SizedBox(),
-                            ),
-                          ],
-                        ),
-                      ],
+                        ],
+                      ),
                     ),
                   ),
                 ),

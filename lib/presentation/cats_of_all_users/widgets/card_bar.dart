@@ -13,6 +13,7 @@ Widget cardBar({
   @required Timestamp updatedAt,
   @required bool isCurrentUser,
   @required String id,
+  @required Function userImageTap,
   String uid,
   String userId,
 }) {
@@ -40,24 +41,30 @@ Widget cardBar({
         color: profilePhotoURL != null ? null : CustomColors.whiteMain,
       ),
       child: profilePhotoURL != null
-          ? Container(
-              width: 50,
-              height: 50,
-              decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(
-                  5,
-                ),
-                image: DecorationImage(
-                  fit: BoxFit.fill,
-                  image: NetworkImage(
-                    profilePhotoURL,
+          ? GestureDetector(
+              onTap: userImageTap,
+              child: Container(
+                width: 50,
+                height: 50,
+                decoration: BoxDecoration(
+                  borderRadius: BorderRadius.circular(
+                    5,
+                  ),
+                  image: DecorationImage(
+                    fit: BoxFit.fill,
+                    image: NetworkImage(
+                      profilePhotoURL,
+                    ),
                   ),
                 ),
               ),
             )
-          : Icon(
-              MaterialCommunityIcons.cat,
-              color: CustomColors.brownMain,
+          : GestureDetector(
+              onTap: userImageTap,
+              child: Icon(
+                MaterialCommunityIcons.cat,
+                color: CustomColors.brownMain,
+              ),
             ),
     ),
     title: displayName != null

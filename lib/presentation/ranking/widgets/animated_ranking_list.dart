@@ -1,6 +1,7 @@
 import 'package:auto_animated/auto_animated.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/presentation/ranking/ranking_model.dart';
+import 'package:catter_app/presentation/user_posts/user_posts_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -69,7 +70,7 @@ class AnimatedRankingList extends StatelessWidget {
                                         child: Neumorphic(
                                           style: NeumorphicStyle(
                                             boxShape:
-                                            NeumorphicBoxShape.roundRect(
+                                                NeumorphicBoxShape.roundRect(
                                               BorderRadius.circular(10),
                                             ),
                                             depth: 2,
@@ -79,9 +80,22 @@ class AnimatedRankingList extends StatelessWidget {
                                               width: 5,
                                             ),
                                           ),
-                                          child: Image(
-                                            image: NetworkImage(
-                                              rankingLists.profilePhotoURL,
+                                          child: GestureDetector(
+                                            onTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UserPostsPage(
+                                                    userId: rankingLists.id,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                            child: Image(
+                                              image: NetworkImage(
+                                                rankingLists.profilePhotoURL,
+                                              ),
                                             ),
                                           ),
                                         ),
@@ -117,7 +131,7 @@ class AnimatedRankingList extends StatelessWidget {
                                         child: Neumorphic(
                                           style: NeumorphicStyle(
                                             boxShape:
-                                            NeumorphicBoxShape.roundRect(
+                                                NeumorphicBoxShape.roundRect(
                                               BorderRadius.vertical(
                                                   top: Radius.circular(10)),
                                             ),
@@ -126,37 +140,37 @@ class AnimatedRankingList extends StatelessWidget {
                                           ),
                                           child: Center(
                                             child:
-                                            _ranking.indexOf(rankingLists) +
-                                                1 >
-                                                1000
-                                                ? NeumorphicText(
-                                              '${_ranking.indexOf(rankingLists) + 1}',
-                                              textStyle:
-                                              NeumorphicTextStyle(
-                                                fontSize: 15,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                              ),
-                                              style: NeumorphicStyle(
-                                                color: CustomColors
-                                                    .whiteMain,
-                                                depth: 1,
-                                              ),
-                                            )
-                                                : NeumorphicText(
-                                              '${_ranking.indexOf(rankingLists) + 1}',
-                                              textStyle:
-                                              NeumorphicTextStyle(
-                                                fontSize: 20,
-                                                fontWeight:
-                                                FontWeight.bold,
-                                              ),
-                                              style: NeumorphicStyle(
-                                                color: CustomColors
-                                                    .whiteMain,
-                                                depth: 1,
-                                              ),
-                                            ),
+                                                _ranking.indexOf(rankingLists) +
+                                                            1 >
+                                                        1000
+                                                    ? NeumorphicText(
+                                                        '${_ranking.indexOf(rankingLists) + 1}',
+                                                        textStyle:
+                                                            NeumorphicTextStyle(
+                                                          fontSize: 15,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                        style: NeumorphicStyle(
+                                                          color: CustomColors
+                                                              .whiteMain,
+                                                          depth: 1,
+                                                        ),
+                                                      )
+                                                    : NeumorphicText(
+                                                        '${_ranking.indexOf(rankingLists) + 1}',
+                                                        textStyle:
+                                                            NeumorphicTextStyle(
+                                                          fontSize: 20,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                        ),
+                                                        style: NeumorphicStyle(
+                                                          color: CustomColors
+                                                              .whiteMain,
+                                                          depth: 1,
+                                                        ),
+                                                      ),
                                           ),
                                         ),
                                       ),
@@ -166,7 +180,7 @@ class AnimatedRankingList extends StatelessWidget {
                                         child: Neumorphic(
                                           style: NeumorphicStyle(
                                             boxShape:
-                                            NeumorphicBoxShape.roundRect(
+                                                NeumorphicBoxShape.roundRect(
                                               BorderRadius.vertical(
                                                   bottom: Radius.circular(10)),
                                             ),
@@ -175,59 +189,61 @@ class AnimatedRankingList extends StatelessWidget {
                                           ),
                                           child: Row(
                                             mainAxisAlignment:
-                                            MainAxisAlignment.center,
+                                                MainAxisAlignment.center,
                                             children: <Widget>[
                                               rankingLists.likedCount > 1000
                                                   ? NeumorphicIcon(
-                                                MaterialCommunityIcons.heart,
-                                                size: 15,
-                                                style: NeumorphicStyle(
-                                                  depth: 1,
-                                                  color: CustomColors
-                                                      .brownSub,
-                                                ),
-                                              )
+                                                      MaterialCommunityIcons
+                                                          .heart,
+                                                      size: 15,
+                                                      style: NeumorphicStyle(
+                                                        depth: 1,
+                                                        color: CustomColors
+                                                            .brownSub,
+                                                      ),
+                                                    )
                                                   : NeumorphicIcon(
-                                                MaterialCommunityIcons.heart,
-                                                size: 20,
-                                                style: NeumorphicStyle(
-                                                  depth: 1,
-                                                  color: CustomColors
-                                                      .brownSub,
-                                                ),
-                                              ),
+                                                      MaterialCommunityIcons
+                                                          .heart,
+                                                      size: 20,
+                                                      style: NeumorphicStyle(
+                                                        depth: 1,
+                                                        color: CustomColors
+                                                            .brownSub,
+                                                      ),
+                                                    ),
                                               SizedBox(
                                                 width: 3,
                                               ),
                                               rankingLists.likedCount > 1000
                                                   ? NeumorphicText(
-                                                '${rankingLists.likedCount}',
-                                                textStyle:
-                                                NeumorphicTextStyle(
-                                                  fontSize: 15,
-                                                  fontWeight:
-                                                  FontWeight.bold,
-                                                ),
-                                                style: NeumorphicStyle(
-                                                  color: CustomColors
-                                                      .brownSub,
-                                                  depth: 1,
-                                                ),
-                                              )
+                                                      '${rankingLists.likedCount}',
+                                                      textStyle:
+                                                          NeumorphicTextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      style: NeumorphicStyle(
+                                                        color: CustomColors
+                                                            .brownSub,
+                                                        depth: 1,
+                                                      ),
+                                                    )
                                                   : NeumorphicText(
-                                                '${rankingLists.likedCount}',
-                                                textStyle:
-                                                NeumorphicTextStyle(
-                                                  fontSize: 20,
-                                                  fontWeight:
-                                                  FontWeight.bold,
-                                                ),
-                                                style: NeumorphicStyle(
-                                                  color: CustomColors
-                                                      .brownSub,
-                                                  depth: 1,
-                                                ),
-                                              ),
+                                                      '${rankingLists.likedCount}',
+                                                      textStyle:
+                                                          NeumorphicTextStyle(
+                                                        fontSize: 20,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                      ),
+                                                      style: NeumorphicStyle(
+                                                        color: CustomColors
+                                                            .brownSub,
+                                                        depth: 1,
+                                                      ),
+                                                    ),
                                             ],
                                           ),
                                         ),
