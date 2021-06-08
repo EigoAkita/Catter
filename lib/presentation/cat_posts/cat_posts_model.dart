@@ -33,6 +33,8 @@ class CatPostsModel extends ChangeNotifier {
         _fireStore.collection('users').doc(this._auth.currentUser.uid);
     DocumentSnapshot _snap = await _myUserDoc.get();
     int postedCount = _snap.data()['postedCount'];
+    String profilePhotoURL = _snap.data()['profilePhotoURL'];
+    String displayName = _snap.data()['displayName'];
 
     DocumentReference _myPostDoc =
         _fireStore.collection('posts').doc(_generatedId);
@@ -44,6 +46,8 @@ class CatPostsModel extends ChangeNotifier {
       'userId': this._auth.currentUser.uid,
       'catName': this.catName,
       'catType': this.catType,
+      'profilePhotoURL': profilePhotoURL,
+      'displayName': displayName,
       'createdAt': FieldValue.serverTimestamp(),
       'updatedAt': FieldValue.serverTimestamp(),
       'catPhotoURL': postImageURL,

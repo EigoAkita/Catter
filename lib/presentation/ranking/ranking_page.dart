@@ -1,4 +1,3 @@
-import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/ranking/ranking_model.dart';
 import 'package:catter_app/presentation/ranking/widgets/animated_ranking_list.dart';
