@@ -18,20 +18,25 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> submitForm({
-    @required String inappropriatePost,
-    @required String anotherContributor,
+  Future<void> sendPostReport({
+    @required String reportPost,
+    @required String reportUser,
   }) async {
     try {
       await FirebaseFirestore.instance.collection('contacts').add({
+        //通報した人のuserId
         'userId': FirebaseAuth.instance.currentUser.uid,
+        //通報した人のメールアドレス
         'email': this.mail,
+        //通報された人
+        'reportUser': reportUser,
+        //通報された投稿
+        'reportPost': reportPost,
+        //作成した日
         'createdAt': FieldValue.serverTimestamp(),
-        'inappropriatePost': inappropriatePost,
-        'anotherContributor': anotherContributor,
       });
     } catch (e) {
-      print('お問い合わせの送信時にエラー');
+      print('投稿通報時にエラー');
       throw ('エラーが発生しました');
     }
   }
@@ -58,8 +63,8 @@ class CatsOfAllUsersModel extends ChangeNotifier {
       //スイッチの切り替えで自分の投稿
       if (!isCurrentUserPost) {
         catsOfAllUsersList.removeWhere(
-          (blockUserList) =>
-              blockUserList.userId != FirebaseAuth.instance.currentUser.uid,
+          (currentUserList) =>
+              currentUserList.userId != FirebaseAuth.instance.currentUser.uid,
         );
       }
       //ログインしている自身のuserIdまたはblockUserId内に既に自身のuidがある投稿は削除

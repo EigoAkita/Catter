@@ -2,6 +2,7 @@ import 'dart:ui';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/cat_posts/cat_posts_page.dart';
+import 'package:catter_app/presentation/cat_posts_comment/cat_posts_comment_page.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
 import 'package:catter_app/presentation/cats_of_all_users/widgets/card_bar.dart';
 import 'package:catter_app/presentation/user_posts/user_posts_page.dart';
@@ -81,8 +82,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => CatPostsPage(
-                                ),
+                                builder: (context) => CatPostsPage(),
                               ),
                             );
                           });
@@ -93,243 +93,317 @@ class CatsOfAllUsersPage extends StatelessWidget {
                   ],
                 ),
                 body: Center(
-                  child: SingleChildScrollView(
-                    child: ListView(
-                      shrinkWrap: true,
-                      physics: NeverScrollableScrollPhysics(),
-                      children: catLists
-                          .map(
-                            (catLists) => Card(
-                              shadowColor: CustomColors.grayMain,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(10),
-                              ),
-                              color: CustomColors.brownSub,
-                              child: Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Visibility(
-                                    visible: catLists.userId ==
-                                        _auth.currentUser.uid,
-                                    child: cardBar(
-                                      model: model,
-                                      profilePhotoURL: catLists.profilePhotoURL,
-                                      displayName: catLists.displayName,
-                                      updatedAt: catLists.updatedAt,
-                                      isCurrentUser: true,
-                                      id: catLists.id,
-                                      uid: _auth.currentUser.uid,
-                                      userImageTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => UserPostsPage(
-                                              userId: catLists.userId,
-                                            ),
-                                          ),
-                                        );
-                                      },
+                  child: Stack(
+                    children: <Widget>[
+                      Scrollbar(
+                        child: SingleChildScrollView(
+                          child: ListView(
+                            shrinkWrap: true,
+                            physics: NeverScrollableScrollPhysics(),
+                            children: catLists
+                                .map(
+                                  (catLists) => Card(
+                                    shadowColor: CustomColors.grayMain,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(10),
                                     ),
-                                  ),
-                                  Visibility(
-                                    visible: catLists.userId !=
-                                        _auth.currentUser.uid,
-                                    child: cardBar(
-                                      model: model,
-                                      profilePhotoURL: catLists.profilePhotoURL,
-                                      displayName: catLists.displayName,
-                                      updatedAt: catLists.updatedAt,
-                                      isCurrentUser: false,
-                                      id: catLists.id,
-                                      userId: catLists.userId,
-                                      userImageTap: () {
-                                        Navigator.push(
-                                          context,
-                                          MaterialPageRoute(
-                                            builder: (context) => UserPostsPage(
-                                              userId: catLists.userId,
-                                            ),
-                                          ),
-                                        );
-                                      },
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 5,
-                                  ),
-                                  Center(
-                                    child: Container(
-                                      width: MediaQuery.of(context).size.width /
-                                          1.10,
-                                      child: Neumorphic(
-                                        style: NeumorphicStyle(
-                                          boxShape:
-                                              NeumorphicBoxShape.roundRect(
-                                            BorderRadius.circular(10),
-                                          ),
-                                          depth: 3,
-                                          color: CustomColors.brownSub,
-                                          border: NeumorphicBorder(
-                                            color: CustomColors.brownSub,
-                                            width: 5,
-                                          ),
-                                        ),
-                                        child: Image(
-                                          image: NetworkImage(
-                                            catLists.catPhotoURL,
-                                          ),
-                                        ),
-                                      ),
-                                    ),
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: 25,
-                                      ),
-                                      NeumorphicText(
-                                        '名前 : ${catLists.catName}',
-                                        textStyle: NeumorphicTextStyle(
-                                            fontSize: 12.5,
-                                            fontWeight: FontWeight.bold),
-                                        style: NeumorphicStyle(
-                                          depth: 1,
-                                          color: CustomColors.whiteMain,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  Row(
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: 25,
-                                      ),
-                                      NeumorphicText(
-                                        '種類 : ${catLists.catType}',
-                                        textStyle: NeumorphicTextStyle(
-                                            fontSize: 12.5,
-                                            fontWeight: FontWeight.bold),
-                                        style: NeumorphicStyle(
-                                          depth: 1,
-                                          color: CustomColors.whiteMain,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Visibility(
-                                    visible: catLists.userId !=
-                                        _auth.currentUser.uid,
+                                    color: CustomColors.brownSub,
                                     child: Column(
                                       children: <Widget>[
-                                        Row(
-                                          mainAxisAlignment:
-                                              MainAxisAlignment.center,
-                                          children: <Widget>[
-                                            SizedBox(
-                                              width: 10,
-                                            ),
-                                            NeumorphicFloatingActionButton(
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Visibility(
+                                          visible: catLists.userId ==
+                                              _auth.currentUser.uid,
+                                          child: cardBar(
+                                            model: model,
+                                            profilePhotoURL:
+                                                catLists.profilePhotoURL,
+                                            displayName: catLists.displayName,
+                                            updatedAt: catLists.updatedAt,
+                                            isCurrentUser: true,
+                                            id: catLists.id,
+                                            uid: _auth.currentUser.uid,
+                                            userImageTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UserPostsPage(
+                                                    userId: catLists.userId,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        Visibility(
+                                          visible: catLists.userId !=
+                                              _auth.currentUser.uid,
+                                          child: cardBar(
+                                            model: model,
+                                            profilePhotoURL:
+                                                catLists.profilePhotoURL,
+                                            displayName: catLists.displayName,
+                                            updatedAt: catLists.updatedAt,
+                                            isCurrentUser: false,
+                                            id: catLists.id,
+                                            userId: catLists.userId,
+                                            userImageTap: () {
+                                              Navigator.push(
+                                                context,
+                                                MaterialPageRoute(
+                                                  builder: (context) =>
+                                                      UserPostsPage(
+                                                    userId: catLists.userId,
+                                                  ),
+                                                ),
+                                              );
+                                            },
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 5,
+                                        ),
+                                        Center(
+                                          child: Container(
+                                            width: MediaQuery.of(context)
+                                                    .size
+                                                    .width /
+                                                1.10,
+                                            child: Neumorphic(
                                               style: NeumorphicStyle(
-                                                depth: 1,
-                                                color: catLists.isFavoritePhotos
-                                                    ? CustomColors.whiteMain
-                                                    : Colors.amberAccent,
-                                                boxShape: NeumorphicBoxShape
-                                                    .roundRect(
+                                                boxShape:
+                                                    NeumorphicBoxShape.roundRect(
                                                   BorderRadius.circular(10),
                                                 ),
+                                                depth: 3,
+                                                color: CustomColors.brownSub,
+                                                border: NeumorphicBorder(
+                                                  color: CustomColors.brownSub,
+                                                  width: 5,
+                                                ),
                                               ),
-                                              child: Icon(
-                                                MaterialCommunityIcons.star,
-                                                size: 30,
-                                                color: catLists.isFavoritePhotos
-                                                    ? CustomColors.grayMain
-                                                    : CustomColors.whiteMain,
+                                              child: Image(
+                                                image: NetworkImage(
+                                                  catLists.catPhotoURL,
+                                                ),
                                               ),
-                                              onPressed: () async {
-                                                catLists.isFavoritePhotos =
-                                                    !catLists.isFavoritePhotos;
-                                                await model
-                                                    .pressedFavoriteButton(
-                                                  isFavoritePhotos:
-                                                      catLists.isFavoritePhotos,
-                                                  id: catLists.id,
-                                                  uid: _auth.currentUser.uid,
-                                                );
-                                              },
                                             ),
+                                          ),
+                                        ),
+                                        SizedBox(
+                                          height: 10,
+                                        ),
+                                        Row(
+                                          children: <Widget>[
                                             SizedBox(
-                                              width: 25,
+                                              width: 15,
                                             ),
                                             NeumorphicText(
-                                              'or',
+                                              '名前 : ${catLists.catName}',
+                                              textStyle: NeumorphicTextStyle(
+                                                  fontSize: 12.5,
+                                                  fontWeight: FontWeight.bold),
                                               style: NeumorphicStyle(
                                                 depth: 1,
                                                 color: CustomColors.whiteMain,
                                               ),
-                                              textStyle: NeumorphicTextStyle(
-                                                fontSize: 25,
-                                                fontWeight: FontWeight.bold,
-                                              ),
                                             ),
+                                          ],
+                                        ),
+                                        Row(
+                                          children: <Widget>[
                                             SizedBox(
-                                              width: 25,
+                                              width: 15,
                                             ),
-                                            NeumorphicFloatingActionButton(
+                                            NeumorphicText(
+                                              '種類 : ${catLists.catType}',
+                                              textStyle: NeumorphicTextStyle(
+                                                  fontSize: 12.5,
+                                                  fontWeight: FontWeight.bold),
                                               style: NeumorphicStyle(
                                                 depth: 1,
-                                                color: catLists.isLikePhotos
-                                                    ? CustomColors.whiteMain
-                                                    : Colors.pinkAccent,
-                                                boxShape: NeumorphicBoxShape
-                                                    .roundRect(
-                                                  BorderRadius.circular(10),
-                                                ),
+                                                color: CustomColors.whiteMain,
                                               ),
-                                              child: Icon(
-                                                MaterialCommunityIcons.heart,
-                                                size: 30,
-                                                color: catLists.isLikePhotos
-                                                    ? CustomColors.grayMain
-                                                    : CustomColors.whiteMain,
-                                              ),
-                                              onPressed: () {
-                                                catLists.isLikePhotos =
-                                                    !catLists.isLikePhotos;
-                                                model.pressedLikeButton(
-                                                  isLikePhotos:
-                                                      catLists.isLikePhotos,
-                                                  id: catLists.id,
-                                                  uid: _auth.currentUser.uid,
-                                                  anotherUid: catLists.userId,
-                                                );
-                                              },
-                                            ),
-                                            SizedBox(
-                                              width: 10,
                                             ),
                                           ],
                                         ),
                                         SizedBox(
                                           height: 10,
                                         ),
+                                        Row(
+                                          children: <Widget>[
+                                            SizedBox(
+                                              width: 15,
+                                            ),
+                                            Icon(
+                                              MaterialCommunityIcons.heart,
+                                              color: Colors.pinkAccent,
+                                              size: 30,
+                                            ),
+                                            SizedBox(
+                                              width: 25,
+                                            ),
+                                            GestureDetector(
+                                              onTap: () async {
+                                                model.startLoading();
+                                                WidgetsBinding.instance
+                                                    .addPostFrameCallback((_) {
+                                                  Navigator.push(
+                                                    context,
+                                                    MaterialPageRoute(
+                                                      builder: (context) =>
+                                                          CatPostsCommentPage(
+                                                        catPhotoURL:
+                                                            catLists.catPhotoURL,
+                                                        displayName:
+                                                            catLists.displayName,
+                                                        profilePhotoURL: catLists
+                                                            .profilePhotoURL,
+                                                        catName: catLists.catName,
+                                                        catType: catLists.catType,
+                                                        postId: catLists.id,
+                                                      ),
+                                                    ),
+                                                  );
+                                                });
+                                                model.endLoading();
+                                              },
+                                              child: Icon(
+                                                MaterialCommunityIcons
+                                                    .comment_processing_outline,
+                                                color: CustomColors.whiteMain,
+                                                size: 30,
+                                              ),
+                                            ),
+                                          ],
+                                        ),
+                                        // Visibility(
+                                        //   visible: catLists.userId !=
+                                        //       _auth.currentUser.uid,
+                                        //   child: Column(
+                                        //     children: <Widget>[
+                                        //       Row(
+                                        //         mainAxisAlignment:
+                                        //             MainAxisAlignment.center,
+                                        //         children: <Widget>[
+                                        //           SizedBox(
+                                        //             width: 10,
+                                        //           ),
+                                        //           NeumorphicFloatingActionButton(
+                                        //             style: NeumorphicStyle(
+                                        //               depth: 1,
+                                        //               color: catLists.isFavoritePhotos
+                                        //                   ? CustomColors.whiteMain
+                                        //                   : Colors.amberAccent,
+                                        //               boxShape: NeumorphicBoxShape
+                                        //                   .roundRect(
+                                        //                 BorderRadius.circular(10),
+                                        //               ),
+                                        //             ),
+                                        //             child: Icon(
+                                        //               MaterialCommunityIcons.star,
+                                        //               size: 30,
+                                        //               color: catLists.isFavoritePhotos
+                                        //                   ? CustomColors.grayMain
+                                        //                   : CustomColors.whiteMain,
+                                        //             ),
+                                        //             onPressed: () async {
+                                        //               catLists.isFavoritePhotos =
+                                        //                   !catLists.isFavoritePhotos;
+                                        //               await model
+                                        //                   .pressedFavoriteButton(
+                                        //                 isFavoritePhotos:
+                                        //                     catLists.isFavoritePhotos,
+                                        //                 id: catLists.id,
+                                        //                 uid: _auth.currentUser.uid,
+                                        //               );
+                                        //             },
+                                        //           ),
+                                        //           SizedBox(
+                                        //             width: 25,
+                                        //           ),
+                                        //           NeumorphicText(
+                                        //             'or',
+                                        //             style: NeumorphicStyle(
+                                        //               depth: 1,
+                                        //               color: CustomColors.whiteMain,
+                                        //             ),
+                                        //             textStyle: NeumorphicTextStyle(
+                                        //               fontSize: 25,
+                                        //               fontWeight: FontWeight.bold,
+                                        //             ),
+                                        //           ),
+                                        //           SizedBox(
+                                        //             width: 25,
+                                        //           ),
+                                        //           NeumorphicFloatingActionButton(
+                                        //             style: NeumorphicStyle(
+                                        //               depth: 1,
+                                        //               color: catLists.isLikePhotos
+                                        //                   ? CustomColors.whiteMain
+                                        //                   : Colors.pinkAccent,
+                                        //               boxShape: NeumorphicBoxShape
+                                        //                   .roundRect(
+                                        //                 BorderRadius.circular(10),
+                                        //               ),
+                                        //             ),
+                                        //             child: Icon(
+                                        //               MaterialCommunityIcons.heart,
+                                        //               size: 30,
+                                        //               color: catLists.isLikePhotos
+                                        //                   ? CustomColors.grayMain
+                                        //                   : CustomColors.whiteMain,
+                                        //             ),
+                                        //             onPressed: () {
+                                        //               catLists.isLikePhotos =
+                                        //                   !catLists.isLikePhotos;
+                                        //               model.pressedLikeButton(
+                                        //                 isLikePhotos:
+                                        //                     catLists.isLikePhotos,
+                                        //                 id: catLists.id,
+                                        //                 uid: _auth.currentUser.uid,
+                                        //                 anotherUid: catLists.userId,
+                                        //               );
+                                        //             },
+                                        //           ),
+                                        //           SizedBox(
+                                        //             width: 10,
+                                        //           ),
+                                        //         ],
+                                        //       ),
+                                        //       SizedBox(
+                                        //         height: 10,
+                                        //       ),
+                                        //     ],
+                                        //   ),
+                                        // ),
+                                        SizedBox(
+                                          height: 25,
+                                        ),
                                       ],
                                     ),
                                   ),
-                                ],
-                              ),
+                                )
+                                .toList(),
+                          ),
+                        ),
+                      ),
+                      Visibility(
+                        visible: model.catsOfAllUsersList.isEmpty,
+                        child: Center(
+                          child: Text(
+                            '投稿がありません',
+                            style: TextStyle(
+                              fontWeight: FontWeight.bold,
+                              color: CustomColors.blackMain,
                             ),
-                          )
-                          .toList(),
-                    ),
+                          ),
+                        ),
+                      ),
+                    ],
                   ),
                 ),
               ),

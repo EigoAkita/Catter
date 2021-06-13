@@ -2,6 +2,7 @@ import 'package:auto_animated/auto_animated.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/presentation/ranking/ranking_model.dart';
 import 'package:catter_app/presentation/user_posts/user_posts_page.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
@@ -43,220 +44,264 @@ class AnimatedRankingList extends StatelessWidget {
                 child: ListView(
                   children: _ranking
                       .map(
-                        (rankingLists) => Card(
-                          elevation: 2,
-                          shadowColor: CustomColors.grayMain,
-                          shape: RoundedRectangleBorder(
-                            borderRadius: BorderRadius.circular(10),
-                          ),
-                          color: CustomColors.brownSub,
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                            children: <Widget>[
-                              Column(
-                                children: <Widget>[
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.start,
-                                    children: <Widget>[
-                                      SizedBox(
-                                        width: 10,
-                                      ),
-                                      Container(
-                                        width: 60,
-                                        height: 60,
-                                        child: Neumorphic(
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                              BorderRadius.circular(10),
-                                            ),
-                                            depth: 2,
-                                            color: CustomColors.brownSub,
-                                            border: NeumorphicBorder(
-                                              color: CustomColors.brownSub,
-                                              width: 5,
-                                            ),
-                                          ),
-                                          child: GestureDetector(
-                                            onTap: () {
-                                              Navigator.push(
-                                                context,
-                                                MaterialPageRoute(
-                                                  builder: (context) =>
-                                                      UserPostsPage(
-                                                    userId: rankingLists.id,
-                                                  ),
-                                                ),
-                                              );
-                                            },
-                                            child: Image(
-                                              image: NetworkImage(
-                                                rankingLists.profilePhotoURL,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                      ),
-                                      SizedBox(
-                                        width: 15,
-                                      ),
-                                      NeumorphicText(
-                                        '${rankingLists.displayName}',
-                                        textStyle: NeumorphicTextStyle(
-                                          fontSize: 20,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                        style: NeumorphicStyle(
-                                          color: CustomColors.whiteMain,
-                                          depth: 1,
-                                        ),
-                                      ),
-                                    ],
-                                  ),
-                                  SizedBox(
-                                    height: 10,
-                                  ),
-                                ],
+                        (rankingLists) => Stack(
+                          children: <Widget>[
+                            Card(
+                              elevation: 2,
+                              shadowColor: CustomColors.grayMain,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(10),
                               ),
-                              Row(
+                              color: CustomColors.brownSub,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: <Widget>[
                                   Column(
                                     children: <Widget>[
-                                      Container(
-                                        height: 30,
-                                        width: 90,
-                                        child: Neumorphic(
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                              BorderRadius.vertical(
-                                                  top: Radius.circular(10)),
-                                            ),
-                                            depth: 1,
-                                            color: CustomColors.brownSub,
-                                          ),
-                                          child: Center(
-                                            child:
-                                                _ranking.indexOf(rankingLists) +
-                                                            1 >
-                                                        1000
-                                                    ? NeumorphicText(
-                                                        '${_ranking.indexOf(rankingLists) + 1}',
-                                                        textStyle:
-                                                            NeumorphicTextStyle(
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                        style: NeumorphicStyle(
-                                                          color: CustomColors
-                                                              .whiteMain,
-                                                          depth: 1,
-                                                        ),
-                                                      )
-                                                    : NeumorphicText(
-                                                        '${_ranking.indexOf(rankingLists) + 1}',
-                                                        textStyle:
-                                                            NeumorphicTextStyle(
-                                                          fontSize: 20,
-                                                          fontWeight:
-                                                              FontWeight.bold,
-                                                        ),
-                                                        style: NeumorphicStyle(
-                                                          color: CustomColors
-                                                              .whiteMain,
-                                                          depth: 1,
-                                                        ),
-                                                      ),
-                                          ),
-                                        ),
+                                      SizedBox(
+                                        height: 10,
                                       ),
-                                      Container(
-                                        height: 30,
-                                        width: 90,
-                                        child: Neumorphic(
-                                          style: NeumorphicStyle(
-                                            boxShape:
-                                                NeumorphicBoxShape.roundRect(
-                                              BorderRadius.vertical(
-                                                  bottom: Radius.circular(10)),
-                                            ),
-                                            depth: 1,
-                                            color: CustomColors.brownMain,
+                                      Row(
+                                        mainAxisAlignment: MainAxisAlignment.start,
+                                        children: <Widget>[
+                                          SizedBox(
+                                            width: 10,
                                           ),
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
+                                          Stack(
                                             children: <Widget>[
-                                              rankingLists.likedCount > 1000
-                                                  ? NeumorphicIcon(
-                                                      MaterialCommunityIcons
-                                                          .heart,
-                                                      size: 15,
-                                                      style: NeumorphicStyle(
-                                                        depth: 1,
-                                                        color: CustomColors
-                                                            .brownSub,
-                                                      ),
-                                                    )
-                                                  : NeumorphicIcon(
-                                                      MaterialCommunityIcons
-                                                          .heart,
-                                                      size: 20,
-                                                      style: NeumorphicStyle(
-                                                        depth: 1,
-                                                        color: CustomColors
-                                                            .brownSub,
+                                              Container(
+                                                width: 60,
+                                                height: 60,
+                                                child: Neumorphic(
+                                                  style: NeumorphicStyle(
+                                                    boxShape: NeumorphicBoxShape
+                                                        .roundRect(
+                                                      BorderRadius.circular(10),
+                                                    ),
+                                                    depth: 2,
+                                                    color: CustomColors.brownSub,
+                                                    border: NeumorphicBorder(
+                                                      color: CustomColors.brownSub,
+                                                      width: 5,
+                                                    ),
+                                                  ),
+                                                  child: GestureDetector(
+                                                    onTap: () {
+                                                      Navigator.push(
+                                                        context,
+                                                        MaterialPageRoute(
+                                                          builder: (context) =>
+                                                              UserPostsPage(
+                                                                userId: rankingLists.id,
+                                                              ),
+                                                        ),
+                                                      );
+                                                    },
+                                                    child: Image(
+                                                      image: NetworkImage(
+                                                        rankingLists
+                                                            .profilePhotoURL,
                                                       ),
                                                     ),
-                                              SizedBox(
-                                                width: 3,
+                                                  ),
+                                                ),
                                               ),
-                                              rankingLists.likedCount > 1000
-                                                  ? NeumorphicText(
-                                                      '${rankingLists.likedCount}',
-                                                      textStyle:
-                                                          NeumorphicTextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      style: NeumorphicStyle(
-                                                        color: CustomColors
-                                                            .brownSub,
-                                                        depth: 1,
-                                                      ),
-                                                    )
-                                                  : NeumorphicText(
-                                                      '${rankingLists.likedCount}',
-                                                      textStyle:
-                                                          NeumorphicTextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                      ),
-                                                      style: NeumorphicStyle(
-                                                        color: CustomColors
-                                                            .brownSub,
-                                                        depth: 1,
-                                                      ),
-                                                    ),
                                             ],
                                           ),
-                                        ),
+                                          SizedBox(
+                                            width: 15,
+                                          ),
+                                          NeumorphicText(
+                                            '${rankingLists.displayName}',
+                                            textStyle: NeumorphicTextStyle(
+                                              fontSize: 20,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                            style: NeumorphicStyle(
+                                              color: CustomColors.whiteMain,
+                                              depth: 1,
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        height: 10,
                                       ),
                                     ],
                                   ),
-                                  SizedBox(
-                                    width: 10,
+                                  Row(
+                                    children: <Widget>[
+                                      Column(
+                                        children: <Widget>[
+                                          Container(
+                                            height: 30,
+                                            width: 90,
+                                            child: Neumorphic(
+                                              style: NeumorphicStyle(
+                                                boxShape:
+                                                NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.vertical(
+                                                      top: Radius.circular(10)),
+                                                ),
+                                                depth: 1,
+                                                color: CustomColors.brownSub,
+                                              ),
+                                              child: Center(
+                                                child:
+                                                _ranking.indexOf(rankingLists) +
+                                                    1 >
+                                                    1000
+                                                    ? NeumorphicText(
+                                                  '${_ranking.indexOf(rankingLists) + 1}',
+                                                  textStyle:
+                                                  NeumorphicTextStyle(
+                                                    fontSize: 15,
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                  ),
+                                                  style: NeumorphicStyle(
+                                                    color: CustomColors
+                                                        .whiteMain,
+                                                    depth: 1,
+                                                  ),
+                                                )
+                                                    : NeumorphicText(
+                                                  '${_ranking.indexOf(rankingLists) + 1}',
+                                                  textStyle:
+                                                  NeumorphicTextStyle(
+                                                    fontSize: 20,
+                                                    fontWeight:
+                                                    FontWeight.bold,
+                                                  ),
+                                                  style: NeumorphicStyle(
+                                                    color: CustomColors
+                                                        .whiteMain,
+                                                    depth: 1,
+                                                  ),
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                          Container(
+                                            height: 30,
+                                            width: 90,
+                                            child: Neumorphic(
+                                              style: NeumorphicStyle(
+                                                boxShape:
+                                                NeumorphicBoxShape.roundRect(
+                                                  BorderRadius.vertical(
+                                                      bottom: Radius.circular(10)),
+                                                ),
+                                                depth: 1,
+                                                color: CustomColors.brownMain,
+                                              ),
+                                              child: Row(
+                                                mainAxisAlignment:
+                                                MainAxisAlignment.center,
+                                                children: <Widget>[
+                                                  rankingLists.likedCount > 1000
+                                                      ? NeumorphicIcon(
+                                                    MaterialCommunityIcons
+                                                        .heart,
+                                                    size: 15,
+                                                    style: NeumorphicStyle(
+                                                      depth: 1,
+                                                      color: CustomColors
+                                                          .brownSub,
+                                                    ),
+                                                  )
+                                                      : NeumorphicIcon(
+                                                    MaterialCommunityIcons
+                                                        .heart,
+                                                    size: 20,
+                                                    style: NeumorphicStyle(
+                                                      depth: 1,
+                                                      color: CustomColors
+                                                          .brownSub,
+                                                    ),
+                                                  ),
+                                                  SizedBox(
+                                                    width: 3,
+                                                  ),
+                                                  rankingLists.likedCount > 1000
+                                                      ? NeumorphicText(
+                                                    '${rankingLists.likedCount}',
+                                                    textStyle:
+                                                    NeumorphicTextStyle(
+                                                      fontSize: 15,
+                                                      fontWeight:
+                                                      FontWeight.bold,
+                                                    ),
+                                                    style: NeumorphicStyle(
+                                                      color: CustomColors
+                                                          .brownSub,
+                                                      depth: 1,
+                                                    ),
+                                                  )
+                                                      : NeumorphicText(
+                                                    '${rankingLists.likedCount}',
+                                                    textStyle:
+                                                    NeumorphicTextStyle(
+                                                      fontSize: 20,
+                                                      fontWeight:
+                                                      FontWeight.bold,
+                                                    ),
+                                                    style: NeumorphicStyle(
+                                                      color: CustomColors
+                                                          .brownSub,
+                                                      depth: 1,
+                                                    ),
+                                                  ),
+                                                ],
+                                              ),
+                                            ),
+                                          ),
+                                        ],
+                                      ),
+                                      SizedBox(
+                                        width: 10,
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
-                            ],
-                          ),
+                            ),
+                            Visibility(
+                              visible: rankingLists.id ==
+                                  FirebaseAuth
+                                      .instance.currentUser.uid,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                children: <Widget>[
+                                  Container(
+                                    width: 40,
+                                    height: 20,
+                                    decoration: BoxDecoration(
+                                      color:
+                                      Colors.pinkAccent,
+                                      borderRadius:
+                                      BorderRadius.circular(
+                                        2.5,
+                                      ),
+                                    ),
+                                    child: Center(
+                                      child: Text(
+                                        'YOU',
+                                        textAlign: TextAlign.center,
+                                        style: TextStyle(
+                                          color:
+                                          CustomColors.whiteMain,
+                                          fontWeight:
+                                          FontWeight.bold,
+                                          fontSize: 10,
+                                        ),
+                                      ),
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ],
                         ),
                       )
                       .toList(),

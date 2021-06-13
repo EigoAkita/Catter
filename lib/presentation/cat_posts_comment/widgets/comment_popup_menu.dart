@@ -1,17 +1,16 @@
 import 'package:awesome_dialog/awesome_dialog.dart';
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/main_dialog.dart';
-import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
+import 'package:catter_app/presentation/cat_posts_comment/cat_posts_comment_model.dart';
 import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 
-Widget popupMenu({
+Widget commentPopupMenu({
   @required bool isCurrentUser,
-  @required CatsOfAllUsersModel model,
+  @required CatPostsCommentModel model,
   @required String id,
-  String authUid,
-  String catListsUid,
+  String commentListsUid,
 }) =>
     isCurrentUser
         ? PopupMenuButton<int>(
@@ -25,15 +24,14 @@ Widget popupMenu({
                       context: context,
                       animType: AnimType.BOTTOMSLIDE,
                       dialogType: DialogType.QUESTION,
-                      dialogText: '投稿を削除しますか？',
+                      dialogText: 'コメントを削除しますか？',
                       subOKText: 'はい',
                       cancelPress: () {},
                       okPress: () async {
-                        await model.deleteMyPost(
+                        await model.deleteMyPostComment(
                           id: id,
-                          uid: authUid,
                         );
-                        await model.fetchPosts();
+                        await model.fetchPostComment();
                       },
                     );
                   },
@@ -53,7 +51,7 @@ Widget popupMenu({
             icon: Icon(
               Icons.more_horiz,
               size: 35,
-              color: CustomColors.whiteMain,
+              color: CustomColors.brownSub,
             ),
           )
         : PopupMenuButton<int>(
@@ -74,9 +72,9 @@ Widget popupMenu({
                         model.startLoading();
                         await model.fetchContact();
                         try {
-                          await model.sendPostReport(
-                            reportPost: id,
-                            reportUser: catListsUid,
+                          await model.sendPostCommentReport(
+                            reportComment: id,
+                            reportCommentUser: commentListsUid,
                           );
                           mainDialog(
                               isOKOnly: false,
@@ -109,37 +107,29 @@ Widget popupMenu({
                     mainDialog(
                       isOKOnly: true,
                       context: context,
-                      animType:
-                      AnimType.BOTTOMSLIDE,
-                      dialogType:
-                      DialogType.WARNING,
-                      dialogText: 'この投稿をブロックしますか？',
+                      animType: AnimType.BOTTOMSLIDE,
+                      dialogType: DialogType.WARNING,
+                      dialogText: 'このコメントをブロックしますか？',
                       subOKText: 'ブロックする',
                       cancelPress: () {},
                       okPress: () async {
                         model.startLoading();
                         try {
-                          await model
-                              .blockUserPosts(
+                          await model.blockUserComments(
                             id: id,
                           );
                           mainDialog(
                               isOKOnly: false,
                               context: context,
-                              animType: AnimType
-                                  .BOTTOMSLIDE,
-                              dialogType: DialogType
-                                  .NO_HEADER,
-                              dialogText:
-                              '投稿をブロックしました',
+                              animType: AnimType.BOTTOMSLIDE,
+                              dialogType: DialogType.NO_HEADER,
+                              dialogText: 'コメントをブロックしました',
                               subOKText: 'はい');
                           model.endLoading();
                         } catch (e) {
                           model.endLoading();
                           errorShowDialog(
-                              loginErrorText:
-                              'エラーが発生しました',
-                              context: context);
+                              loginErrorText: 'エラーが発生しました', context: context);
                         }
                       },
                     );
@@ -160,6 +150,6 @@ Widget popupMenu({
             icon: Icon(
               Icons.more_horiz,
               size: 35,
-              color: CustomColors.whiteMain,
+              color: CustomColors.brownSub,
             ),
           );

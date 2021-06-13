@@ -81,6 +81,19 @@ class MyPostScreenPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                Visibility(
+                  visible: model.myPostScreenList.isEmpty,
+                  child: Center(
+                    child: Text(
+                      '投稿がありません',
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color:
+                        CustomColors.blackMain,
+                      ),
+                    ),
+                  ),
+                ),
                 screenLoading(
                   isLoading: model.isLoading,
                 ),

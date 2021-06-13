@@ -232,7 +232,7 @@ class MyProfilePage extends StatelessWidget {
                           size: 30,
                           color: CustomColors.brownMain,
                         ),
-                        myProfileText: 'いいねした投稿',
+                        myProfileText: 'いいね',
                       ),
                       SizedBox(
                         height: 10,
@@ -253,6 +253,9 @@ class MyProfilePage extends StatelessWidget {
                           color: CustomColors.brownMain,
                         ),
                         myProfileText: 'お気に入り',
+                      ),
+                      SizedBox(
+                        height: 10,
                       ),
                     ],
                   ),

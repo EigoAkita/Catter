@@ -20,7 +20,7 @@ class MyLikedPostScreenPage extends StatelessWidget {
           return Scaffold(
             appBar: AppBar(
               title: Text(
-                'いいねした投稿',
+                'いいね',
                 style: TextStyle(
                   color: CustomColors.whiteMain,
                   fontWeight: FontWeight.bold,
@@ -80,6 +80,28 @@ class MyLikedPostScreenPage extends StatelessWidget {
                             )
                             .toList(),
                       ),
+                    ),
+                  ),
+                ),
+                Visibility(
+                  visible: model.myLikedPostScreenList.isEmpty,
+                  child: Center(
+                    child: RichText(
+                      text: const TextSpan(
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color:CustomColors.blackMain,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '"いいね"にした\n',
+                          ),
+                          TextSpan(
+                            text: '投稿がありません',
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
                     ),
                   ),
                 ),
