@@ -8,6 +8,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
   bool isLoading = false;
   bool isCurrentUserPost = false;
   String mail = '';
+
   List<CatsOfAllUsers> catsOfAllUsersList = [];
 
   Future fetchContact() async {

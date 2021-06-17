@@ -76,7 +76,7 @@ Widget commentTile({
               ? Text(
             '$displayName',
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 12.5,
               color: CustomColors.brownSub,
               fontWeight: FontWeight.bold,
             ),
@@ -84,7 +84,7 @@ Widget commentTile({
               : Text(
             '名無しさん',
             style: TextStyle(
-              fontSize: 15,
+              fontSize: 12.5,
               color: CustomColors.brownSub,
               fontWeight: FontWeight.bold,
             ),

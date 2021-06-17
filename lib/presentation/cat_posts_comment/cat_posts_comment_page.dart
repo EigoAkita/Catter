@@ -2,6 +2,7 @@ import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
 import 'package:catter_app/presentation/cat_posts_comment/cat_posts_comment_model.dart';
 import 'package:catter_app/presentation/cat_posts_comment/widgets/comment_tile.dart';
+import 'package:catter_app/presentation/user_posts/user_posts_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
@@ -209,7 +210,7 @@ class CatPostsCommentPage extends StatelessWidget {
                             ),
                             Row(
                               children: <Widget>[
-                                const Expanded(
+                                Expanded(
                                   flex: 1,
                                   child: SizedBox(),
                                 ),
@@ -220,7 +221,8 @@ class CatPostsCommentPage extends StatelessWidget {
                                       shape: NeumorphicShape.flat,
                                       depth: 1,
                                       color: CustomColors.whiteMain,
-                                      shadowDarkColorEmboss: Colors.blueGrey,
+                                      shadowDarkColorEmboss:
+                                          Colors.blueGrey,
                                     ),
                                     child: TextFormField(
                                       focusNode: _focusNodeComment,
@@ -249,7 +251,7 @@ class CatPostsCommentPage extends StatelessWidget {
                                     ),
                                   ),
                                 ),
-                                const Expanded(
+                                Expanded(
                                   flex: 1,
                                   child: SizedBox(),
                                 ),
@@ -265,18 +267,19 @@ class CatPostsCommentPage extends StatelessWidget {
                                       }
                                     },
                                     child: NeumorphicIcon(
-                                      MaterialCommunityIcons.send_circle,
-                                      size: 50,
+                                      Icons.send_rounded,
+                                      size: 35,
                                       style: NeumorphicStyle(
                                         shape: NeumorphicShape.flat,
                                         depth: 1,
-                                        color: CustomColors.brownSub,
-                                        shadowDarkColorEmboss: Colors.blueGrey,
+                                        color: Colors.pinkAccent,
+                                        shadowDarkColorEmboss:
+                                            Colors.blueGrey,
                                       ),
                                     ),
                                   ),
                                 ),
-                                const Expanded(
+                                Expanded(
                                   flex: 1,
                                   child: SizedBox(),
                                 ),
@@ -303,7 +306,6 @@ class CatPostsCommentPage extends StatelessWidget {
                                               .map(
                                                 (commentList) => Stack(
                                                   children: <Widget>[
-
                                                     Column(
                                                       children: <Widget>[
                                                         Visibility(
@@ -323,7 +325,17 @@ class CatPostsCommentPage extends StatelessWidget {
                                                             isCurrentUser: true,
                                                             id: commentList.id,
                                                             uid: model.uid,
-                                                            userImageTap: () {},
+                                                            userImageTap: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      UserPostsPage(
+                                                                        userId: commentList.userId,
+                                                                      ),
+                                                                ),
+                                                              );
+                                                            },
                                                           ),
                                                         ),
                                                         Visibility(
@@ -345,7 +357,17 @@ class CatPostsCommentPage extends StatelessWidget {
                                                             id: commentList.id,
                                                             userId: commentList
                                                                 .userId,
-                                                            userImageTap: () {},
+                                                            userImageTap: () {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder: (context) =>
+                                                                      UserPostsPage(
+                                                                        userId: commentList.userId,
+                                                                      ),
+                                                                ),
+                                                              );
+                                                            },
                                                           ),
                                                         ),
                                                         SizedBox(

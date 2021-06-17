@@ -1,3 +1,4 @@
+import 'package:catter_app/config/ng_word.dart';
 import 'package:catter_app/domain/post_comment.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -89,6 +90,18 @@ class CatPostsCommentModel extends ChangeNotifier {
     FirebaseFirestore _fireStore = FirebaseFirestore.instance;
     WriteBatch _batch = _fireStore.batch();
 
+    FirebaseFirestore _firestore = FirebaseFirestore.instance;
+    DocumentReference _commentDoc = _firestore.collection('posts').doc(postId);
+    DocumentReference _comment = _firestore.collection('posts').doc(postId);
+    DocumentSnapshot _snap = await _comment.get();
+    int _commentCount = _snap.data()['commentCount'];
+
+    if (_commentCount > 0) {
+      _batch.update(_commentDoc, {'commentCount': FieldValue.increment(-1)});
+    } else {
+      _batch.update(_commentDoc, {'commentCount': 0});
+    }
+
     await FirebaseFirestore.instance
         .collection('posts/$postId/comments')
         .doc(id)
@@ -113,6 +126,9 @@ class CatPostsCommentModel extends ChangeNotifier {
     DocumentSnapshot _snap = await _myUserDoc.get();
     String profilePhotoURL = _snap.data()['profilePhotoURL'];
     String displayName = _snap.data()['displayName'];
+
+    DocumentReference _commentDoc = _firestore.collection('posts').doc(postId);
+
     // posts/{postId}/comments コレクションコメントデータを set
     _batch.set(
       _myCommentDoc,
@@ -126,6 +142,8 @@ class CatPostsCommentModel extends ChangeNotifier {
         'updatedAt': FieldValue.serverTimestamp(),
       },
     );
+
+    _batch.update(_commentDoc, {'commentCount': FieldValue.increment(1)});
 
     await _batch.commit();
     notifyListeners();
@@ -163,11 +181,15 @@ class CatPostsCommentModel extends ChangeNotifier {
     if (text.length > 140) {
       this.isCommentValid = false;
       this.errorComment = '140 文字以内で入力して下さい（現在 ${text.length} 文字）。';
+    } else if (ngWord.any(
+      (ngWordItem) => text.contains(ngWordItem),
+    )) {
+      this.isCommentValid = false;
+      this.errorComment = '使用出来ない文字が含まれています';
     } else {
       this.isCommentValid = true;
       this.errorComment = '';
     }
-
     notifyListeners();
   }
 }

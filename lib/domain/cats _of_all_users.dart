@@ -15,7 +15,7 @@ class CatsOfAllUsers {
     this.favoriteAt = doc.data()['favoriteAt'];
     this.likedAt = doc.data()['likedAt'];
     this.blockedUserId = doc.data()['blockedUserId'];
-    this.comments = doc.data()['comments'];
+    this.commentCount = doc.data()['commentCount'];
     this.isLikePhotos = true;
     this.isFavoritePhotos = true;
   }
@@ -34,6 +34,6 @@ class CatsOfAllUsers {
   Timestamp favoriteAt;
   Timestamp likedAt;
   List<dynamic> blockedUserId;
-  List<dynamic> comments;
+  int commentCount;
   DocumentReference documentReference;
 }

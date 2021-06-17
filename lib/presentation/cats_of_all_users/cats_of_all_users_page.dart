@@ -174,8 +174,8 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 1.10,
                                             child: Neumorphic(
                                               style: NeumorphicStyle(
-                                                boxShape:
-                                                    NeumorphicBoxShape.roundRect(
+                                                boxShape: NeumorphicBoxShape
+                                                    .roundRect(
                                                   BorderRadius.circular(10),
                                                 ),
                                                 depth: 3,
@@ -256,14 +256,16 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                     MaterialPageRoute(
                                                       builder: (context) =>
                                                           CatPostsCommentPage(
-                                                        catPhotoURL:
-                                                            catLists.catPhotoURL,
-                                                        displayName:
-                                                            catLists.displayName,
+                                                        catPhotoURL: catLists
+                                                            .catPhotoURL,
+                                                        displayName: catLists
+                                                            .displayName,
                                                         profilePhotoURL: catLists
                                                             .profilePhotoURL,
-                                                        catName: catLists.catName,
-                                                        catType: catLists.catType,
+                                                        catName:
+                                                            catLists.catName,
+                                                        catType:
+                                                            catLists.catType,
                                                         postId: catLists.id,
                                                       ),
                                                     ),
@@ -278,6 +280,28 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                 size: 30,
                                               ),
                                             ),
+                                            SizedBox(
+                                              width: 5,
+                                            ),
+                                            catLists.commentCount != null
+                                                ? Text(
+                                                    '${catLists.commentCount}',
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: CustomColors
+                                                            .whiteMain),
+                                                  )
+                                                : Text(
+                                                    '0',
+                                                    style: TextStyle(
+                                                        fontSize: 15,
+                                                        fontWeight:
+                                                            FontWeight.bold,
+                                                        color: CustomColors
+                                                            .whiteMain),
+                                                  ),
                                           ],
                                         ),
                                         // Visibility(
