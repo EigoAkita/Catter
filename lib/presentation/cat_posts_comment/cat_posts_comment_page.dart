@@ -221,8 +221,7 @@ class CatPostsCommentPage extends StatelessWidget {
                                       shape: NeumorphicShape.flat,
                                       depth: 1,
                                       color: CustomColors.whiteMain,
-                                      shadowDarkColorEmboss:
-                                          Colors.blueGrey,
+                                      shadowDarkColorEmboss: Colors.blueGrey,
                                     ),
                                     child: TextFormField(
                                       focusNode: _focusNodeComment,
@@ -273,8 +272,7 @@ class CatPostsCommentPage extends StatelessWidget {
                                         shape: NeumorphicShape.flat,
                                         depth: 1,
                                         color: Colors.pinkAccent,
-                                        shadowDarkColorEmboss:
-                                            Colors.blueGrey,
+                                        shadowDarkColorEmboss: Colors.blueGrey,
                                       ),
                                     ),
                                   ),
@@ -329,10 +327,12 @@ class CatPostsCommentPage extends StatelessWidget {
                                                               Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      UserPostsPage(
-                                                                        userId: commentList.userId,
-                                                                      ),
+                                                                  builder:
+                                                                      (context) =>
+                                                                          UserPostsPage(
+                                                                    userId: commentList
+                                                                        .userId,
+                                                                  ),
                                                                 ),
                                                               );
                                                             },
@@ -361,10 +361,12 @@ class CatPostsCommentPage extends StatelessWidget {
                                                               Navigator.push(
                                                                 context,
                                                                 MaterialPageRoute(
-                                                                  builder: (context) =>
-                                                                      UserPostsPage(
-                                                                        userId: commentList.userId,
-                                                                      ),
+                                                                  builder:
+                                                                      (context) =>
+                                                                          UserPostsPage(
+                                                                    userId: commentList
+                                                                        .userId,
+                                                                  ),
                                                                 ),
                                                               );
                                                             },

@@ -13,7 +13,9 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
 import 'package:lite_rolling_switch/lite_rolling_switch.dart';
+import 'package:lottie/lottie.dart';
 import 'package:provider/provider.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class CatsOfAllUsersPage extends StatelessWidget {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -221,8 +223,9 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                             NeumorphicText(
                                               '種類 : ${catLists.catType}',
                                               textStyle: NeumorphicTextStyle(
-                                                  fontSize: 12.5,
-                                                  fontWeight: FontWeight.bold),
+                                                fontSize: 12.5,
+                                                fontWeight: FontWeight.bold,
+                                              ),
                                               style: NeumorphicStyle(
                                                 depth: 1,
                                                 color: CustomColors.whiteMain,
@@ -235,73 +238,139 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                         ),
                                         Row(
                                           children: <Widget>[
-                                            SizedBox(
-                                              width: 15,
-                                            ),
-                                            Icon(
-                                              MaterialCommunityIcons.heart,
-                                              color: Colors.pinkAccent,
-                                              size: 30,
-                                            ),
-                                            SizedBox(
-                                              width: 25,
-                                            ),
-                                            GestureDetector(
-                                              onTap: () async {
-                                                model.startLoading();
-                                                WidgetsBinding.instance
-                                                    .addPostFrameCallback((_) {
-                                                  Navigator.push(
-                                                    context,
-                                                    MaterialPageRoute(
-                                                      builder: (context) =>
-                                                          CatPostsCommentPage(
-                                                        catPhotoURL: catLists
-                                                            .catPhotoURL,
-                                                        displayName: catLists
-                                                            .displayName,
-                                                        profilePhotoURL: catLists
-                                                            .profilePhotoURL,
-                                                        catName:
-                                                            catLists.catName,
-                                                        catType:
-                                                            catLists.catType,
-                                                        postId: catLists.id,
-                                                      ),
+                                            Stack(
+                                              children: <Widget>[
+                                                Column(
+                                                  children: <Widget>[
+                                                    SizedBox(
+                                                      height: 18.2610,
                                                     ),
-                                                  );
-                                                });
-                                                model.endLoading();
-                                              },
-                                              child: Icon(
-                                                MaterialCommunityIcons
-                                                    .comment_processing_outline,
-                                                color: CustomColors.whiteMain,
-                                                size: 30,
-                                              ),
-                                            ),
-                                            SizedBox(
-                                              width: 5,
-                                            ),
-                                            catLists.commentCount != null
-                                                ? Text(
-                                                    '${catLists.commentCount}',
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: CustomColors
-                                                            .whiteMain),
-                                                  )
-                                                : Text(
-                                                    '0',
-                                                    style: TextStyle(
-                                                        fontSize: 15,
-                                                        fontWeight:
-                                                            FontWeight.bold,
-                                                        color: CustomColors
-                                                            .whiteMain),
+                                                    Row(
+                                                      children: <Widget>[
+                                                        SizedBox(
+                                                          width: 17.890,
+                                                        ),
+                                                        Icon(
+                                                          MaterialCommunityIcons
+                                                              .heart_outline,
+                                                          size: 29.90,
+                                                          color: CustomColors
+                                                              .whiteMain,
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+
+                                                        ///Todo:likeCount
+                                                        Text(
+                                                          '999',
+                                                          style: TextStyle(
+                                                            fontSize: 15,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: CustomColors
+                                                                .whiteMain,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 25,
+                                                        ),
+                                                        GestureDetector(
+                                                          onTap: () async {
+                                                            model
+                                                                .startLoading();
+                                                            WidgetsBinding
+                                                                .instance
+                                                                .addPostFrameCallback(
+                                                                    (_) {
+                                                              Navigator.push(
+                                                                context,
+                                                                MaterialPageRoute(
+                                                                  builder:
+                                                                      (context) =>
+                                                                          CatPostsCommentPage(
+                                                                    catPhotoURL:
+                                                                        catLists
+                                                                            .catPhotoURL,
+                                                                    displayName:
+                                                                        catLists
+                                                                            .displayName,
+                                                                    profilePhotoURL:
+                                                                        catLists
+                                                                            .profilePhotoURL,
+                                                                    catName:
+                                                                        catLists
+                                                                            .catName,
+                                                                    catType:
+                                                                        catLists
+                                                                            .catType,
+                                                                    postId:
+                                                                        catLists
+                                                                            .id,
+                                                                  ),
+                                                                ),
+                                                              );
+                                                            });
+                                                            model.endLoading();
+                                                          },
+                                                          child: Icon(
+                                                            MaterialCommunityIcons
+                                                                .comment_processing_outline,
+                                                            color: CustomColors
+                                                                .whiteMain,
+                                                            size: 29.90,
+                                                          ),
+                                                        ),
+                                                        SizedBox(
+                                                          width: 5,
+                                                        ),
+                                                        catLists.commentCount !=
+                                                                null
+                                                            ? Text(
+                                                                '${catLists.commentCount}',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: CustomColors
+                                                                      .whiteMain,
+                                                                ),
+                                                              )
+                                                            : Text(
+                                                                '0',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: CustomColors
+                                                                      .whiteMain,
+                                                                ),
+                                                              ),
+                                                      ],
+                                                    ),
+                                                  ],
+                                                ),
+                                                Container(
+                                                  width: 66.065,
+                                                  height: 66.065,
+                                                  child: LottieAnimation(
+                                                    model: model,
+                                                    isLikePhotos:
+                                                        catLists.isLikePhotos,
+                                                    id: catLists.id,
+                                                    uid: _auth.currentUser.uid,
+                                                    anotherUid: catLists.userId,
+                                                    likeUserId: [
+                                                      catLists.likeUserId
+                                                    ],
                                                   ),
+                                                ),
+                                              ],
+                                            ),
                                           ],
                                         ),
                                         // Visibility(
@@ -405,7 +474,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                         //   ),
                                         // ),
                                         SizedBox(
-                                          height: 25,
+                                          height: 10,
                                         ),
                                       ],
                                     ),
@@ -438,6 +507,100 @@ class CatsOfAllUsersPage extends StatelessWidget {
           ],
         );
       }),
+    );
+  }
+}
+
+// ignore: must_be_immutable
+class LottieAnimation extends StatefulWidget {
+  LottieAnimation({
+    Key key,
+    @required this.model,
+    @required this.isLikePhotos,
+    @required this.id,
+    @required this.uid,
+    @required this.anotherUid,
+    @required this.likeUserId,
+  }) : super(key: key);
+
+  CatsOfAllUsersModel model;
+  bool isLikePhotos;
+  String id;
+  String uid;
+  String anotherUid;
+  List<dynamic> likeUserId;
+
+  @override
+  _LottieAnimationState createState() => _LottieAnimationState();
+}
+
+class _LottieAnimationState extends State<LottieAnimation>
+    with SingleTickerProviderStateMixin {
+  AnimationController controller;
+  Duration duration;
+  var isLikePosts = false;
+
+  void _setLikePostsBool(String key, bool value) async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    prefs.setBool(key, value);
+  }
+
+  void _getLikePostsBool() async {
+    var prefs = await SharedPreferences.getInstance();
+    setState(() {
+      isLikePosts = prefs.getBool('likePostBool') ?? false;
+    });
+  }
+
+  @override
+  void initState() {
+    _getLikePostsBool();
+    controller = AnimationController(vsync: this);
+    super.initState();
+  }
+
+  @override
+  void dispose() {
+    controller.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+
+    return GestureDetector(
+      onTap: () {
+        if (controller.isCompleted) {
+          controller.reset();
+          widget.isLikePhotos = !widget.isLikePhotos;
+        } else {
+          controller.forward();
+          widget.isLikePhotos = widget.isLikePhotos;
+        }
+        widget.model.pressedLikeButton(
+          isLikePhotos: isLikePosts,
+          id: widget.id,
+          uid: widget.uid,
+          anotherUid: widget.anotherUid,
+          likeUserId: widget.likeUserId,
+        );
+        isLikePosts = !isLikePosts;
+        _setLikePostsBool('likePostBool', isLikePosts);
+        print(isLikePosts);
+      },
+      child: Lottie.asset(
+        'lib/resources/lottie/836-like-button.json',
+        repeat: true,
+        controller: controller,
+        onLoaded: (composition) {
+          controller.duration = composition.duration;
+          if (isLikePosts) {
+            controller.forward();
+          } else {
+            controller.reset();
+          }
+        },
+      ),
     );
   }
 }

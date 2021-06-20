@@ -126,6 +126,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     @required String uid,
     @required anotherUid,
     @required bool isLikePhotos,
+    @required List<dynamic> likeUserId,
   }) async {
     FirebaseFirestore _fireStore = FirebaseFirestore.instance;
     WriteBatch _batch = _fireStore.batch();
@@ -140,6 +141,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
       isLikePhotos: isLikePhotos,
     );
 
+    likeUserPosts(id: id, isLikePhotos: isLikePhotos);
     // 対象をいいねから削除する
     if (isLikePhotos) {
       await FirebaseFirestore.instance
@@ -148,6 +150,10 @@ class CatsOfAllUsersModel extends ChangeNotifier {
           .delete();
 
       _batch.update(_anotherUserDoc, {'likedCount': FieldValue.increment(-1)});
+
+      if(likeUserId.contains(uid)){
+        _batch.update(_anotherUserDoc, {'likedCount': FieldValue.increment(0)});
+      }
 
       await _batch.commit();
     }
@@ -202,6 +208,34 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     } catch (e) {
       print('ブロックした時にエラーが発生');
       print(e);
+    }
+    notifyListeners();
+  }
+
+  Future<void> likeUserPosts(
+      {@required String id, @required bool isLikePhotos}) async {
+    if (isLikePhotos) {
+      try {
+        await FirebaseFirestore.instance.collection('posts').doc(id).update(
+          <String, FieldValue>{
+            'likeUserId': FieldValue.delete(),
+          },
+        );
+      } catch (e) {
+        print('いいね解除時にエラーが発生');
+        print(e);
+      }
+    } else {
+      try {
+        await FirebaseFirestore.instance.collection('posts').doc(id).update(
+          <String, FieldValue>{
+            'likeUserId': FieldValue.arrayUnion(<String>[uid]),
+          },
+        );
+      } catch (e) {
+        print('いいねした時にエラーが発生');
+        print(e);
+      }
     }
     notifyListeners();
   }

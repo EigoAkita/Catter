@@ -46,6 +46,8 @@ dependencies:
   flutter_native_splash: ^0.3.2
   lite_rolling_switch: ^0.1.1
   keyboard_actions: ^3.3.1+1
+  lottie: ^0.7.0+1
+  shared_preferences: any
 
   # The following adds the Cupertino Icons font to your application.
   # Use with the CupertinoIcons class for iOS style icons.
@@ -78,6 +80,8 @@ flutter:
   assets:
     - lib/resources/images/login_image.png
     - lib/resources/images/add_photo.png
+    - lib/resources/lottie/562-emoji-reaction.json
+    - lib/resources/lottie/836-like-button.json
 
   # To add assets to your application, add an assets section, like this:
   # assets:
