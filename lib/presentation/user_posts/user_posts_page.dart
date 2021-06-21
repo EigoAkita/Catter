@@ -1,6 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
-import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/user_posts/user_posts_model.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -33,17 +32,6 @@ class UserPostsPage extends StatelessWidget {
                   elevation: 0,
                   backgroundColor: CustomColors.brownSub,
                   brightness: Brightness.dark,
-                  leading: IconButton(
-                    icon: Icon(Icons.arrow_back_ios),
-                    onPressed: () {
-                      Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                          builder: (context) => BasePage(),
-                        ),
-                      );
-                    },
-                  ),
                 ),
                 body: SingleChildScrollView(
                   child: GestureDetector(

@@ -82,6 +82,28 @@ class MyFavoritePostScreenPage extends StatelessWidget {
                     ),
                   ),
                 ),
+                Visibility(
+                  visible: model.myFavoritePostScreenList.isEmpty,
+                  child: Center(
+                    child: RichText(
+                      text: TextSpan(
+                        style: TextStyle(
+                          fontWeight: FontWeight.bold,
+                          color:CustomColors.blackMain,
+                        ),
+                        children: [
+                          TextSpan(
+                            text: '"お気に入り"にした\n',
+                          ),
+                          TextSpan(
+                            text: '投稿がありません',
+                          ),
+                        ],
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                ),
                 screenLoading(
                   isLoading: model.isLoading,
                 ),

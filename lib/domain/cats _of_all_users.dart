@@ -2,7 +2,6 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 
 class CatsOfAllUsers {
   CatsOfAllUsers(DocumentSnapshot doc) {
-
     this.documentReference = doc.reference;
     this.id = doc.id;
     this.userId = doc.data()['userId'];
@@ -16,8 +15,10 @@ class CatsOfAllUsers {
     this.favoriteAt = doc.data()['favoriteAt'];
     this.likedAt = doc.data()['likedAt'];
     this.blockedUserId = doc.data()['blockedUserId'];
+    this.likeUserId = doc.data()['likeUserId'];
+    this.commentCount = doc.data()['commentCount'];
     this.isLikePhotos = true;
-    this.isFavoritePhotos =true;
+    this.isFavoritePhotos = true;
   }
 
   String id;
@@ -34,5 +35,8 @@ class CatsOfAllUsers {
   Timestamp favoriteAt;
   Timestamp likedAt;
   List<dynamic> blockedUserId;
+  List<dynamic> likeUserId;
+  int commentCount;
   DocumentReference documentReference;
+
 }

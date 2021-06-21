@@ -50,10 +50,11 @@ AppBar changeAppBar({
             children: <Widget>[
               GestureDetector(
                 onTap: () {
-                  Navigator.pushReplacement(
+                  Navigator.push(
                     context,
                     MaterialPageRoute(
-                      builder: (context) => SettingPage(),
+                      builder: (context) =>
+                         SettingPage(),
                     ),
                   );
                 },

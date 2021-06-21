@@ -8,6 +8,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
   bool isLoading = false;
   bool isCurrentUserPost = false;
   String mail = '';
+
   List<CatsOfAllUsers> catsOfAllUsersList = [];
 
   Future fetchContact() async {
@@ -18,20 +19,25 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> submitForm({
-    @required String inappropriatePost,
-    @required String anotherContributor,
+  Future<void> sendPostReport({
+    @required String reportPost,
+    @required String reportUser,
   }) async {
     try {
       await FirebaseFirestore.instance.collection('contacts').add({
+        //通報した人のuserId
         'userId': FirebaseAuth.instance.currentUser.uid,
+        //通報した人のメールアドレス
         'email': this.mail,
+        //通報された人
+        'reportUser': reportUser,
+        //通報された投稿
+        'reportPost': reportPost,
+        //作成した日
         'createdAt': FieldValue.serverTimestamp(),
-        'inappropriatePost': inappropriatePost,
-        'anotherContributor': anotherContributor,
       });
     } catch (e) {
-      print('お問い合わせの送信時にエラー');
+      print('投稿通報時にエラー');
       throw ('エラーが発生しました');
     }
   }
@@ -58,8 +64,8 @@ class CatsOfAllUsersModel extends ChangeNotifier {
       //スイッチの切り替えで自分の投稿
       if (!isCurrentUserPost) {
         catsOfAllUsersList.removeWhere(
-          (blockUserList) =>
-              blockUserList.userId != FirebaseAuth.instance.currentUser.uid,
+          (currentUserList) =>
+              currentUserList.userId != FirebaseAuth.instance.currentUser.uid,
         );
       }
       //ログインしている自身のuserIdまたはblockUserId内に既に自身のuidがある投稿は削除
@@ -120,6 +126,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     @required String uid,
     @required anotherUid,
     @required bool isLikePhotos,
+    @required List<dynamic> likeUserId,
   }) async {
     FirebaseFirestore _fireStore = FirebaseFirestore.instance;
     WriteBatch _batch = _fireStore.batch();
@@ -134,6 +141,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
       isLikePhotos: isLikePhotos,
     );
 
+    likeUserPosts(id: id, isLikePhotos: isLikePhotos);
     // 対象をいいねから削除する
     if (isLikePhotos) {
       await FirebaseFirestore.instance
@@ -142,6 +150,10 @@ class CatsOfAllUsersModel extends ChangeNotifier {
           .delete();
 
       _batch.update(_anotherUserDoc, {'likedCount': FieldValue.increment(-1)});
+
+      if(likeUserId.contains(uid)){
+        _batch.update(_anotherUserDoc, {'likedCount': FieldValue.increment(0)});
+      }
 
       await _batch.commit();
     }
@@ -196,6 +208,34 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     } catch (e) {
       print('ブロックした時にエラーが発生');
       print(e);
+    }
+    notifyListeners();
+  }
+
+  Future<void> likeUserPosts(
+      {@required String id, @required bool isLikePhotos}) async {
+    if (isLikePhotos) {
+      try {
+        await FirebaseFirestore.instance.collection('posts').doc(id).update(
+          <String, FieldValue>{
+            'likeUserId': FieldValue.delete(),
+          },
+        );
+      } catch (e) {
+        print('いいね解除時にエラーが発生');
+        print(e);
+      }
+    } else {
+      try {
+        await FirebaseFirestore.instance.collection('posts').doc(id).update(
+          <String, FieldValue>{
+            'likeUserId': FieldValue.arrayUnion(<String>[uid]),
+          },
+        );
+      } catch (e) {
+        print('いいねした時にエラーが発生');
+        print(e);
+      }
     }
     notifyListeners();
   }
