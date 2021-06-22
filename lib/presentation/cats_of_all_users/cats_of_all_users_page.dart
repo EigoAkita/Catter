@@ -262,16 +262,38 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                         ),
 
                                                         ///Todo:likeCount
-                                                        Text(
-                                                          '999',
-                                                          style: TextStyle(
-                                                            fontSize: 15,
-                                                            fontWeight:
-                                                                FontWeight.bold,
-                                                            color: CustomColors
-                                                                .whiteMain,
-                                                          ),
-                                                        ),
+                                                        catLists.likeUserId ==
+                                                                null
+                                                            ? Text(
+                                                                '0',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: CustomColors
+                                                                      .whiteMain,
+                                                                ),
+                                                              )
+                                                            : Text(
+                                                                '${catLists.likeUserId.length}',
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 15,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                  color: catLists
+                                                                          .likeUserId
+                                                                          .contains(model
+                                                                              .uid)
+                                                                      ? CustomColors
+                                                                          .redMain
+                                                                      : CustomColors
+                                                                          .whiteMain,
+                                                                ),
+                                                              ),
                                                         SizedBox(
                                                           width: 25,
                                                         ),
@@ -373,106 +395,6 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                             ),
                                           ],
                                         ),
-                                        // Visibility(
-                                        //   visible: catLists.userId !=
-                                        //       _auth.currentUser.uid,
-                                        //   child: Column(
-                                        //     children: <Widget>[
-                                        //       Row(
-                                        //         mainAxisAlignment:
-                                        //             MainAxisAlignment.center,
-                                        //         children: <Widget>[
-                                        //           SizedBox(
-                                        //             width: 10,
-                                        //           ),
-                                        //           NeumorphicFloatingActionButton(
-                                        //             style: NeumorphicStyle(
-                                        //               depth: 1,
-                                        //               color: catLists.isFavoritePhotos
-                                        //                   ? CustomColors.whiteMain
-                                        //                   : Colors.amberAccent,
-                                        //               boxShape: NeumorphicBoxShape
-                                        //                   .roundRect(
-                                        //                 BorderRadius.circular(10),
-                                        //               ),
-                                        //             ),
-                                        //             child: Icon(
-                                        //               MaterialCommunityIcons.star,
-                                        //               size: 30,
-                                        //               color: catLists.isFavoritePhotos
-                                        //                   ? CustomColors.grayMain
-                                        //                   : CustomColors.whiteMain,
-                                        //             ),
-                                        //             onPressed: () async {
-                                        //               catLists.isFavoritePhotos =
-                                        //                   !catLists.isFavoritePhotos;
-                                        //               await model
-                                        //                   .pressedFavoriteButton(
-                                        //                 isFavoritePhotos:
-                                        //                     catLists.isFavoritePhotos,
-                                        //                 id: catLists.id,
-                                        //                 uid: _auth.currentUser.uid,
-                                        //               );
-                                        //             },
-                                        //           ),
-                                        //           SizedBox(
-                                        //             width: 25,
-                                        //           ),
-                                        //           NeumorphicText(
-                                        //             'or',
-                                        //             style: NeumorphicStyle(
-                                        //               depth: 1,
-                                        //               color: CustomColors.whiteMain,
-                                        //             ),
-                                        //             textStyle: NeumorphicTextStyle(
-                                        //               fontSize: 25,
-                                        //               fontWeight: FontWeight.bold,
-                                        //             ),
-                                        //           ),
-                                        //           SizedBox(
-                                        //             width: 25,
-                                        //           ),
-                                        //           NeumorphicFloatingActionButton(
-                                        //             style: NeumorphicStyle(
-                                        //               depth: 1,
-                                        //               color: catLists.isLikePhotos
-                                        //                   ? CustomColors.whiteMain
-                                        //                   : Colors.pinkAccent,
-                                        //               boxShape: NeumorphicBoxShape
-                                        //                   .roundRect(
-                                        //                 BorderRadius.circular(10),
-                                        //               ),
-                                        //             ),
-                                        //             child: Icon(
-                                        //               MaterialCommunityIcons.heart,
-                                        //               size: 30,
-                                        //               color: catLists.isLikePhotos
-                                        //                   ? CustomColors.grayMain
-                                        //                   : CustomColors.whiteMain,
-                                        //             ),
-                                        //             onPressed: () {
-                                        //               catLists.isLikePhotos =
-                                        //                   !catLists.isLikePhotos;
-                                        //               model.pressedLikeButton(
-                                        //                 isLikePhotos:
-                                        //                     catLists.isLikePhotos,
-                                        //                 id: catLists.id,
-                                        //                 uid: _auth.currentUser.uid,
-                                        //                 anotherUid: catLists.userId,
-                                        //               );
-                                        //             },
-                                        //           ),
-                                        //           SizedBox(
-                                        //             width: 10,
-                                        //           ),
-                                        //         ],
-                                        //       ),
-                                        //       SizedBox(
-                                        //         height: 10,
-                                        //       ),
-                                        //     ],
-                                        //   ),
-                                        // ),
                                         SizedBox(
                                           height: 10,
                                         ),
@@ -567,7 +489,6 @@ class _LottieAnimationState extends State<LottieAnimation>
 
   @override
   Widget build(BuildContext context) {
-
     return GestureDetector(
       onTap: () {
         if (controller.isCompleted) {

@@ -4,7 +4,6 @@ import 'package:catter_app/presentation/cat_posts/cat_posts_model.dart';
 import 'package:catter_app/presentation/cats_of_all_users/cats_of_all_users_model.dart';
 import 'package:catter_app/presentation/email_login/email_login_model.dart';
 import 'package:catter_app/presentation/forget_password/forget_password_model.dart';
-import 'package:catter_app/presentation/my_favorite_post_screen/my_favorite_post_screen_model.dart';
 import 'package:catter_app/presentation/my_liked_post_screen/my_liked_post_screen_model.dart';
 import 'package:catter_app/presentation/my_post_screen/my_post_screen_model.dart';
 import 'package:catter_app/presentation/my_profile/my_profile_model.dart';
@@ -53,9 +52,6 @@ Future<void> main() async {
         ),
         ChangeNotifierProvider<ForgetPasswordModel>(
           create: (_) => ForgetPasswordModel(),
-        ),
-        ChangeNotifierProvider<MyFavoritePostScreenModel>(
-          create: (_) => MyFavoritePostScreenModel(),
         ),
         ChangeNotifierProvider<MyLikedPostScreenModel>(
           create: (_) => MyLikedPostScreenModel(),
