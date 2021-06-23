@@ -5,7 +5,6 @@ import 'package:catter_app/presentation/my_post_screen/my_post_screen_page.dart'
 import 'package:catter_app/presentation/my_profile/my_profile_model.dart';
 import 'package:catter_app/presentation/my_profile/widgets/transition_button.dart';
 import 'package:catter_app/presentation/my_profile_change/my_profile_change_page.dart';
-import 'package:catter_app/presentation/setting/setting_page.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
