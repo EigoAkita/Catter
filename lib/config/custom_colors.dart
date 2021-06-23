@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 
 class CustomColors {
@@ -12,4 +14,5 @@ class CustomColors {
   static const Color blackMain =Color(0x3F000000);
   static const Color blackSub = Color(0xFF000000);
   static const Color redMain = Color(0xFFFF1744);
+  static const Color pinkMain = Color(0xFFFF4081);
 }

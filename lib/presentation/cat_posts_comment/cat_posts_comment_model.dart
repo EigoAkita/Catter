@@ -185,7 +185,7 @@ class CatPostsCommentModel extends ChangeNotifier {
       (ngWordItem) => text.contains(ngWordItem),
     )) {
       this.isCommentValid = false;
-      this.errorComment = '使用出来ない文字が含まれています';
+      this.errorComment = '使用出来ない文字が含まれています。';
     } else {
       this.isCommentValid = true;
       this.errorComment = '';

@@ -1,4 +1,5 @@
 import 'package:catter_app/config/convert_error_message.dart';
+import 'package:catter_app/config/ng_word.dart';
 import 'package:catter_app/presentation/email_login/widgets/error_show_dialog.dart';
 import 'package:catter_app/repository/firebase_firestore_api/users_api.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -38,6 +39,11 @@ class NicknameRegistrationModel extends ChangeNotifier {
     } else if (text.length > 6) {
       isNicknameValid = false;
       this.errorNickname = 'ニックネームは6文字以内です。';
+    } else if (ngWord.any(
+      (ngWordItem) => text.contains(ngWordItem),
+    )) {
+      isNicknameValid = false;
+      this.errorNickname = '使用出来ない文字が含まれています。';
     } else {
       isNicknameValid = true;
       this.errorNickname = '';
