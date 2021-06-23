@@ -18,14 +18,12 @@ AwesomeDialog mainDialog({
           context: context,
           animType: animType,
           dialogType: dialogType,
-          body: Center(
-            child: Text(
-              '$dialogText',
-              style: TextStyle(
-                color: CustomColors.grayMain,
-                fontWeight: FontWeight.bold,
-                fontSize: 15,
-              ),
+          body: Text(
+            '$dialogText',
+            style: TextStyle(
+              color: CustomColors.grayMain,
+              fontWeight: FontWeight.bold,
+              fontSize: 15,
             ),
           ),
           btnCancelOnPress: cancelPress,
