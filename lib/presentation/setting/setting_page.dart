@@ -30,115 +30,90 @@ class SettingPage extends StatelessWidget {
             SizedBox(
               height: data.size.height,
               width: data.size.width,
-              child: GestureDetector(
-                onHorizontalDragUpdate: (details) {
-                  if (details.delta.dx > 20) {
-                    Navigator.of(context).pop();
-                  }
-                },
-                child: Scaffold(
-                  appBar: AppBar(
-                    title: Text(
-                      '設定',
-                      style: TextStyle(
-                        color: CustomColors.whiteMain,
-                        fontWeight: FontWeight.bold,
+              child: Scaffold(
+                body: SingleChildScrollView(
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      SizedBox(
+                        height: 10,
                       ),
-                    ),
-                    elevation: 3,
-                    backgroundColor: CustomColors.brownSub,
-                    brightness: Brightness.dark,
-                    leading: IconButton(
-                      icon: Icon(Icons.arrow_back_ios),
-                      onPressed: () {
-                        Navigator.of(context).pop();
-                      },
-                    ),
-                  ),
-                  body: SingleChildScrollView(
-                    child: Column(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: <Widget>[
-                        SizedBox(
-                          height: 10,
-                        ),
-                        transitionButton(
-                          tapAction: () async {
-                            const teamsOfServiceURL =
-                                'https://kiyac.app/termsOfService/RnJ1enYAKSz3isHCTNWv';
-                            if (await canLaunch(teamsOfServiceURL)) {
-                              await launch(teamsOfServiceURL);
-                            } else {
-                              errorShowDialog(
-                                loginErrorText: 'エラーが発生しました',
-                                context: context,
-                              );
-                            }
-                          },
-                          transitionIcon: Icon(
-                            MaterialCommunityIcons.book_open,
-                            size: 30,
-                            color: CustomColors.brownMain,
-                          ),
-                          myProfileText: '利用規約',
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        transitionButton(
-                          tapAction: () async {
-                            final teamsOfServiceURL =
-                                'https://kiyac.app/plivacypolicy/77AoBVZzhnrpfVvvMHN4';
-                            if (await canLaunch(teamsOfServiceURL)) {
-                              await launch(teamsOfServiceURL);
-                            } else {
-                              errorShowDialog(
-                                loginErrorText: 'エラーが発生しました',
-                                context: context,
-                              );
-                            }
-                          },
-                          transitionIcon: Icon(
-                            MaterialCommunityIcons.shield_alert,
-                            size: 30,
-                            color: CustomColors.brownMain,
-                          ),
-                          myProfileText: 'プライバシーポリシー',
-                        ),
-                        SizedBox(
-                          height: 10,
-                        ),
-                        transitionButton(
-                          tapAction: () {
-                            mainDialog(
-                              isOKOnly: true,
+                      transitionButton(
+                        tapAction: () async {
+                          const teamsOfServiceURL =
+                              'https://kiyac.app/termsOfService/RnJ1enYAKSz3isHCTNWv';
+                          if (await canLaunch(teamsOfServiceURL)) {
+                            await launch(teamsOfServiceURL);
+                          } else {
+                            errorShowDialog(
+                              loginErrorText: 'エラーが発生しました',
                               context: context,
-                              animType: AnimType.BOTTOMSLIDE,
-                              dialogType: DialogType.QUESTION,
-                              dialogText: 'ログアウトしますか？',
-                              subOKText: 'はい',
-                              cancelPress: () {},
-                              okPress: () async {
-                                model.startLoading();
-                                Navigator.pushReplacement(
-                                  context,
-                                  MaterialPageRoute(
-                                    builder: (context) => EmailLoginPage(),
-                                  ),
-                                );
-                                model.endLoading();
-                              },
                             );
-                          },
-                          transitionIcon: Icon(
-                            MaterialCommunityIcons.exit_to_app,
-                            size: 30,
-                            color: CustomColors.brownMain,
-                          ),
-                          myProfileText: 'ログアウト',
+                          }
+                        },
+                        transitionIcon: Icon(
+                          MaterialCommunityIcons.book_open,
+                          size: 30,
+                          color: CustomColors.brownMain,
                         ),
-                      ],
-                    ),
+                        myProfileText: '利用規約',
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      transitionButton(
+                        tapAction: () async {
+                          final teamsOfServiceURL =
+                              'https://kiyac.app/plivacypolicy/77AoBVZzhnrpfVvvMHN4';
+                          if (await canLaunch(teamsOfServiceURL)) {
+                            await launch(teamsOfServiceURL);
+                          } else {
+                            errorShowDialog(
+                              loginErrorText: 'エラーが発生しました',
+                              context: context,
+                            );
+                          }
+                        },
+                        transitionIcon: Icon(
+                          MaterialCommunityIcons.shield_alert,
+                          size: 30,
+                          color: CustomColors.brownMain,
+                        ),
+                        myProfileText: 'プライバシーポリシー',
+                      ),
+                      SizedBox(
+                        height: 10,
+                      ),
+                      transitionButton(
+                        tapAction: () {
+                          mainDialog(
+                            isOKOnly: true,
+                            context: context,
+                            animType: AnimType.BOTTOMSLIDE,
+                            dialogType: DialogType.QUESTION,
+                            dialogText: 'ログアウトしますか？',
+                            subOKText: 'はい',
+                            cancelPress: () {},
+                            okPress: () async {
+                              model.startLoading();
+                              Navigator.pushReplacement(
+                                context,
+                                MaterialPageRoute(
+                                  builder: (context) => EmailLoginPage(),
+                                ),
+                              );
+                              model.endLoading();
+                            },
+                          );
+                        },
+                        transitionIcon: Icon(
+                          MaterialCommunityIcons.exit_to_app,
+                          size: 30,
+                          color: CustomColors.brownMain,
+                        ),
+                        myProfileText: 'ログアウト',
+                      ),
+                    ],
                   ),
                 ),
               ),

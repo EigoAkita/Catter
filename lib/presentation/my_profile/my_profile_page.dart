@@ -182,8 +182,7 @@ class MyProfilePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyProfileChangePage(
-                              ),
+                              builder: (context) => MyProfileChangePage(),
                             ),
                           );
                         },
@@ -202,8 +201,7 @@ class MyProfilePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyPostScreenPage(
-                              ),
+                              builder: (context) => MyPostScreenPage(),
                             ),
                           );
                         },
@@ -222,8 +220,7 @@ class MyProfilePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyLikedPostScreenPage(
-                              ),
+                              builder: (context) => MyLikedPostScreenPage(),
                             ),
                           );
                         },
@@ -233,26 +230,6 @@ class MyProfilePage extends StatelessWidget {
                           color: CustomColors.brownMain,
                         ),
                         myProfileText: 'いいね',
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      transitionButton(
-                        tapAction: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => SettingPage(
-                              ),
-                            ),
-                          );
-                        },
-                        transitionIcon: Icon(
-                          MaterialCommunityIcons.settings,
-                          size: 30,
-                          color: CustomColors.brownMain,
-                        ),
-                        myProfileText: '設定',
                       ),
                       SizedBox(
                         height: 10,

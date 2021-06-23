@@ -47,6 +47,21 @@ AppBar changeAppBar({
         automaticallyImplyLeading: false,
       );
       break;
+    case 3:
+      return AppBar(
+        title: Text(
+          '設定',
+          style: TextStyle(
+            color: CustomColors.whiteMain,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        elevation: 3,
+        backgroundColor: CustomColors.brownSub,
+        brightness: Brightness.dark,
+        automaticallyImplyLeading: false,
+      );
+      break;
     default:
       break;
   }
