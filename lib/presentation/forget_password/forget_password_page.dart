@@ -196,7 +196,7 @@ class ForgetPasswordPage extends StatelessWidget {
                                                   dialogType:
                                                       DialogType.NO_HEADER,
                                                   dialogText:
-                                                      'パスワード再設定用メール\nを送信しました。\n\nメールボックスをご確認ください。',
+                                                      'パスワード再設定用メール\nを送信しました。\nメールボックスをご確認ください。',
                                                   subOKText: 'はい',
                                                 );
                                                 model.endLoading();

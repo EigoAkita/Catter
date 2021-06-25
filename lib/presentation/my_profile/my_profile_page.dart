@@ -1,6 +1,5 @@
 import 'package:catter_app/config/custom_colors.dart';
 import 'package:catter_app/config/screen_loading.dart';
-import 'package:catter_app/presentation/my_favorite_post_screen/my_favorite_post_screen_page.dart';
 import 'package:catter_app/presentation/my_liked_post_screen/my_liked_post_screen_page.dart';
 import 'package:catter_app/presentation/my_post_screen/my_post_screen_page.dart';
 import 'package:catter_app/presentation/my_profile/my_profile_model.dart';
@@ -182,8 +181,7 @@ class MyProfilePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyProfileChangePage(
-                              ),
+                              builder: (context) => MyProfileChangePage(),
                             ),
                           );
                         },
@@ -202,8 +200,7 @@ class MyProfilePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyPostScreenPage(
-                              ),
+                              builder: (context) => MyPostScreenPage(),
                             ),
                           );
                         },
@@ -222,8 +219,7 @@ class MyProfilePage extends StatelessWidget {
                           Navigator.push(
                             context,
                             MaterialPageRoute(
-                              builder: (context) => MyLikedPostScreenPage(
-                              ),
+                              builder: (context) => MyLikedPostScreenPage(),
                             ),
                           );
                         },
@@ -233,26 +229,6 @@ class MyProfilePage extends StatelessWidget {
                           color: CustomColors.brownMain,
                         ),
                         myProfileText: 'いいね',
-                      ),
-                      SizedBox(
-                        height: 10,
-                      ),
-                      transitionButton(
-                        tapAction: () {
-                          Navigator.push(
-                            context,
-                            MaterialPageRoute(
-                              builder: (context) => MyFavoritePostScreenPage(
-                              ),
-                            ),
-                          );
-                        },
-                        transitionIcon: Icon(
-                          MaterialCommunityIcons.star,
-                          size: 30,
-                          color: CustomColors.brownMain,
-                        ),
-                        myProfileText: 'お気に入り',
                       ),
                       SizedBox(
                         height: 10,

@@ -9,12 +9,6 @@ import 'package:provider/provider.dart';
 import 'base_model.dart';
 
 class BasePage extends StatelessWidget {
-  final List<String> _pageNames = [
-    'みんなのねこ',
-    'ランキング',
-    'マイプロフィール',
-  ];
-
   @override
   Widget build(BuildContext context) {
     Provider.of<BaseModel>(context, listen: false);
@@ -36,21 +30,24 @@ class BasePage extends StatelessWidget {
                   MaterialCommunityIcons.cat,
                   color: CustomColors.whiteMain,
                 ),
-                title: _pageNames[0],
               ),
               TabItem(
                 icon: Icon(
                   MaterialCommunityIcons.crown,
                   color: CustomColors.whiteMain,
                 ),
-                title: _pageNames[1],
               ),
               TabItem(
                 icon: Icon(
                   MaterialCommunityIcons.human,
                   color: CustomColors.whiteMain,
                 ),
-                title: _pageNames[2],
+              ),
+              TabItem(
+                icon: Icon(
+                  MaterialCommunityIcons.settings,
+                  color: CustomColors.whiteMain,
+                ),
               ),
             ],
           ),

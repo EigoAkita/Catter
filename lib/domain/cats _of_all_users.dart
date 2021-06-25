@@ -17,6 +17,7 @@ class CatsOfAllUsers {
     this.blockedUserId = doc.data()['blockedUserId'];
     this.likeUserId = doc.data()['likeUserId'];
     this.commentCount = doc.data()['commentCount'];
+    this.likePhotoCount = doc.data()['likePhotoCount'];
     this.isLikePhotos = true;
     this.isFavoritePhotos = true;
   }
@@ -37,6 +38,7 @@ class CatsOfAllUsers {
   List<dynamic> blockedUserId;
   List<dynamic> likeUserId;
   int commentCount;
+  int likePhotoCount;
   DocumentReference documentReference;
 
 }

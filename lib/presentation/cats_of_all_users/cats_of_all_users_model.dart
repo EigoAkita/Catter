@@ -79,47 +79,6 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  // お気に入りボタンを押した時の処理
-  Future<void> pressedFavoriteButton({
-    @required String id,
-    @required String uid,
-    @required bool isFavoritePhotos,
-  }) async {
-    bool _oldState = isFavoritePhotos;
-    // お気に入りの ON/OFF を切り替える
-    switchFavoriteState(
-      input: _oldState,
-      isFavoritePhotos: isFavoritePhotos,
-    );
-
-    // 対象をお気に入りから削除する
-    if (isFavoritePhotos) {
-      await FirebaseFirestore.instance
-          .collection('users/$uid/favorite_posts')
-          .doc(id)
-          .delete();
-    }
-    // 対象をお気に入りに追加する
-    else {
-      DocumentSnapshot _doc;
-
-      _doc = await FirebaseFirestore.instance.collection('posts').doc(id).get();
-
-      Map _fields = _doc.data();
-      _fields['favoriteAt'] = FieldValue.serverTimestamp();
-
-      try {
-        await FirebaseFirestore.instance
-            .collection('users/$uid/favorite_posts')
-            .doc(id)
-            .set(_fields);
-      } catch (e) {
-        print('お気に入りの追加時にエラーが発生');
-        print(e);
-      }
-    }
-  }
-
   // いいねボタンを押した時の処理
   Future<void> pressedLikeButton({
     @required String id,
@@ -182,6 +141,61 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     }
   }
 
+  Future<void> likeUserPosts(
+      {@required String id, @required bool isLikePhotos}) async {
+    if (isLikePhotos) {
+      try {
+        await FirebaseFirestore.instance.collection('posts').doc(id).update(
+          <String, FieldValue>{
+            'likeUserId': FieldValue.arrayRemove(<String>[uid]),
+          },
+        );
+
+        FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+        WriteBatch _batch = _fireStore.batch();
+
+        FirebaseFirestore _firestore = FirebaseFirestore.instance;
+        DocumentReference _likePhotosDoc = _firestore.collection('posts').doc(id);
+        DocumentSnapshot _snap = await _likePhotosDoc.get();
+        int _likePhotoCount = _snap.data()['likePhotoCount'];
+
+        if (_likePhotoCount > 0) {
+          _batch.update(_likePhotosDoc, {'likePhotoCount': FieldValue.increment(-1)});
+        } else {
+          _batch.update(_likePhotosDoc, {'likePhotoCount': 0});
+        }
+
+        await _batch.commit();
+
+      } catch (e) {
+        print('いいね解除時にエラーが発生');
+        print(e);
+      }
+    } else {
+      try {
+        await FirebaseFirestore.instance.collection('posts').doc(id).update(
+          <String, FieldValue>{
+            'likeUserId': FieldValue.arrayUnion(<String>[uid]),
+          },
+        );
+
+        FirebaseFirestore _firestore = FirebaseFirestore.instance;
+        WriteBatch _batch = _firestore.batch();
+
+        DocumentReference _commentDoc = _firestore.collection('posts').doc(id);
+
+        _batch.update(_commentDoc, {'likePhotoCount': FieldValue.increment(1)});
+        await _batch.commit();
+
+      } catch (e) {
+        print('いいねした時にエラーが発生');
+        print(e);
+      }
+    }
+
+    notifyListeners();
+  }
+
   Future<void> deleteMyPost({
     @required String id,
     @required String uid,
@@ -212,33 +226,7 @@ class CatsOfAllUsersModel extends ChangeNotifier {
     notifyListeners();
   }
 
-  Future<void> likeUserPosts(
-      {@required String id, @required bool isLikePhotos}) async {
-    if (isLikePhotos) {
-      try {
-        await FirebaseFirestore.instance.collection('posts').doc(id).update(
-          <String, FieldValue>{
-            'likeUserId': FieldValue.delete(),
-          },
-        );
-      } catch (e) {
-        print('いいね解除時にエラーが発生');
-        print(e);
-      }
-    } else {
-      try {
-        await FirebaseFirestore.instance.collection('posts').doc(id).update(
-          <String, FieldValue>{
-            'likeUserId': FieldValue.arrayUnion(<String>[uid]),
-          },
-        );
-      } catch (e) {
-        print('いいねした時にエラーが発生');
-        print(e);
-      }
-    }
-    notifyListeners();
-  }
+
 
   void switchFavoriteState({
     @required bool input,

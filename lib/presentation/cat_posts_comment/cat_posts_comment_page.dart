@@ -271,7 +271,7 @@ class CatPostsCommentPage extends StatelessWidget {
                                       style: NeumorphicStyle(
                                         shape: NeumorphicShape.flat,
                                         depth: 1,
-                                        color: Colors.pinkAccent,
+                                        color: CustomColors.pinkMain,
                                         shadowDarkColorEmboss: Colors.blueGrey,
                                       ),
                                     ),

@@ -278,7 +278,7 @@ class AnimatedRankingList extends StatelessWidget {
                                     height: 20,
                                     decoration: BoxDecoration(
                                       color:
-                                      Colors.pinkAccent,
+                                      CustomColors.pinkMain,
                                       borderRadius:
                                       BorderRadius.circular(
                                         2.5,
