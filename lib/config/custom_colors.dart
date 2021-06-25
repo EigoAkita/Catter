@@ -4,8 +4,8 @@ import 'package:flutter/material.dart';
 
 class CustomColors {
   const CustomColors._();
-  static const Color brownMain = Color(0xEEEDB212);
-  static const Color brownSub =Color(0xFFFFCA28);
+  static const Color brownSub = Color(0xFFF5C647);
+  static const Color brownMain =Color(0xFFb18b55);
   static const Color grayMain = Color(0xFF8C8C8C);
   static const Color graySub =Color(0xFF6D5823);
   static const Color blueMain =Color(0xFF42A5F5);

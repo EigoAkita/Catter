@@ -150,6 +150,23 @@ class CatsOfAllUsersModel extends ChangeNotifier {
             'likeUserId': FieldValue.arrayRemove(<String>[uid]),
           },
         );
+
+        FirebaseFirestore _fireStore = FirebaseFirestore.instance;
+        WriteBatch _batch = _fireStore.batch();
+
+        FirebaseFirestore _firestore = FirebaseFirestore.instance;
+        DocumentReference _likePhotosDoc = _firestore.collection('posts').doc(id);
+        DocumentSnapshot _snap = await _likePhotosDoc.get();
+        int _likePhotoCount = _snap.data()['likePhotoCount'];
+
+        if (_likePhotoCount > 0) {
+          _batch.update(_likePhotosDoc, {'likePhotoCount': FieldValue.increment(-1)});
+        } else {
+          _batch.update(_likePhotosDoc, {'likePhotoCount': 0});
+        }
+
+        await _batch.commit();
+
       } catch (e) {
         print('いいね解除時にエラーが発生');
         print(e);
@@ -161,11 +178,21 @@ class CatsOfAllUsersModel extends ChangeNotifier {
             'likeUserId': FieldValue.arrayUnion(<String>[uid]),
           },
         );
+
+        FirebaseFirestore _firestore = FirebaseFirestore.instance;
+        WriteBatch _batch = _firestore.batch();
+
+        DocumentReference _commentDoc = _firestore.collection('posts').doc(id);
+
+        _batch.update(_commentDoc, {'likePhotoCount': FieldValue.increment(1)});
+        await _batch.commit();
+
       } catch (e) {
         print('いいねした時にエラーが発生');
         print(e);
       }
     }
+
     notifyListeners();
   }
 

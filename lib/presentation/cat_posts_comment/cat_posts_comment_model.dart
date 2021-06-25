@@ -92,8 +92,7 @@ class CatPostsCommentModel extends ChangeNotifier {
 
     FirebaseFirestore _firestore = FirebaseFirestore.instance;
     DocumentReference _commentDoc = _firestore.collection('posts').doc(postId);
-    DocumentReference _comment = _firestore.collection('posts').doc(postId);
-    DocumentSnapshot _snap = await _comment.get();
+    DocumentSnapshot _snap = await _commentDoc.get();
     int _commentCount = _snap.data()['commentCount'];
 
     if (_commentCount > 0) {

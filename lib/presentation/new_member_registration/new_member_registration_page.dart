@@ -76,7 +76,7 @@ class NewMemberRegistrationPage extends StatelessWidget {
                               loginText: '利用規約',
                               loginTextColor: model.isCheckTeamsOfUse
                                   ? CustomColors.whiteMain
-                                  : CustomColors.blueMain,
+                                  : CustomColors.pinkMain,
                               isLoginTextFontSize: true,
                               isLoginTextWeight: false,
                               context: context,
@@ -88,7 +88,7 @@ class NewMemberRegistrationPage extends StatelessWidget {
                                 fontSize: 15,
                                 color: model.isCheckTeamsOfUse
                                     ? CustomColors.whiteMain
-                                    : CustomColors.grayMain,
+                                    : CustomColors.graySub,
                               ),
                             )
                           ],
@@ -104,7 +104,7 @@ class NewMemberRegistrationPage extends StatelessWidget {
                               loginButtonVariables: _loginButtonVariables[3]
                                   ['value'],
                               loginText: 'プライバシーポリシー',
-                              loginTextColor: CustomColors.blueMain,
+                              loginTextColor: CustomColors.pinkMain,
                               isLoginTextFontSize: true,
                               isLoginTextWeight: false,
                               context: context,

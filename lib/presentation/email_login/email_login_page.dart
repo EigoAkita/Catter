@@ -6,8 +6,10 @@ import 'package:catter_app/presentation/base/base_page.dart';
 import 'package:catter_app/presentation/email_login/email_login_model.dart';
 import 'package:catter_app/presentation/email_login/widgets/login_text_button.dart';
 import 'package:catter_app/presentation/email_login/widgets/login_text_form_widget.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_neumorphic/flutter_neumorphic.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class EmailLoginPage extends StatelessWidget {
@@ -44,21 +46,34 @@ class EmailLoginPage extends StatelessWidget {
                               SizedBox(
                                 height: 25,
                               ),
-                              Row(
+                              Stack(
                                 children: <Widget>[
-                                  const Expanded(
-                                    flex: 1,
-                                    child: SizedBox(),
-                                  ),
-                                  Expanded(
-                                    flex: 8,
-                                    child: Image.asset(
-                                      '${imagePath}login_image.png',
+                                  Center(
+                                    child: Container(
+                                      width: 275,
+                                      height: 275,
+                                      child: Image.asset(
+                                        'lib/resources/images/app_icon.png',
+                                      ),
                                     ),
                                   ),
-                                  const Expanded(
-                                    flex: 1,
-                                    child: SizedBox(),
+                                  Column(
+                                    children: <Widget>[
+                                      SizedBox(
+                                        height: 230,
+                                      ),
+                                      Center(
+                                        child: Text(
+                                          'Catter',
+                                          style: GoogleFonts.baiJamjuree(
+                                            fontStyle: FontStyle.italic,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 55,
+                                            color: CustomColors.whiteMain,
+                                          ),
+                                        ),
+                                      ),
+                                    ],
                                   ),
                                 ],
                               ),
@@ -125,7 +140,7 @@ class EmailLoginPage extends StatelessWidget {
                                                 loginTextColor:
                                                     model.isCheckTeamsOfUse
                                                         ? CustomColors.whiteMain
-                                                        : CustomColors.blueMain,
+                                                        : CustomColors.pinkMain,
                                                 isLoginTextFontSize: false,
                                                 isLoginTextWeight: false,
                                                 context: context,
@@ -137,7 +152,7 @@ class EmailLoginPage extends StatelessWidget {
                                                   fontSize: 10,
                                                   color: model.isCheckTeamsOfUse
                                                       ? CustomColors.whiteMain
-                                                      : CustomColors.grayMain,
+                                                      : CustomColors.graySub,
                                                 ),
                                               )
                                             ],

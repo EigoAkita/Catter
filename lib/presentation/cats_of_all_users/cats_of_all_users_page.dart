@@ -265,7 +265,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                           ),
 
                                                           ///Todo:likeCount
-                                                          catLists.likeUserId ==
+                                                          catLists.likePhotoCount ==
                                                                   null
                                                               ? Text(
                                                                   '0',
@@ -281,7 +281,7 @@ class CatsOfAllUsersPage extends StatelessWidget {
                                                                   ),
                                                                 )
                                                               : Text(
-                                                                  '${catLists.likeUserId.length}',
+                                                                  '${catLists.likePhotoCount}',
                                                                   style:
                                                                       TextStyle(
                                                                     fontSize:
